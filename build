@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+`cd src; javac languages/scalararithmetic/*.java languages/abstractions/*.java`;
+
+`mkdir bin/languages`;
+`mkdir bin/languages/scalararithmetic`;
+
+`mv src/languages/scalararithmetic/*.class bin/languages/scalararithmetic`;
+
