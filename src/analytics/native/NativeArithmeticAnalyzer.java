@@ -1,4 +1,4 @@
-package hephaestos.analytics.native;
+package proteus.analytics.native;
 
 public class NativeArithmeticAnalyzer {
 

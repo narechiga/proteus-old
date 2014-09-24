@@ -1,7 +1,7 @@
-package hephaestos.dl.syntax;
+package proteus.dl.syntax;
 
 import java.util.*;
-import hephaestos.dl.semantics.*;
+import proteus.dl.semantics.*;
 
 public class VectorTerm extends NonScalarTerm {
 	int length;

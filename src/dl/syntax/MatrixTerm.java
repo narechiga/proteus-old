@@ -1,6 +1,6 @@
-package hephaestos.dl.syntax;
+package proteus.dl.syntax;
 
-import hephaestos.dl.semantics.*;
+import proteus.dl.semantics.*;
 import java.util.*;
 
 public class MatrixTerm extends NonScalarTerm {

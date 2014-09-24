@@ -1,4 +1,4 @@
-package hephaestos.analytics.abstractions;
+package proteus.analytics.abstractions;
 
 public abstract class ArithmeticAnalyzer {
 }

@@ -1,6 +1,6 @@
-package hephaestos.logicsolvers.mathematicakit;
+package proteus.logicsolvers.mathematicakit;
 
-import hephaestos.logicsolvers.abstractions.*;
+import proteus.logicsolvers.abstractions.*;
 import java.util.*;
 import java.io.*;
 import manticore.dl.*;

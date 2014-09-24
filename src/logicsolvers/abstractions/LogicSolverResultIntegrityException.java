@@ -1,4 +1,4 @@
-package hephaestos.logicsolvers.abstractions;
+package proteus.logicsolvers.abstractions;
 
 public class LogicSolverResultIntegrityException extends Exception{
 

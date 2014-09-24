@@ -1,14 +1,14 @@
 
 %{
 	import java.util.*;
-	import hephaestos.dl.syntax.*;
-	import hephaestos.dl.semantics.*;
+	import proteus.dl.syntax.*;
+	import proteus.dl.semantics.*;
 
 	@SuppressWarnings({"unchecked"})
 %}
 
 %language "Java"
-%define package hephaestos.dl.parser
+%define package proteus.dl.parser
 %define extends {AbstractdLParser}
 %define parser_class_name {dLParser}
 %define public

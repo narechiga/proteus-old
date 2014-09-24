@@ -1,7 +1,7 @@
-package hephaestos.dl.semantics;
+package proteus.dl.semantics;
 
 import java.util.*;;
-import hephaestos.dl.syntax.*;;
+import proteus.dl.syntax.*;;
 import java.lang.*;;
 
 public class NativeInterpretation implements Interpretation {

@@ -5,9 +5,9 @@ open (AOL, "<", "ArithmeticOperatorList.txt") or die "Cannot open ArithmeticOper
 
 open (NI, ">", "NativeInterpretation.java") or die "Cannot open NativeInterpretation.java: $!";
 
-print NI "package hephaestos.dl.semantics;\n\n";
+print NI "package proteus.dl.semantics;\n\n";
 print NI "import java.util.*;;\n";
-print NI "import hephaestos.dl.syntax.*;;\n";
+print NI "import proteus.dl.syntax.*;;\n";
 print NI "import java.lang.*;;\n\n";
 
 print NI "public class NativeInterpretation implements Interpretation {\n\n";

@@ -1,6 +1,6 @@
-package hephaestos.dl.syntax;
+package proteus.dl.syntax;
 
-import hephaestos.dl.semantics.*;
+import proteus.dl.semantics.*;
 
 public class UnknownInequalityException extends RuntimeException {
 	// Extends RuntimeException because if you wrote something with a bad

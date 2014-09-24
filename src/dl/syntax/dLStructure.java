@@ -1,7 +1,7 @@
-package hephaestos.dl.syntax;
+package proteus.dl.syntax;
 
-import hephaestos.dl.semantics.*;
-import hephaestos.dl.parser.*;
+import proteus.dl.semantics.*;
+import proteus.dl.parser.*;
 
 import java.util.*;
 import java.io.*;
