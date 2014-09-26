@@ -122,8 +122,7 @@ public class MatrixTerm extends NonScalarTerm {
 	
 // Convenience functions
 	public MatrixTerm clone() {
-		//TODO
-		return null;
+		return new MatrixTerm( getRows(), getColumns(), cloneArguments() );
 	}
 
 	public ArrayList<Term> toArrayList() {
@@ -139,13 +138,22 @@ public class MatrixTerm extends NonScalarTerm {
 	}
 
 	public Set<RealVariable> getFreeVariables() {
-		return null;
-		// TODO
+		HashSet<RealVariable> freeVariables;
+
+		ArrayList<Term> entries = toArrayList();
+		Iterator<Term> entryIterator = entries.iterator();
+
+		while( entryIterator.hasNext() ) {
+			freeVariables.addAll( entryIterator.next().getFreeVariables() );
+		}
+
+		return freeVariables;
 	}
 
 	public Set<RealVariable> getDynamicVariables() {
-		return null;
-		// TODO
+		// Same as the corresponding method for a term
+		HashSet<RealVariable> dynamicVariables = new HashSet<RealVariable>();
+		return dynamicVariables;
 	}
 
 // Manipulations

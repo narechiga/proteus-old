@@ -53,8 +53,8 @@ public class Term extends GeneralizedTerm {
 
 		while ( subTermIterator.hasNext() ) {
 			// This can be done safely because all the arguments of a term will be terms,
-			// see constructor
-			subTerms.add( (Term)subTermIterator.next() );
+			// see constructors
+			subTerms.add( (Term)(subTermIterator.next()) );
 		}
 
 		return subTerms;

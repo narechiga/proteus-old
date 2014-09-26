@@ -244,12 +244,29 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		return affinity;
 	}
 
+	public ArrayList<Term> splitTermOnPlus( Term thisTerm ) {
+		ArrayList<Term> summands;
+
+		if ( thisTerm instanceof AdditionTerm ) {
+			summands.addAll( splitTermOnPlus( thisTerm.getLeftSummand() ) );
+			summands.addAll( splitTermOnPlus( thisTerm.getRightSummand() ) );
+
+		} else {
+			summands.add( thisTerm );
+
+		}
+
+		return summands;
+	}
+
 	public MatrixTerm extractLinearCoefficients( ExplicitODE ode, ArrayList<RealVariable> variables ) {
 		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
 
-		ArrayList<Term> additiveTerms= splitOnPlus( ode.getRHS() );
+		ArrayList<Term> additiveTerms= splitTermOnPlus( ode.getRHS() );
 
-		return null;
+		for ( Term summand : additiveTerms ) {
+
+		}
 	}
 
 }
