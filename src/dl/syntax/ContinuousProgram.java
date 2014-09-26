@@ -11,22 +11,22 @@ public class ContinuousProgram extends HybridProgram {
 	public ContinuousProgram ( ArrayList<ExplicitODE> odeList, dLFormula doe ) {
 		this.operator = new Operator("continuous-evolution");
 
-		spawnChildren();
-		this.children.addAll( odeList );
+		spawnArguments();
+		this.arguments.addAll( odeList );
 
 		// Guarantee: Must always have a doe, even if it's just "true"
-		this.children.add( doe );
+		this.arguments.add( doe );
 	}
 
 	// constructor without DOE
 	public ContinuousProgram ( ArrayList<ExplicitODE> odeList ) {
 		this.operator = new Operator("continuous-evolution");
 		
-		spawnChildren();
-		this.children.addAll( odeList );
+		spawnArguments();
+		this.arguments.addAll( odeList );
 
 		// Guarantee: Must always have a doe, even if it's just "true"
-		this.children.add( new TrueFormula() );
+		this.arguments.add( new TrueFormula() );
 	}
 
 	public ArrayList<RealVariable> getContinuousVariables() {
@@ -48,12 +48,12 @@ public class ContinuousProgram extends HybridProgram {
 
 		ArrayList<ExplicitODE> odeList = new ArrayList<ExplicitODE>();
 
-		Iterator<dLStructure> childIterator = children.iterator();
-		dLStructure thisChild;
+		Iterator<dLStructure> childIterator = arguments.iterator();
+		dLStructure thisArgument;
 		while ( childIterator.hasNext() ) {
-			thisChild = childIterator.next();
-			if ( thisChild instanceof ExplicitODE) {
-				odeList.add( (ExplicitODE)thisChild );
+			thisArgument = childIterator.next();
+			if ( thisArgument instanceof ExplicitODE) {
+				odeList.add( (ExplicitODE)thisArgument );
 			}
 		}
 
@@ -61,38 +61,38 @@ public class ContinuousProgram extends HybridProgram {
 	}
 
 	public ExplicitODE getODE( int index ) {
-		return (ExplicitODE)children.get( index );
+		return (ExplicitODE)arguments.get( index );
 	}
 
 	public void addODE( dLStructure ode ) {
-		int doeIndex = children.size() - 1;
+		int doeIndex = arguments.size() - 1;
 		
-		children.add( doeIndex, ode );
+		arguments.add( doeIndex, ode );
 	}
 
 	public void addODEs( ArrayList<dLStructure> odeList ) {
-		int doeIndex = children.size() - 1;
+		int doeIndex = arguments.size() - 1;
 		
-		children.addAll( doeIndex, odeList );
+		arguments.addAll( doeIndex, odeList );
 	}
 
 
 	// Operations on DOE
 	public dLFormula getDOE() {
-		int doeIndex = children.size() - 1;
+		int doeIndex = arguments.size() - 1;
 
-		if ( children.get(doeIndex) instanceof dLFormula ) {
-			return ((dLFormula)children.get(doeIndex));
+		if ( arguments.get(doeIndex) instanceof dLFormula ) {
+			return ((dLFormula)arguments.get(doeIndex));
 		} else {
 			return null;
 		}
 	}
 
 	public void setDOE ( dLFormula doe ) {
-		int doeIndex = children.size();
+		int doeIndex = arguments.size();
 
 		// Assume: Must always have a doe, even if it's just "true"
-		children.set( doeIndex, doe );
+		arguments.set( doeIndex, doe );
 	}
 
 	public void restrictDOE () {}
@@ -152,17 +152,17 @@ public class ContinuousProgram extends HybridProgram {
 		
 		String returnString = "{ ";
 
-		Iterator<dLStructure> childIterator = children.iterator();
-		dLStructure thisChild;
+		Iterator<dLStructure> childIterator = arguments.iterator();
+		dLStructure thisArgument;
 		ExplicitODE thisODE;
 
 		while( childIterator.hasNext() ) {
 			
-			thisChild = childIterator.next();
+			thisArgument = childIterator.next();
 
 			if ( childIterator.hasNext() ) { // then this is an ode, not the doe
 
-				thisODE = (ExplicitODE)thisChild;
+				thisODE = (ExplicitODE)thisArgument;
 				returnString = returnString + thisODE.toKeYmaeraString() + ", ";
 
 			} else { //then this is the doe

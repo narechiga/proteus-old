@@ -10,17 +10,17 @@ public class BoxModalityFormula extends dLFormula {
 	public BoxModalityFormula ( HybridProgram program, dLFormula formula ) {
 		operator = new Operator("box-modality"); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( program );
-		children.add( formula );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( program );
+		arguments.add( formula );
 	}
 
 	public HybridProgram getProgram() {
-		return (HybridProgram)(children.get(0));
+		return (HybridProgram)(arguments.get(0));
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(children.get(1));
+		return (dLFormula)(arguments.get(1));
 	}
 
 //	public HybridProgram getLHS() {

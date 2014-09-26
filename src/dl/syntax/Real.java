@@ -9,27 +9,32 @@ public class Real extends Term {
 // Constructors
 	//public Real ( Operator operator ) {
 	//	this.operator = operator;
-	//	children = null;
+	//	arguments = null;
 	//}
 
 	public Real ( String value ) {
 		operator = new Operator( value, 0 );
-		children = null;
+		arguments = null;
 	}
 
 	public Real( Double value ) {
 		operator = new Operator( value.toString(), 0 );
-		children = null;
+		arguments = null;
 	}
 	
 	public Real( Float value ) {
 		operator = new Operator( value.toString(), 0 );
-		children = null;
+		arguments = null;
 	}
 
 	public Real( Integer value ) {
 		operator = new Operator( value.toString(), 0 );
-		children = null;
+		arguments = null;
+	}
+
+// Convenience function
+	public boolean isANumber() {
+		return true;
 	}
 
 // Substitution method

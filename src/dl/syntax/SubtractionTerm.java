@@ -7,26 +7,26 @@ public class SubtractionTerm extends Term {
 	public SubtractionTerm ( Term minuend, Term subtrahend ) {
 		operator = new Operator( "-", 2, true );
 
-		spawnChildren();
-		addChild( minuend );
-		addChild( subtrahend );
+		spawnArguments();
+		addArgument( minuend );
+		addArgument( subtrahend );
 	}
 
 // Getters
 	public Term getMinuend() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getSubtrahend() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 	public Term getLHS() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getRHS() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 	
 // Clone

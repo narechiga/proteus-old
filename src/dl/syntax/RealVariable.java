@@ -9,7 +9,11 @@ public class RealVariable extends Term {
 // Constructor
 	public RealVariable ( String name ) {
 		operator = new Operator( name, 0 );
-		children = null;
+		arguments = null;
+	}
+
+	public boolean isAVariable() {
+		return true;
 	}
 
 // equals

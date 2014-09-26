@@ -11,25 +11,25 @@ public class SequenceProgram extends HybridProgram {
 
 		this.operator = new Operator("sequence", true);
 
-		this.children = new ArrayList<dLStructure>();
-		this.children.add( firstProgram );
-		this.children.add( secondProgram );
+		this.arguments = new ArrayList<dLStructure>();
+		this.arguments.add( firstProgram );
+		this.arguments.add( secondProgram );
 	}
 
 	public HybridProgram getLHS() {
-		return (HybridProgram)(children.get(0));
+		return (HybridProgram)(arguments.get(0));
 	}
 
 	public HybridProgram getRHS() {
-		return (HybridProgram)(children.get(1));
+		return (HybridProgram)(arguments.get(1));
 	}
 
 	public HybridProgram getFirstProgram() {
-		return (HybridProgram)(children.get(0));
+		return (HybridProgram)(arguments.get(0));
 	}
 
 	public HybridProgram getSecondProgram() {
-		return (HybridProgram)(children.get(1));
+		return (HybridProgram)(arguments.get(1));
 	}
 	
 // Substition method
@@ -45,11 +45,11 @@ public class SequenceProgram extends HybridProgram {
 
 // String methods
 	public String toKeYmaeraString() {
-		return "( " + children.get(0).toKeYmaeraString() + " ; " + children.get(1).toKeYmaeraString() + " )";
+		return "( " + arguments.get(0).toKeYmaeraString() + " ; " + arguments.get(1).toKeYmaeraString() + " )";
 	}
 
 	public String toManticoreString() {
-		return "( " + children.get(0).toManticoreString() + " ; " + children.get(1).toManticoreString() + " )";
+		return "( " + arguments.get(0).toManticoreString() + " ; " + arguments.get(1).toManticoreString() + " )";
 	}
 
 

@@ -76,8 +76,8 @@ foreach ( @arithmeticList ) {
 	if ( ($fix == "infix") && ($arity == 2) ) {
 		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
-		print NI "\t\t\t\tdoubleResult = (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble()\n";
-			print NI "\t\t\t\t\t\t$interpretation (evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble();\n";
+		print NI "\t\t\t\tdoubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()\n";
+			print NI "\t\t\t\t\t\t$interpretation (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();\n";
 		print NI "\t\t\t\tresult = new Real( doubleResult.toString() );\n";
 		print NI "\t\t\t} catch ( Exception e ) {\n";
 		print NI "\t\t\t\tSystem.err.println(\"Exception encountered evaluating rule for operator :: $name ::\");\n";
@@ -86,8 +86,8 @@ foreach ( @arithmeticList ) {
 	} elsif( ($fix == "prefix") && ($arity == 2)  ) {
 		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
-		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble(),\n";
-			print NI "\t\t\t\t\t\t(evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble() );\n";
+		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),\n";
+			print NI "\t\t\t\t\t\t(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );\n";
 		print NI "\t\t\t\tresult = new Real( doubleResult.toString() );\n";
 		print NI "\t\t\t} catch ( Exception e ) {\n";
 		print NI "\t\t\t\tSystem.err.println(\"Exception encountered evaluating rule for operator :: $name ::\");\n";
@@ -96,7 +96,7 @@ foreach ( @arithmeticList ) {
 	} elsif ( ($fix == "prefix") && ($arity == 1) ) {
 		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
-		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );\n";
+		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );\n";
 		print NI "\t\t\t\tresult = new Real( doubleResult.toString() );\n";
 		print NI "\t\t\t} catch ( Exception e ) {\n";
 		print NI "\t\t\t\tSystem.err.println(\"Exception encountered evaluating rule for operator :: $name ::\");\n";

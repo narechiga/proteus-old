@@ -10,17 +10,17 @@ public class ExistsFormula extends dLFormula {
 	public ExistsFormula ( RealVariable quantifiedVariable, dLFormula quantifiedFormula ) {
 		operator = new Operator("exists"); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( quantifiedVariable );
-		children.add( quantifiedFormula );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( quantifiedVariable );
+		arguments.add( quantifiedFormula );
 	}
 
 	public RealVariable getVariable() {
-		return (RealVariable)(children.get(0));
+		return (RealVariable)(arguments.get(0));
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(children.get(1));
+		return (dLFormula)(arguments.get(1));
 	}
 // Substitution method
 	public ExistsFormula substituteConcreteValuation( Valuation substitution ) {

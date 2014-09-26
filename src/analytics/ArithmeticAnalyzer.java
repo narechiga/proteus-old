@@ -247,7 +247,9 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	public MatrixTerm extractLinearCoefficients( ExplicitODE ode, ArrayList<RealVariable> variables ) {
 		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
 
-		ArrayList<Term> additiveTerms= ode.getRHS().splitOnPlus();
+		ArrayList<Term> additiveTerms= splitOnPlus( ode.getRHS() );
+
+		return null;
 	}
 
 }

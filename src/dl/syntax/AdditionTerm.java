@@ -8,25 +8,25 @@ public class AdditionTerm extends Term {
 	public AdditionTerm ( Term leftSummand, Term rightSummand ) {
 		this.operator = new Operator("+", true );
 
-		spawnChildren();
-		addChild( leftSummand );
-		addChild( rightSummand );
+		spawnArguments();
+		addArgument( leftSummand );
+		addArgument( rightSummand );
 	}
 
 	public Term getLeftSummand() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getRightSummand() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 	public Term getLHS() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getRHS() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 // Clone

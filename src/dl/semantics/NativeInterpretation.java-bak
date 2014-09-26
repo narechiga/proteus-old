@@ -77,8 +77,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( addition ) ) {
 
 			try {
-				result = Real.add(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ),
-						evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.add(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ),
+						evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( addition ) )");
 				System.err.println(e);
@@ -88,8 +88,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( subtraction ) ) {
 
 			try {
-				result = Real.subtract(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ),
-						evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.subtract(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ),
+						evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( subtraction ) )");
 				System.err.println(e);
@@ -99,8 +99,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( multiplication ) ) {
 
 			try {
-				result = Real.multiply(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ),
-						evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.multiply(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ),
+						evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( multiplication ) )");
 				System.err.println(e);
@@ -110,8 +110,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( division ) ) {
 
 			try {
-				result = Real.divide(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ),
-						evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.divide(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ),
+						evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( division ) )");
 				System.err.println(e);
@@ -121,8 +121,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -132,8 +132,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( abs ) ) {
 
 			try {
-				result = Real.abs(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.abs(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( abs ) )");
 				System.err.println(e);
@@ -143,8 +143,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( acos ) ) {
 
 			try {
-				result = Real.acos(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.acos(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( acos ) )");
 				System.err.println(e);
@@ -154,8 +154,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( asin ) ) {
 
 			try {
-				result = Real.asin(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.asin(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( asin ) )");
 				System.err.println(e);
@@ -165,8 +165,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( atan ) ) {
 
 			try {
-				result = Real.atan(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.atan(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( atan ) )");
 				System.err.println(e);
@@ -176,8 +176,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( atan2 ) ) {
 
 			try {
-				result = Real.atan2(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.atan2(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( atan2 ) )");
 				System.err.println(e);
@@ -187,8 +187,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( cos ) ) {
 
 			try {
-				result = Real.cos(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.cos(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( cos ) )");
 				System.err.println(e);
@@ -198,8 +198,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( cosh ) ) {
 
 			try {
-				result = Real.cosh(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.cosh(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( cosh ) )");
 				System.err.println(e);
@@ -209,8 +209,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( exp ) ) {
 
 			try {
-				result = Real.exp(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.exp(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( exp ) )");
 				System.err.println(e);
@@ -220,8 +220,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( floor ) ) {
 
 			try {
-				result = Real.floor(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.floor(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( floor ) )");
 				System.err.println(e);
 				e.printStackTrace();
@@ -230,8 +230,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( ln ) ) {
 
 			try {
-				result = Real.log(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.log(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( floor ) )");
 				System.err.println(e);
@@ -241,8 +241,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( : ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -252,8 +252,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -263,8 +263,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -274,8 +274,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -285,8 +285,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -296,8 +296,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -307,8 +307,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -318,8 +318,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -329,8 +329,8 @@ public class NativeInterpretation implements Interpretation {
 		} else if ( thisTerm.operator.equals( power ) ) {
 
 			try {
-				result = Real.power(evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ), 
-					evaluateTerm( (Term)(thisTerm.children.get(1)), valuation ));
+				result = Real.power(evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ), 
+					evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation ));
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered in ( thisTerm.operator.equals( power ) )");
 				System.err.println(e);
@@ -376,7 +376,7 @@ public class NativeInterpretation implements Interpretation {
 		/**/	}
 
 		} else if ( thisFormula instanceof NotFormula ) {
-			return (! evaluateFormula( ((NotFormula)thisFormula).getChild(), valuation ) );
+			return (! evaluateFormula( ((NotFormula)thisFormula).getArgument(), valuation ) );
 		} else if ( thisFormula instanceof AndFormula ) {
 			return (evaluateFormula( ((AndFormula)thisFormula).getLHS(), valuation ) 
 				&& evaluateFormula( ((AndFormula)thisFormula).getRHS(), valuation ));

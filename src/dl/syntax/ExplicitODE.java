@@ -10,27 +10,27 @@ public class ExplicitODE extends dLStructure {
 	public ExplicitODE ( RealVariable lhs, Term rhs ) {
 		operator = new Operator( "explicit-ode" );
 
-		children = new ArrayList<dLStructure>();
-		children.add( lhs );
-		children.add( rhs );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( lhs );
+		arguments.add( rhs );
 
 	}
 
 	//public ExplicitODE ( dLStructure lhs, dLStructure rhs ) {
 	//	operator = new Operator( "explicit-ode" );
 
-	//	children = new ArrayList<dLStructure>();
-	//	children.add( lhs );
-	//	children.add( rhs );
+	//	arguments = new ArrayList<dLStructure>();
+	//	arguments.add( lhs );
+	//	arguments.add( rhs );
 
 	//}
 
 	public RealVariable getLHS() {
-		return (RealVariable)(children.get(0));
+		return (RealVariable)(arguments.get(0));
 	}
 
 	public Term getRHS() {
-		return (Term)(children.get(1));
+		return (Term)(arguments.get(1));
 	}
 
 // Substitution method

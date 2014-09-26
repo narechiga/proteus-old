@@ -7,18 +7,18 @@ public class MultiplicationTerm extends Term {
 	public MultiplicationTerm( Term leftFactor, Term rightFactor ) {
 		this.operator = new Operator("*", 2, true);
 
-		spawnChildren();
-		addChild( leftFactor );
-		addChild( rightFactor );
+		spawnArguments();
+		addArgument( leftFactor );
+		addArgument( rightFactor );
 	}
 
 // Getters
 	public Term getLeftFactor() {
-	       return (Term)getChild( 0 );
+	       return (Term)getArgument( 0 );
 	}
 
 	public Term getRightFactor() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 // Clone

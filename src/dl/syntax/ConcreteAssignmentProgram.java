@@ -8,20 +8,20 @@ import java.util.*;
 public class ConcreteAssignmentProgram extends DiscreteProgram {
 
 // Constructors and field getters
-	public ConcreteAssignmentProgram( RealVariable leftChild, Term rightChild ) {
+	public ConcreteAssignmentProgram( RealVariable leftArgument, Term rightArgument ) {
 		operator = new Operator( "assign", 2, true );
 
-		children = new ArrayList<dLStructure>();
-		children.add( leftChild );
-		children.add( rightChild );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( leftArgument );
+		arguments.add( rightArgument );
 	}
 
 	public RealVariable getLHS() {
-		return (RealVariable)children.get(0);
+		return (RealVariable)arguments.get(0);
 	}
 
 	public Term getRHS() {
-		return (Term)children.get(1);
+		return (Term)arguments.get(1);
 	}
 
 // Substitution method

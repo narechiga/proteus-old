@@ -65,8 +65,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( addition ) ) {
 			try {
-				doubleResult = (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble()
-						+ (evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble();
+				doubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()
+						+ (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: addition ::");
@@ -74,8 +74,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( subtraction ) ) {
 			try {
-				doubleResult = (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble()
-						- (evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble();
+				doubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()
+						- (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: subtraction ::");
@@ -83,8 +83,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( multiplication ) ) {
 			try {
-				doubleResult = (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble()
-						* (evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble();
+				doubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()
+						* (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: multiplication ::");
@@ -92,8 +92,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( division ) ) {
 			try {
-				doubleResult = (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble()
-						/ (evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble();
+				doubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()
+						/ (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: division ::");
@@ -101,8 +101,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( power ) ) {
 			try {
-				doubleResult = Math.pow( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble(),
-						(evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble() );
+				doubleResult = Math.pow( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),
+						(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: power ::");
@@ -110,7 +110,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( absolutevalue ) ) {
 			try {
-				doubleResult = Math.abs( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.abs( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: absolutevalue ::");
@@ -118,7 +118,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( arccosine ) ) {
 			try {
-				doubleResult = Math.acos( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.acos( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: arccosine ::");
@@ -126,7 +126,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( arcsine ) ) {
 			try {
-				doubleResult = Math.asin( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.asin( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: arcsine ::");
@@ -134,7 +134,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( arctangent ) ) {
 			try {
-				doubleResult = Math.atan( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.atan( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: arctangent ::");
@@ -142,8 +142,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( arctangent2 ) ) {
 			try {
-				doubleResult = Math.atan2( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble(),
-						(evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble() );
+				doubleResult = Math.atan2( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),
+						(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: arctangent2 ::");
@@ -151,7 +151,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( cosine ) ) {
 			try {
-				doubleResult = Math.cos( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.cos( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: cosine ::");
@@ -159,7 +159,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( hypcosine ) ) {
 			try {
-				doubleResult = Math.cosh( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.cosh( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: hypcosine ::");
@@ -167,7 +167,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( exponential ) ) {
 			try {
-				doubleResult = Math.exp( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.exp( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: exponential ::");
@@ -175,7 +175,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( floor ) ) {
 			try {
-				doubleResult = Math.floor( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.floor( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: floor ::");
@@ -183,7 +183,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( lognatural ) ) {
 			try {
-				doubleResult = Math.log( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.log( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: lognatural ::");
@@ -191,7 +191,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( log10 ) ) {
 			try {
-				doubleResult = Math.log10( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.log10( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: log10 ::");
@@ -199,8 +199,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( maximum ) ) {
 			try {
-				doubleResult = Math.max( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble(),
-						(evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble() );
+				doubleResult = Math.max( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),
+						(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: maximum ::");
@@ -208,8 +208,8 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( minimum ) ) {
 			try {
-				doubleResult = Math.min( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation )).toDouble(),
-						(evaluateTerm( (Term)(thisTerm.children.get(1)), valuation )).toDouble() );
+				doubleResult = Math.min( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),
+						(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: minimum ::");
@@ -217,7 +217,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( sign ) ) {
 			try {
-				doubleResult = Math.signum( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.signum( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: sign ::");
@@ -225,7 +225,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( sine ) ) {
 			try {
-				doubleResult = Math.sin( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.sin( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: sine ::");
@@ -233,7 +233,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( hypsine ) ) {
 			try {
-				doubleResult = Math.sinh( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.sinh( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: hypsine ::");
@@ -241,7 +241,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( sqrt ) ) {
 			try {
-				doubleResult = Math.sqrt( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.sqrt( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: sqrt ::");
@@ -249,7 +249,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( tangent ) ) {
 			try {
-				doubleResult = Math.tan( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.tan( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: tangent ::");
@@ -257,7 +257,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( hyptangent ) ) {
 			try {
-				doubleResult = Math.tanh( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.tanh( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: hyptangent ::");
@@ -265,7 +265,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( Sine ) ) {
 			try {
-				doubleResult = Math.sin( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.sin( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: Sine ::");
@@ -273,7 +273,7 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operator.equals( Cosine ) ) {
 			try {
-				doubleResult = Math.cos( (evaluateTerm( (Term)(thisTerm.children.get(0)), valuation ) ).toDouble() );
+				doubleResult = Math.cos( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );
 				result = new Real( doubleResult.toString() );
 			} catch ( Exception e ) {
 				System.err.println("Exception encountered evaluating rule for operator :: Cosine ::");

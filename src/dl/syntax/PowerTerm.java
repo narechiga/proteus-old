@@ -7,26 +7,26 @@ public class PowerTerm extends Term {
 	public PowerTerm( Term base, Term exponent ) {
 		operator = new Operator("^", 2, true);
 
-		spawnChildren();
-		addChild( base );
-		addChild( exponent );
+		spawnArguments();
+		addArgument( base );
+		addArgument( exponent );
 	}
 
 // Getters
 	public Term getBase() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getExponent() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 	public Term getLHS() {
-		return (Term)getChild( 0 );
+		return (Term)getArgument( 0 );
 	}
 
 	public Term getRHS() {
-		return (Term)getChild( 1 );
+		return (Term)getArgument( 1 );
 	}
 
 // Clone

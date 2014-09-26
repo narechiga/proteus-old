@@ -24,9 +24,9 @@ public class ClosedBallFormula extends ComparisonFormula {
 			normTerms.add( new SubtractionTerm( thisVariable, center.get( thisVariable ) ) );
 		}
 
-		spawnChildren();
-		addChild( new NormTerm( normTerms, 2 ) );
-		addChild( radius );
+		spawnArguments();
+		addArgument( new NormTerm( normTerms, 2 ) );
+		addArgument( radius );
 	}
 
 	// Just inherit the negation from ComparisonFormula (?)

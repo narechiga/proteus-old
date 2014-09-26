@@ -11,14 +11,14 @@ public class Term extends GeneralizedTerm {
 
 	public Term ( Operator operator, ArrayList<Term> subterms ) {
 		this.operator = operator;
-		this.children = new ArrayList<dLStructure>();
-		this.children.addAll( subterms );
+		this.arguments = new ArrayList<dLStructure>();
+		this.arguments.addAll( subterms );
 	}
 
 	public Term ( String operator, ArrayList<Term> subterms ) {
 		this.operator = new Operator( operator );
-		this.children = new ArrayList<dLStructure>();
-		this.children.addAll( subterms );
+		this.arguments = new ArrayList<dLStructure>();
+		this.arguments.addAll( subterms );
 	}
 
 	public Operator getOperator() {
@@ -49,10 +49,10 @@ public class Term extends GeneralizedTerm {
 
 	public ArrayList<Term> getSubTerms() {
 		ArrayList<Term> subTerms = new ArrayList<Term>();
-		Iterator<dLStructure> subTermIterator = children.iterator();
+		Iterator<dLStructure> subTermIterator = arguments.iterator();
 
 		while ( subTermIterator.hasNext() ) {
-			// This can be done safely because all the children of a term will be terms,
+			// This can be done safely because all the arguments of a term will be terms,
 			// see constructor
 			subTerms.add( (Term)subTermIterator.next() );
 		}
@@ -67,8 +67,8 @@ public class Term extends GeneralizedTerm {
 
 		if ( operator.infix == false ) {
 			returnString = returnString + operator.toKeYmaeraString() + "(";
-			if ( children != null ) {
-				Iterator<dLStructure> childIterator = children.iterator();
+			if ( arguments != null ) {
+				Iterator<dLStructure> childIterator = arguments.iterator();
 				while ( childIterator.hasNext() ) {
 					returnString = returnString + " " + childIterator.next().toKeYmaeraString();
 				}
@@ -76,8 +76,8 @@ public class Term extends GeneralizedTerm {
 			returnString = returnString + " )";
 		} else {
 			returnString = returnString + "( ";
-			if ( children != null ) {
-				Iterator<dLStructure> childIterator = children.iterator();
+			if ( arguments != null ) {
+				Iterator<dLStructure> childIterator = arguments.iterator();
 				while ( childIterator.hasNext() ) {
 					returnString = returnString + childIterator.next().toKeYmaeraString();
 
@@ -126,21 +126,21 @@ public class Term extends GeneralizedTerm {
 	//		return false;
 	//	}
 
-	//	Iterator<dLStructure> myChildIterator = this.children.iterator();
-	//	Iterator<dLStructure> otherChildIterator = otherTerm.children.iterator();
+	//	Iterator<dLStructure> myArgumentIterator = this.arguments.iterator();
+	//	Iterator<dLStructure> otherArgumentIterator = otherTerm.arguments.iterator();
 
 	//	boolean result = true; //will be anded with the condition that each child must be equal, then returned
-	//	Term myChild; Term otherChild;
-	//	// Look at the constructor, and note that all the children of terms are terms.
+	//	Term myArgument; Term otherArgument;
+	//	// Look at the constructor, and note that all the arguments of terms are terms.
 	//	// Then all the typecasts below should succeed.
-	//	while ( myChildIterator.hasNext() ) {
+	//	while ( myArgumentIterator.hasNext() ) {
 
-	//		if ( otherChildIterator.hasNext() ) {
+	//		if ( otherArgumentIterator.hasNext() ) {
 
-	//			myChild = (Term)(myChildIterator.next());
-	//			otherChild = (Term)(otherChildIterator.next());
+	//			myArgument = (Term)(myArgumentIterator.next());
+	//			otherArgument = (Term)(otherArgumentIterator.next());
 	//			
-	//			result = result && myChild.equals( otherChild );
+	//			result = result && myArgument.equals( otherArgument );
 
 	//		} else {
 	//			return false; // because then they are not the same size, cannot be equal!
@@ -151,12 +151,12 @@ public class Term extends GeneralizedTerm {
 // Following two methods really only used for the "arbitrary" term, as in x := *
 	public Term ( Operator operator ) {
 		this.operator = operator;
-		this.children = null;
+		this.arguments = null;
 	}
 
 	public Term ( String operator ) {
 		this.operator = new Operator( operator );
-		this.children = null;
+		this.arguments = null;
 	}
 
 // Logic
@@ -176,19 +176,20 @@ public class Term extends GeneralizedTerm {
 	}
 // Arithmetic properties
 	public boolean isLinearIn( RealVariable variable ) {
-		return true;
+		return false;
 	}
 	public boolean isAffineIn( RealVariable variable ) {
-		return true;	
+		return false;	
 	}
 
 	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
-		return true;
+		return false;
 	}
 
 	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
-		return true;
+		return false;
 	}
+
 
 
 			

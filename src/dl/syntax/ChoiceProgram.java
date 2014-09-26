@@ -11,17 +11,17 @@ public class ChoiceProgram extends HybridProgram {
 
 		this.operator = new Operator("choice", true);
 
-		this.children = new ArrayList<dLStructure>();
-		this.children.add( leftProgram );
-		this.children.add( rightProgram );
+		this.arguments = new ArrayList<dLStructure>();
+		this.arguments.add( leftProgram );
+		this.arguments.add( rightProgram );
 	}
 
 	public HybridProgram getLHS() {
-		return (HybridProgram)(children.get(0));
+		return (HybridProgram)(arguments.get(0));
 	}
 
 	public HybridProgram getRHS() {
-		return (HybridProgram)(children.get(1));
+		return (HybridProgram)(arguments.get(1));
 	}
 	
 // Substitution method
@@ -38,11 +38,11 @@ public class ChoiceProgram extends HybridProgram {
 
 // String methods
 	public String toKeYmaeraString() {
-		return "( " + children.get(0).toKeYmaeraString() + " ++ " + children.get(1).toKeYmaeraString() + " )";
+		return "( " + arguments.get(0).toKeYmaeraString() + " ++ " + arguments.get(1).toKeYmaeraString() + " )";
 	}
 
 	public String toManticoreString() {
-		return "( " + children.get(0).toManticoreString() + " ++ " + children.get(1).toManticoreString() + " )";
+		return "( " + arguments.get(0).toManticoreString() + " ++ " + arguments.get(1).toManticoreString() + " )";
 	}
 
 // Assorted convenience functions

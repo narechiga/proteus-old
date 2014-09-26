@@ -12,12 +12,12 @@ public class NotFormula extends dLFormula {
 	public NotFormula ( dLFormula child ) { 
 		operator = new Operator("not", 1); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( child );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( child );
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(children.get(0));
+		return (dLFormula)(arguments.get(0));
 	}
 
 // Substition method

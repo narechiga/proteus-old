@@ -23,9 +23,9 @@ public class OpenBallFormula extends ComparisonFormula {
 			normTerms.add( new SubtractionTerm( thisVariable, center.get( thisVariable ) ) );
 		}
 
-		spawnChildren();
-		addChild( new NormTerm( normTerms, 2 ) );
-		addChild( radius );
+		spawnArguments();
+		addArgument( new NormTerm( normTerms, 2 ) );
+		addArgument( radius );
 	}
 
 	//public OpenBallFormula( ArrayList<RealVariable> variables, Valuation center, Real radius ) {

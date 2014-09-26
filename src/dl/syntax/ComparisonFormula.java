@@ -11,17 +11,17 @@ public class ComparisonFormula extends dLFormula {
 	public ComparisonFormula ( Operator inequality, Term lhs, Term rhs ) {
 		operator = inequality; //
 
-		children = new ArrayList<dLStructure>();
-		children.add( lhs );
-		children.add( rhs );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( lhs );
+		arguments.add( rhs );
 	}
 
 	public ComparisonFormula ( String inequality, Term lhs, Term rhs ) {
 		operator = new Operator(inequality); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( lhs );
-		children.add( rhs );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( lhs );
+		arguments.add( rhs );
 	}
 
 	public ComparisonFormula() {
@@ -32,11 +32,11 @@ public class ComparisonFormula extends dLFormula {
 	}
 
 	public Term getLHS() {
-		return (Term)(children.get(0));
+		return (Term)(arguments.get(0));
 	}
 
 	public Term getRHS() {
-		return (Term)(children.get(1));
+		return (Term)(arguments.get(1));
 	}
 
 // Substitution method

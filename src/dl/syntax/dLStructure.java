@@ -10,7 +10,7 @@ public abstract class dLStructure {
 
 	public boolean debug = true;
 	public Operator operator;
-	public ArrayList<dLStructure> children;
+	public ArrayList<dLStructure> arguments;
 
         // COLORS! OMG COLORS!
         public static final String ANSI_RESET = "\u001B[0m";
@@ -25,64 +25,81 @@ public abstract class dLStructure {
         public static final String ANSI_BOLD = "\u001B[1m";
 
 
-// Constructors and assorted getters and setters
+// Constructors
 	public dLStructure() {
 		operator = null;
-		children = null;
+		arguments = null;
 	}
 
 	public dLStructure( String operator ) {
 		this.operator = new Operator( operator );
-		children = null;
+		arguments = null;
 	}
 
 	public dLStructure( Operator operator ) {
 		this.operator = operator;
-		children = null;
+		arguments = null;
 	}
 
-	public dLStructure( Operator operator, ArrayList<dLStructure> children ) {
+	public dLStructure( Operator operator, ArrayList<dLStructure> arguments ) {
 		this.operator = operator;
-		this.children = children;
+		this.arguments = arguments;
 	}
 
-	public dLStructure( String operator, ArrayList<dLStructure> children ) {
+	public dLStructure( String operator, ArrayList<dLStructure> arguments ) {
 		this.operator = new Operator( operator );
-		this.children = children;
+		this.arguments = arguments;
 	}
 
+// Getters and setters
 	public Operator getOperator() {
 		return this.operator;
 	}
 
-	public dLStructure getChild( int index ) {
-		if ( children != null ) {
-			return children.get( index );
+	public dLStructure getArgument( int index ) {
+		if ( arguments != null ) {
+			return arguments.get( index );
 		} else {
 			return null;
 		}
 	}
 
-	public boolean setChild( int index, dLStructure newChild ) {
-		if ( children != null ) {
-			children.set( index, newChild );
+	public ArrayList<dLStructure> getArguments() {
+		return arguments;
+	}
+
+	public boolean setArgument( int index, dLStructure newArgument ) {
+		if ( arguments != null ) {
+			arguments.set( index, newArgument );
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean addChild( dLStructure newChild ) {
-		if ( children != null ) {
-			children.add( newChild );
+	public boolean addArgument( dLStructure newArgument ) {
+		if ( arguments != null ) {
+			arguments.add( newArgument );
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public void spawnChildren() {
-		children = new ArrayList<dLStructure>();
+	public void spawnArguments() {
+		arguments = new ArrayList<dLStructure>();
+	}
+
+// clone all the arguments!
+	public ArrayList<dLStructure> cloneArguments() {
+		ArrayList<dLStructure> newArguments = new ArrayList<>();
+
+		Iterator<dLStructure> argIterator = getArguments().iterator();
+		while( argIterator.hasNext() ) {
+			newArguments.add( (argIterator.next()).clone() );
+		}
+
+		return newArguments;
 	}
 
 // Parse a dLStructure from a string
@@ -97,58 +114,6 @@ public abstract class dLStructure {
 		return thisParser.parsedStructure;
 	}
 
-// Return a dLStructure that is the same as this one, but with syntactic substitution
-// of real variables according to the valuation given as an argument
-//	public dLStructure substitute( Valuation substitutions ) {
-//
-//		if ( substitutions == null ) {
-//			 System.out.println("WARNING: manticore.dLStructure.substitute received a null subsitituion valuation");
-//			 return this;
-//			
-//		} else if ( this instanceof Real ) {
-//			if( debug ) {
-//				System.out.println("manticore.dLStructure.substitute returning: " 
-//					+ this.toMathematicaString() );
-//			}
-//			return ((Real)this).clone();
-//
-//		} else if ( this instanceof RealVariable ) {
-//
-//			if ( substitutions.get( (RealVariable)this ) != null ) {	
-//				if( debug ) {
-//					System.out.println("manticore.dLStructure.substitute returning: " + 
-//						substitutions.get( (RealVariable)this ).clone().toMathematicaString());
-//				}
-//
-//				return substitutions.get( (RealVariable)this ).clone();
-//			} else {
-//				if( debug ) {
-//					System.out.println("manticore.dLStructure.substitute returning: " + 
-//								this.toMathematicaString() );
-//				}
-//
-//				return this;
-//			}
-//
-//
-//		} else {
-//
-//			dLStructure newStructure = new dLStructure( this.getOperator() );
-//			Iterator<dLStructure> childIterator = children.iterator();
-//			while( childIterator.hasNext() ) {
-//				newStructure.addChild(
-//					childIterator.next().substitute( substitutions )
-//					);
-//			}
-//
-//			if( debug ) {
-//				System.out.println("manticore.dLStructure.substitute returning: " 
-//					+ newStructure.toMathematicaString() );
-//			}
-//
-//			return newStructure;
-//		}
-//	}
 
 // Extract assorted bits and pieces
 // 1. getVariables
@@ -161,8 +126,8 @@ public abstract class dLStructure {
 
 		if ( this instanceof RealVariable ) {
 			myVariables.add( (RealVariable)this );
-		} else if ( children != null ) {
-			Iterator<dLStructure> childIterator = children.iterator();
+		} else if ( arguments != null ) {
+			Iterator<dLStructure> childIterator = arguments.iterator();
 
 			while ( childIterator.hasNext() ) {
 				myVariables.addAll( childIterator.next().getVariables() );
@@ -186,22 +151,21 @@ public abstract class dLStructure {
 
 		if ( getClass().equals( ContinuousProgram.class ) ) {
 			continuousBlocks.add( (ContinuousProgram)this );
-		} else if ( children != null ) {
+		} else if ( arguments != null ) {
 
-			Iterator<dLStructure> childrenIterator = children.iterator();
+			Iterator<dLStructure> argumentsIterator = arguments.iterator();
 
-			dLStructure thisChild;
-			while ( childrenIterator.hasNext() ) {
-				thisChild = childrenIterator.next();
+			dLStructure thisArgument;
+			while ( argumentsIterator.hasNext() ) {
+				thisArgument = argumentsIterator.next();
 
-				if ( thisChild.children != null ) { 
-					continuousBlocks.addAll( thisChild.extractContinuousBlocks() );
+				if ( thisArgument.arguments != null ) { 
+					continuousBlocks.addAll( thisArgument.extractContinuousBlocks() );
 				}
 			}
 		}
 
 		return continuousBlocks;
-
 	}
 
 	public HybridProgram extractFirstHybridProgram() {
@@ -209,15 +173,15 @@ public abstract class dLStructure {
 
 		if ( this instanceof HybridProgram ) {
 			return (HybridProgram)this;
-		} else if ( children!= null ) {
+		} else if ( arguments!= null ) {
 
-			Iterator<dLStructure> childrenIterator = children.iterator();
-			dLStructure thisChild;
-			while ( childrenIterator.hasNext() ) {
-				thisChild = childrenIterator.next();
+			Iterator<dLStructure> argumentsIterator = arguments.iterator();
+			dLStructure thisArgument;
+			while ( argumentsIterator.hasNext() ) {
+				thisArgument = argumentsIterator.next();
 
-				if ( thisChild.extractFirstHybridProgram() != null ) {
-					myProgram = thisChild.extractFirstHybridProgram();
+				if ( thisArgument.extractFirstHybridProgram() != null ) {
+					myProgram = thisArgument.extractFirstHybridProgram();
 				}
 			}
 		}
@@ -228,9 +192,9 @@ public abstract class dLStructure {
 
 // Export toString methods
 	public String toString() {
-		if ( (operator != null) && (children != null) ) {
-			return "(" + operator.toString() + " " + children.toString() + " )";
-		} else if ( (operator != null) && (children == null) ) {
+		if ( (operator != null) && (arguments != null) ) {
+			return "(" + operator.toString() + " " + arguments.toString() + " )";
+		} else if ( (operator != null) && (arguments == null) ) {
 			return operator.toString();
 		} else {
 			return "(uninitialized structure)";
@@ -238,20 +202,34 @@ public abstract class dLStructure {
 	}
 
 	public String toKeYmaeraString() {
-		return null;
+		throw new RuntimeException("KeYmaera string is undefined for this structure: " + this.getClass().toString() );
 	}
 
 	public String toMathematicaString() {
-		return null;
+		throw new RuntimeException("Mathematica string is undefined for this structure: " + this.getClass().toString() );
 	}
 
 	public String toManticoreString() {
-		System.out.println("Failed to find an appropriate Manticore string method for: " +this.toString());
-		return null;
+		throw new RuntimeException("Manticore string is undefined for this structure: " + this.getClass().toString() );
 	}
 
 	public String todRealString() {
-		return null;
+		throw new RuntimeException("dReal string is undefined for this structure: " + this.getClass().toString() );
+	}
+
+	public String toMatlabString() {
+		throw new RuntimeException("Matlab string is undefined for this structure: " + this.getClass().toString() );
+	}
+
+	public abstract dLStructure clone();
+
+// Convenience functions
+	public boolean isANumber() {
+		return false;
+	}
+
+	public boolean isAVariable() {
+		return false;
 	}
 
 }

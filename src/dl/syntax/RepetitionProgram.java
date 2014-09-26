@@ -6,18 +6,18 @@ import java.util.*;
 
 public class RepetitionProgram extends HybridProgram {
 
-	//ArrayList<HybridProgram> children;
+	//ArrayList<HybridProgram> arguments;
 
-	public RepetitionProgram( HybridProgram onlyChild ) {
+	public RepetitionProgram( HybridProgram onlyArgument ) {
 
 		this.operator = new Operator("repeat", 1);
 
-		this.children = new ArrayList<dLStructure>();
-		this.children.add( onlyChild );
+		this.arguments = new ArrayList<dLStructure>();
+		this.arguments.add( onlyArgument );
 	}
 
 	public HybridProgram getProgram() {
-		return (HybridProgram)(children.get(0));
+		return (HybridProgram)(arguments.get(0));
 	}
 
 // Substitution method

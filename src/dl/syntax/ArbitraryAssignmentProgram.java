@@ -10,12 +10,12 @@ public class ArbitraryAssignmentProgram extends DiscreteProgram {
 	public ArbitraryAssignmentProgram( RealVariable child ) {
 		operator = new Operator( "arbitrary-assign", 1, true );
 
-		children = new ArrayList<dLStructure>();
-		children.add( child );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( child );
 	}
 
 	public RealVariable getLHS() {
-		return (RealVariable)children.get(0);
+		return (RealVariable)arguments.get(0);
 	}
 
 

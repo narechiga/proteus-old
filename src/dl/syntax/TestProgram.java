@@ -8,15 +8,15 @@ import java.util.*;
 public class TestProgram extends DiscreteProgram {
 
 
-	public TestProgram( dLStructure onlyChild ) {
+	public TestProgram( dLStructure onlyArgument ) {
 		operator = new Operator( "test" );
 
-		children = new ArrayList<dLStructure>();
-		children.add( onlyChild );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( onlyArgument );
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(children.get(0));
+		return (dLFormula)(arguments.get(0));
 	}
 
 // Substitute

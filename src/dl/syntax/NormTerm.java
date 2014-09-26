@@ -12,16 +12,16 @@ public class NormTerm extends Term {
 		this.degree = 2;
 		this.operator = new Operator(degree + "-norm", terms.size(), false );
 
-		spawnChildren();
-		children.addAll( terms );
+		spawnArguments();
+		arguments.addAll( terms );
 	}
 
 	public NormTerm ( ArrayList<Term> terms, int degree ) {
 		this.degree = degree;
 		this.operator = new Operator(degree + "-norm", terms.size(), false );
 
-		spawnChildren();
-		children.addAll( terms );
+		spawnArguments();
+		arguments.addAll( terms );
 	}
 	
 	public int getDegree() {
@@ -30,7 +30,7 @@ public class NormTerm extends Term {
 
 	public ArrayList<Term> getTerms() {
 		ArrayList<Term> terms = new ArrayList<Term>();
-		Iterator<dLStructure> termIterator = children.iterator();
+		Iterator<dLStructure> termIterator = arguments.iterator();
 		while ( termIterator.hasNext() ) {
 			terms.add( (Term)(termIterator.next()) );
 		}
@@ -39,14 +39,14 @@ public class NormTerm extends Term {
 	}
 	
 	public Term getTerm( int index ) {
-		return (Term)getChild( index );
+		return (Term)getArgument( index );
 	}
 
 
 // Clone
 	public NormTerm clone () {
 		ArrayList<Term> cloneTerms = new ArrayList<Term>();
-		Iterator<dLStructure> termIterator = children.iterator();
+		Iterator<dLStructure> termIterator = arguments.iterator();
 
 		while ( termIterator.hasNext() ) {
 			cloneTerms.add( ((Term)termIterator.next()).clone() );

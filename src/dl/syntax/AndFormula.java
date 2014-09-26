@@ -9,20 +9,20 @@ public class AndFormula extends dLFormula {
 	boolean debug = false;
 
 // Constructors and field getters
-	public AndFormula ( dLFormula leftChild, dLFormula rightChild ) {
+	public AndFormula ( dLFormula leftArgument, dLFormula rightArgument ) {
 		operator = new Operator("and", 2, true); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( leftChild );
-		children.add( rightChild );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( leftArgument );
+		arguments.add( rightArgument );
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(children.get(0));
+		return (dLFormula)(arguments.get(0));
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(children.get(1));
+		return (dLFormula)(arguments.get(1));
 	}
 
 // Substitution method

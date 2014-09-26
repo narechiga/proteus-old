@@ -10,25 +10,25 @@ public class ImpliesFormula extends dLFormula {
 	public ImpliesFormula ( dLFormula antecedent, dLFormula succedent ) {
 		operator = new Operator("implies", 2, true); //
 
-		children = new ArrayList<dLStructure>();
-		children.add( antecedent );
-		children.add( succedent );
+		arguments = new ArrayList<dLStructure>();
+		arguments.add( antecedent );
+		arguments.add( succedent );
 	}
 
 	public dLFormula getAntecedent() {
-		return (dLFormula)(children.get(0));
+		return (dLFormula)(arguments.get(0));
 	}
 
 	public dLFormula getSuccedent() {
-		return (dLFormula)(children.get(1));
+		return (dLFormula)(arguments.get(1));
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(children.get(0));
+		return (dLFormula)(arguments.get(0));
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(children.get(1));
+		return (dLFormula)(arguments.get(1));
 	}
 
 // Substitution method
