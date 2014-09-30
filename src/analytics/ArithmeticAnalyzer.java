@@ -11,26 +11,26 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	// classes, so that everything can have its own little decorator that adds analytics
 
 //
-	public boolean termContainsVariables( Term thisTerm, ArrayList<RealVariable> variables ) {
-		Set<RealVariable> termVars = thisTerm.getFreeVariables();
-		int termVarsCardinality = termVars.size();
-		termVars.removeAll( variables );
+	//public static boolean termContainsVariables( Term thisTerm, ArrayList<RealVariable> variables ) {
+	//	Set<RealVariable> termVars = thisTerm.getFreeVariables();
+	//	int termVarsCardinality = termVars.size();
+	//	termVars.removeAll( variables );
 
-		if ( termVars.size() < termVarsCardinality ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	//	if ( termVars.size() < termVarsCardinality ) {
+	//		return true;
+	//	} else {
+	//		return false;
+	//	}
+	//}
 
 //
-	public boolean termIsLinearInVariables( Term thisTerm, ArrayList<RealVariable> variables ) throws AnalyticsException {
+	public static boolean isLinearIn( Term thisTerm, ArrayList<RealVariable> variables ) throws AnalyticsException {
 
-		if ( thisTerm instanceof Real ) {
+		if ( thisTerm.isANumber() ) {
 			// A Real is affine in any variables, but never strictly linear
 			return false;
 
-		} else if ( thisTerm instanceof RealVariable ) {
+		} else if ( thisTerm.isAVariable() ) {
 			RealVariable term = (RealVariable)thisTerm;
 
 			if ( variables.contains( term ) ) {
@@ -41,12 +41,12 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof AdditionTerm ) {
+		} else if ( thisTerm.operatorEquals("+") ) {
 			AdditionTerm term = (AdditionTerm)thisTerm;
 			// If both terms are linear in the given variables,
 			// then the sum is linear
-			if ( termIsLinearInVariables( term.getLeftSummand(), variables )
-				&& termIsLinearInVariables( term.getRightSummand(), variables ) ) {
+			if ( isLinearIn( term.getLeftSummand(), variables )
+				&& isLinearIn( term.getRightSummand(), variables ) ) {
 				return true;
 
 			} else {
@@ -54,11 +54,11 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof SubtractionTerm ) {
+		} else if ( thisTerm.operatorEquals("-") ) {
 			SubtractionTerm term = (SubtractionTerm)thisTerm;
 
-			if ( termIsLinearInVariables( term.getMinuend(), variables )
-				&& termIsLinearInVariables( term.getSubtrahend(), variables ) ) {
+			if ( isLinearIn( term.getMinuend(), variables )
+				&& isLinearIn( term.getSubtrahend(), variables ) ) {
 				return true;
 
 			} else {
@@ -66,17 +66,17 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof MultiplicationTerm ) {
+		} else if ( thisTerm.operatorEquals("*") ) {
 			// If exactly one factor is linear in the given variables
 			// and the other contains none, then the product is linear
 			MultiplicationTerm term = (MultiplicationTerm)thisTerm;
 
-			if ( termIsLinearInVariables( term.getLeftFactor(), variables )
-				&& !termContainsVariables( term.getRightFactor(), variables) ) {
+			if ( term.getLeftFactor().containsAnyFreeVariables( variables )
+				&& !term.getRightFactor().containsAnyFreeVariables( variables) )  {
 				return true;
 
-			} else if ( termIsLinearInVariables( term.getRightFactor(), variables )
-				&& !termContainsVariables( term.getLeftFactor(), variables ) ) {
+			} else if ( isLinearIn( term.getRightFactor(), variables )
+				&& !term.getLeftFactor().containsAnyFreeVariables( variables ) ) {
 				return true;
 
 			} else {
@@ -84,15 +84,15 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof DivisionTerm ) {
+		} else if ( thisTerm.operatorEquals("/") ) {
 			// If the numerator is linear and the denominator does not contain
 			// the variables, then the quotient is linear
 			DivisionTerm term = (DivisionTerm)thisTerm;
 
 			boolean linearity;
 	
-			if ( termIsLinearInVariables( term.getNumerator(), variables ) 
-				&& !termContainsVariables( term.getDenominator(), variables )) {
+			if ( isLinearIn( term.getNumerator(), variables ) 
+				&& !term.getDenominator().containsAnyFreeVariables( variables )) {
 
 				linearity = true;
 				
@@ -102,7 +102,7 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	
 			return linearity;
 
-		} else if ( thisTerm instanceof PowerTerm ) {
+		} else if ( thisTerm.operatorEquals("^") ) {
 			// A power term can never be linear in any of its variables
 			return false;
 
@@ -111,15 +111,15 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 					+ "; with operator: " + thisTerm.getOperator().toString() );
 		}
 
-	} // end termIsLinearInVariables
+	} // end isLinearIn
 
 //
-	public boolean termIsAffineInVariables( Term thisTerm, ArrayList<RealVariable> variables ) throws AnalyticsException {
-		if ( thisTerm instanceof Real ) {
+	public static boolean isAffineIn( Term thisTerm, ArrayList<RealVariable> variables ) throws AnalyticsException {
+		if ( thisTerm.isANumber() ) {
 			// A Real is affine in any variables
 			return true;
 
-		} else if ( thisTerm instanceof RealVariable ) {
+		} else if ( thisTerm.isAVariable() ) {
 			// If this variable is one of the variables of interest, it
 			// is linear and hence affine. If it is not one of the variables
 			// of interest, then it is affine because it is an additive constant
@@ -127,14 +127,14 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			return true;
 
-		} else if ( thisTerm instanceof AdditionTerm ) {
+		} else if ( thisTerm.operatorEquals("+") ) {
 			// If both terms are affine in the given variables,
 			// then the sum is affine
 			
 			AdditionTerm term = (AdditionTerm)thisTerm;
 			
-			if ( termIsAffineInVariables( term.getLeftSummand(), variables )
-				&& termIsAffineInVariables( term.getRightSummand(), variables ) ) {
+			if ( isAffineIn( term.getLeftSummand(), variables )
+				&& isAffineIn( term.getRightSummand(), variables ) ) {
 				return true;
 
 			} else {
@@ -142,11 +142,11 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof SubtractionTerm ) {
+		} else if ( thisTerm.operatorEquals("-") ) {
 			SubtractionTerm term = (SubtractionTerm)thisTerm;
 
-			if ( termIsAffineInVariables( term.getMinuend(), variables )
-				&& termIsAffineInVariables( term.getSubtrahend(), variables ) ) {
+			if ( isAffineIn( term.getMinuend(), variables )
+				&& isAffineIn( term.getSubtrahend(), variables ) ) {
 				return true;
 
 			} else {
@@ -154,18 +154,18 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof MultiplicationTerm ) {
+		} else if ( thisTerm.operatorEquals("*") ) {
 			// If exactly one factor is affine in the given variables
 			// and the other contains none of those variables, then the product is affine
 
 			MultiplicationTerm term = (MultiplicationTerm)thisTerm;
 
-			if ( termIsAffineInVariables( term.getLeftFactor(), variables )
-				&& !termContainsVariables( term.getRightFactor(), variables) ) {
+			if ( isAffineIn( term.getLeftFactor(), variables )
+				&& !term.getRightFactor().containsAnyFreeVariables( variables) ) {
 				return true;
 
-			} else if ( termIsAffineInVariables( term.getRightFactor(), variables )
-				&& !termContainsVariables( term.getLeftFactor(), variables ) ) {
+			} else if ( isAffineIn( term.getRightFactor(), variables )
+				&& !term.getLeftFactor().containsAnyFreeVariables( variables ) ) {
 				return true;
 
 			} else {
@@ -173,7 +173,7 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
-		} else if ( thisTerm instanceof DivisionTerm ) {
+		} else if ( thisTerm.operatorEquals("/") ) {
 			// If the numerator is affine and the denominator does not contain
 			// the variables, then the quotient is affine
 
@@ -181,8 +181,8 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			boolean affinity;
 	
-			if ( termIsAffineInVariables( term.getNumerator(), variables ) 
-				&& !termContainsVariables( term.getDenominator(), variables )) {
+			if ( isAffineIn( term.getNumerator(), variables ) 
+				&& !term.getDenominator().containsAnyFreeVariables( variables )) {
 
 				affinity = true;
 				
@@ -192,12 +192,12 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	
 			return affinity;
 
-		} else if ( thisTerm instanceof PowerTerm ) {
+		} else if ( thisTerm.operatorEquals("^") ) {
 			// A power term can be affine only if it doesn't contain the given variables
 
 			PowerTerm term = (PowerTerm)thisTerm;
 
-			if ( !termContainsVariables( term, variables ) ) {
+			if ( !term.containsAnyFreeVariables( variables ) ) {
 				return true;
 
 			} else  {
@@ -206,50 +206,51 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 			}
 
 		} else {
-			throw new AnalyticsException("Unknown term type: " + thisTerm.getClass().getName()
-					+ "; with operator: " + thisTerm.getOperator().toString() );
+			return false;
+			//throw new AnalyticsException("Unknown term type: " + thisTerm.getClass().getName()
+			//		+ "; with operator: " + thisTerm.getOperator().toString() );
 		}
 
 	}
 
 // ExplicitODE
-	public boolean odeIsLinearInVariables( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
-		return termIsLinearInVariables( ode.getRHS(), variables );
+	public static boolean isLinearIn( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
+		return isLinearIn( ode.getRHS(), variables );
 	}
 
-	public boolean odeIsAffineInVariables( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
-		return termIsAffineInVariables( ode.getRHS(), variables );
+	public static boolean isAffineIn( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
+		return isAffineIn( ode.getRHS(), variables );
 	}
 
 // ContinuousProgram
-	public boolean continuousProgramIsLinearInVariables( ContinuousProgram cprogram, ArrayList<RealVariable> variables ) throws AnalyticsException {
+	public static boolean isLinearIn( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws AnalyticsException {
 		boolean linearity = true;
 
-		Iterator<ExplicitODE> odeIterator = cprogram.getODEs().iterator();
+		Iterator<ExplicitODE> odeIterator = continousProgram.getODEs().iterator();
 		while ( odeIterator.hasNext() ) {
-			linearity = linearity && odeIsLinearInVariables( odeIterator.next(), variables );
+			linearity = linearity && isLinearIn( odeIterator.next(), variables );
 		}
 
 		return linearity;
 	}
 
-	public boolean continuousProgramIsAffineInVariables( ContinuousProgram cprogram, ArrayList<RealVariable> variables ) throws AnalyticsException {
+	public static boolean isAffineIn( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws AnalyticsException {
 		boolean affinity = true;
 
-		Iterator<ExplicitODE> odeIterator = cprogram.getODEs().iterator();
+		Iterator<ExplicitODE> odeIterator = continousProgram.getODEs().iterator();
 		while ( odeIterator.hasNext() ) {
-			affinity = affinity && odeIsAffineInVariables( odeIterator.next(), variables );
+			affinity = affinity && isAffineIn( odeIterator.next(), variables );
 		}
 
 		return affinity;
 	}
 
-	public ArrayList<Term> splitTermOnPlus( Term thisTerm ) {
-		ArrayList<Term> summands;
+	public static ArrayList<Term> splitTermOnAddition( Term thisTerm ) {
+		ArrayList<Term> summands = new ArrayList<>();
 
-		if ( thisTerm instanceof AdditionTerm ) {
-			summands.addAll( splitTermOnPlus( thisTerm.getLeftSummand() ) );
-			summands.addAll( splitTermOnPlus( thisTerm.getRightSummand() ) );
+		if ( thisTerm.operatorEquals("+") ) {
+			summands.addAll( splitTermOnAddition( ((AdditionTerm)thisTerm).getLeftSummand() ) );
+			summands.addAll( splitTermOnAddition( ((AdditionTerm)thisTerm).getRightSummand() ) );
 
 		} else {
 			summands.add( thisTerm );
@@ -258,16 +259,80 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 		return summands;
 	}
+	
+	public static ArrayList<Term> splitTermOnMultiplication( Term thisTerm ) {
+		ArrayList<Term> factors = new ArrayList<>();
 
-	public MatrixTerm extractLinearCoefficients( ExplicitODE ode, ArrayList<RealVariable> variables ) {
-		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+		if ( thisTerm.operatorEquals("*") ) {
+			factors.addAll( splitTermOnMultiplication( ((MultiplicationTerm)thisTerm).getLeftFactor() ) );
+			factors.addAll( splitTermOnMultiplication( ((MultiplicationTerm)thisTerm).getRightFactor() ) );
 
-		ArrayList<Term> additiveTerms= splitTermOnPlus( ode.getRHS() );
-
-		for ( Term summand : additiveTerms ) {
+		} else {
+			factors.add( thisTerm );
 
 		}
+
+		return factors;
 	}
+
+	public static MatrixTerm extractLinearCoefficients( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
+		
+		if ( !isLinearIn( ode, variables ) ){
+			throw new AnalyticsException( "ODE is not even linear!" );
+		}
+
+		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+
+		ArrayList<Term> additiveTerms = splitTermOnAddition( ode.getRHS() );
+		MatrixTerm coefficients = new MatrixTerm( 1, variables.size() );
+
+		ArrayList<Term> subFactors;
+		RealVariable thisVariable;
+		for ( Term thisSummand : additiveTerms ) {
+			subFactors = splitTermOnMultiplication( thisSummand );
+
+			for ( int j = 1; j < variables.size() + 1; j ++ ) {
+				if ( subFactors.contains( variables.get( j - 1 ) ) ) {
+					subFactors.remove( variables.get( j - 1 ) );
+
+					if ( subFactors.size() == 0 ) {
+						coefficients.setElement( 1, j, new Real(1) );
+					} else {
+						coefficients.setElement( 1, j, new MultiplicationTerm( subFactors ) );
+					}
+
+				}
+			}
+
+		}
+		return coefficients;
+	}
+
+	public static MatrixTerm extractLinearCoefficients( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws Exception {
+		// A challenge when getting this method to work was ensuring that the column-order of the variables
+		// is the same as the row-order of the variables. The variables in the ArrayList passed in here are in some order,
+		// and I need to make sure that the row corresponding to each ODE is put at the same index.
+
+		if ( !isLinearIn( continousProgram, variables ) ){
+			throw new AnalyticsException( "Continuous program is not even linear!" );
+		}
+
+		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+
+		ArrayList<ExplicitODE> odeList = continousProgram.getODEs();
+		HashMap<RealVariable, MatrixTerm> rows = new HashMap<>();
+		for ( ExplicitODE thisODE : odeList ) {
+			rows.put( thisODE.getLHS(), extractLinearCoefficients( thisODE, variables ) );
+		}
+
+		MatrixTerm coefficients = new MatrixTerm( 0, variables.size() );
+		for ( int v = 0; v < variables.size(); v ++ ) {
+			coefficients = coefficients.addAsRow( rows.get( variables.get( v ) ) );
+		}
+
+		return coefficients;
+	}
+
 
 }
 

@@ -9,47 +9,49 @@ public class Term extends GeneralizedTerm {
 	public Term () {
 	}
 
-	public Term ( Operator operator, ArrayList<Term> subterms ) {
+	protected Term ( Operator operator, ArrayList<Term> subTerms ) {
 		this.operator = operator;
 		this.arguments = new ArrayList<dLStructure>();
-		this.arguments.addAll( subterms );
+		this.arguments.addAll( subTerms );
 	}
 
-	public Term ( String operator, ArrayList<Term> subterms ) {
+	protected Term ( String operator, ArrayList<Term> subTerms ) {
 		this.operator = new Operator( operator );
 		this.arguments = new ArrayList<dLStructure>();
-		this.arguments.addAll( subterms );
+		this.arguments.addAll( subTerms );
 	}
 
 	public Operator getOperator() {
 		return this.operator;
 	}
 
+
 // Substitution method
 	public Term substituteConcreteValuation( Valuation substitution ) {
-		ArrayList<Term> subtermsSubstituted = new ArrayList<Term>();
-		Iterator<Term> subtermIterator = getSubTerms().iterator();
-		while ( subtermIterator.hasNext() ) {
-			subtermsSubstituted.add( subtermIterator.next().substituteConcreteValuation( substitution ) );
+		ArrayList<Term> subTermsSubstituted = new ArrayList<Term>();
+		Iterator<Term> subTermIterator = getSubTerms().iterator();
+		while ( subTermIterator.hasNext() ) {
+			subTermsSubstituted.add( subTermIterator.next().substituteConcreteValuation( substitution ) );
 		}
 		
-		return new Term( getOperator().clone(), subtermsSubstituted );
+		return new Term( getOperator().clone(), subTermsSubstituted );
 	}
 
 // Clone method
 	public Term clone() {
-		ArrayList<Term> subtermClones = new ArrayList<Term>();
+		ArrayList<Term> subTermClones = new ArrayList<Term>();
 		Iterator<Term> subTermIterator = getSubTerms().iterator();
 		while ( subTermIterator.hasNext() ) {
-			subtermClones.add( subTermIterator.next().clone() );
+			subTermClones.add( subTermIterator.next().clone() );
 		}
 
-		return new Term( getOperator().clone(), subtermClones );
+		return new Term( getOperator().clone(), subTermClones );
 	}
 
+// Manipulating subTerms
 	public ArrayList<Term> getSubTerms() {
 		ArrayList<Term> subTerms = new ArrayList<Term>();
-		Iterator<dLStructure> subTermIterator = arguments.iterator();
+		Iterator<dLStructure> subTermIterator = getArgumentIterator();
 
 		while ( subTermIterator.hasNext() ) {
 			// This can be done safely because all the arguments of a term will be terms,
@@ -58,6 +60,14 @@ public class Term extends GeneralizedTerm {
 		}
 
 		return subTerms;
+	}
+
+	public void addSubTerm( Term subTerm ) {	
+		addArgument( subTerm );
+	}	
+
+	public void addSubTerms( ArrayList<Term> subTermList ) {
+		arguments.addAll( subTermList );
 	}
 
 
@@ -96,6 +106,10 @@ public class Term extends GeneralizedTerm {
 		return toKeYmaeraString();
 	}
 
+	public String toMatlabString() {
+		return toKeYmaeraString();
+	}
+
 	public String toManticoreString() {
 		return toKeYmaeraString();
 	}
@@ -111,9 +125,6 @@ public class Term extends GeneralizedTerm {
 
 		return returnString;
 	}
-
-
-		
 
 	//public boolean equals( Object otherObject ) { // This is too restrictive, because does not allow for commutativity
 
@@ -148,18 +159,6 @@ public class Term extends GeneralizedTerm {
 	//	}
 	//}
 
-// Following two methods really only used for the "arbitrary" term, as in x := *
-	public Term ( Operator operator ) {
-		this.operator = operator;
-		this.arguments = null;
-	}
-
-	public Term ( String operator ) {
-		this.operator = new Operator( operator );
-		this.arguments = null;
-	}
-
-// Logic
 	public Set<RealVariable> getFreeVariables() {
 		HashSet<RealVariable> freeVariables = new HashSet<RealVariable>();
 		Iterator<Term> subTermIterator = getSubTerms().iterator();
@@ -174,21 +173,39 @@ public class Term extends GeneralizedTerm {
 		HashSet<RealVariable> dynamicVariables = new HashSet<RealVariable>();
 		return dynamicVariables;
 	}
+
+// Following two methods really only used for the "arbitrary" term, as in x := *
+	//public Term ( Operator operator ) {
+	//	this.operator = operator;
+	//	this.arguments = null;
+	//}
+        //
+	//public Term ( String operator ) {
+	//	this.operator = new Operator( operator );
+	//	this.arguments = null;
+	//}
+
 // Arithmetic properties
-	public boolean isLinearIn( RealVariable variable ) {
-		return false;
-	}
-	public boolean isAffineIn( RealVariable variable ) {
-		return false;	
-	}
-
-	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
-		return false;
-	}
-
-	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
-		return false;
-	}
+//	public boolean isLinearIn( RealVariable variable ) {
+//		ArrayList<RealVariable> variableList = new ArrayList<>();
+//		variableList.add( variable );
+//
+//		return isLinearIn( variableList );
+//	}
+//	public boolean isAffineIn( RealVariable variable ) {
+//		ArrayList<RealVariable> variableList = new ArrayList<>();
+//		variableList.add( variable );
+//
+//		return isAffineIn( variableList );
+//	}
+//
+//	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
+//		return false;
+//	}
+//
+//	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
+//		return false;
+//	}
 
 
 

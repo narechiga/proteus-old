@@ -34,5 +34,4 @@ public class AdditionTerm extends Term {
 		return new AdditionTerm( getLeftSummand().clone() , getRightSummand().clone() );
 	}
 
-
 }

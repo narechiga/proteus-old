@@ -28,6 +28,10 @@ public class DivisionTerm extends Term {
 		return (Term)getArgument( 1 );
 	}
 
+	public DivisionTerm clone() {
+		return new DivisionTerm( getNumerator().clone() , getDenominator().clone() );
+	}
+
 	//public Term getLHS() {
 	//	return (Term)getArgument( 0 );
 	//}

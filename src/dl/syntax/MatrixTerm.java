@@ -16,6 +16,8 @@ public class MatrixTerm extends NonScalarTerm {
 		// Correct type of chiildren will be enforced when adding elements
 		// to it -- only terms may be added.
 		spawnArguments();
+
+		zeroOut();
 	}
 
 	protected MatrixTerm ( int rows, int columns, List<dLStructure> matrix  ) {
@@ -34,6 +36,12 @@ public class MatrixTerm extends NonScalarTerm {
 
 	protected int computeArgumentIndex( int row, int column ) {
 		return (row - 1)*numColumns + column - 1;
+	}
+
+	protected void zeroOut() {
+		for ( int i = 0; i < getNumRows()*getNumColumns(); i ++ ) {
+			addArgument( new Real(0) );
+		}
 	}
 
 // Basic getters and setters
@@ -118,11 +126,54 @@ public class MatrixTerm extends NonScalarTerm {
 	}
 
 // String methods
-	// TODO
+	public String toMatlabString() {
+		String matlabString = "[ ";
+
+		for ( int i = 1; i < getNumRows() + 1; i ++ ) {
+			for ( int j = 1; j < getNumColumns() + 1; j ++ ) {
+				matlabString = matlabString + getElement( i, j ).toMatlabString();
+
+				if ( j < getNumColumns() ) {
+					matlabString = matlabString + ", ";
+				}
+			}
+
+			if ( i < getNumRows() ) {
+				matlabString = matlabString + "; ";
+			}
+		}
+
+		matlabString = matlabString + " ]";
+
+		return matlabString;
+	}
+
+	public String toMatrixFormString() {
+		String matrixFormString = "[ ";
+
+		for ( int i = 1; i < getNumRows() + 1; i ++ ) {
+			for ( int j = 1; j < getNumColumns() + 1; j ++ ) {
+				matrixFormString = matrixFormString + getElement( i, j ).toMatlabString();
+
+				if ( j < getNumColumns() ) {
+					matrixFormString = matrixFormString + ", ";
+				}
+			}
+
+			if ( i < getNumRows() ) {
+				matrixFormString = matrixFormString + ";\n";
+			}
+		}
+
+		matrixFormString = matrixFormString + " ]";
+
+		return matrixFormString;
+	}
+
 	
 // Convenience functions
 	public MatrixTerm clone() {
-		return new MatrixTerm( getRows(), getColumns(), cloneArguments() );
+		return new MatrixTerm( getNumRows(), getNumColumns(), cloneArguments() );
 	}
 
 	public ArrayList<Term> toArrayList() {
@@ -138,7 +189,7 @@ public class MatrixTerm extends NonScalarTerm {
 	}
 
 	public Set<RealVariable> getFreeVariables() {
-		HashSet<RealVariable> freeVariables;
+		HashSet<RealVariable> freeVariables = new HashSet<>();
 
 		ArrayList<Term> entries = toArrayList();
 		Iterator<Term> entryIterator = entries.iterator();

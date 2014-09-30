@@ -50,7 +50,7 @@ print NI "\t\tDouble doubleResult = null;\n";
 print NI "\t\tReal result = null;\n\n";
 
 # Base case: Real
-print NI "\t\tif ( thisTerm instanceof Real ) {\n";
+print NI "\t\tif ( thisTerm.isANumber() ) {\n";
 print NI "\t\t\ttry{\n";
 print NI "\t\t\t\tresult = (Real)thisTerm;\n";
 print NI "\t\t\t} catch ( Exception e ) {\n";
@@ -58,7 +58,7 @@ print NI "\t\t\t\tSystem.err.println(\"Exception encountered evaluating rule for
 print NI "\t\t\t\te.printStackTrace();\n\t\t\t}\n";
 
 # Base case: RealVariable
-print NI "\t\t} else if ( thisTerm instanceof RealVariable ) {\n";
+print NI "\t\t} else if ( thisTerm.isAVariable() ) {\n";
 print NI "\t\t\ttry{\n";
 print NI "\t\t\t\tresult = valuation.get((RealVariable)thisTerm);\n";
 print NI "\t\t\t} catch ( Exception e ) {\n";
@@ -74,7 +74,7 @@ foreach ( @arithmeticList ) {
 	$fix = @operator[4];
 
 	if ( ($fix == "infix") && ($arity == 2) ) {
-		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
+		print NI "\t\t} else if ( thisTerm.operatorEquals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
 		print NI "\t\t\t\tdoubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()\n";
 			print NI "\t\t\t\t\t\t$interpretation (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();\n";
@@ -84,7 +84,7 @@ foreach ( @arithmeticList ) {
 		print NI "\t\t\t\te.printStackTrace();\n\t\t\t}\n";
 
 	} elsif( ($fix == "prefix") && ($arity == 2)  ) {
-		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
+		print NI "\t\t} else if ( thisTerm.operatorEquals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
 		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble(),\n";
 			print NI "\t\t\t\t\t\t(evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble() );\n";
@@ -94,7 +94,7 @@ foreach ( @arithmeticList ) {
 		print NI "\t\t\t\te.printStackTrace();\n\t\t\t}\n";
 
 	} elsif ( ($fix == "prefix") && ($arity == 1) ) {
-		print NI "\t\t} else if ( thisTerm.operator.equals( $name ) ) {\n";
+		print NI "\t\t} else if ( thisTerm.operatorEquals( $name ) ) {\n";
 		print NI "\t\t\ttry {\n";
 		print NI "\t\t\t\tdoubleResult = $interpretation( (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation ) ).toDouble() );\n";
 		print NI "\t\t\t\tresult = new Real( doubleResult.toString() );\n";

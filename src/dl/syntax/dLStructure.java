@@ -68,6 +68,10 @@ public abstract class dLStructure {
 		return arguments;
 	}
 
+	public Iterator<dLStructure> getArgumentIterator() {
+		return getArguments().iterator();
+	}
+
 	public boolean setArgument( int index, dLStructure newArgument ) {
 		if ( arguments != null ) {
 			arguments.set( index, newArgument );
@@ -86,9 +90,28 @@ public abstract class dLStructure {
 		}
 	}
 
+	public boolean addArguments( ArrayList<dLStructure> newArgumentList ) {
+		if ( arguments != null ) {
+			arguments.addAll( newArgumentList );
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void spawnArguments() {
 		arguments = new ArrayList<dLStructure>();
 	}
+
+	public boolean operatorEquals( Operator thisOperator ) {
+		return getOperator().equals( thisOperator );
+	}
+
+	public boolean operatorEquals( String thisOperatorString ) {
+		return getOperator().equals( new Operator( thisOperatorString ) );
+	}
+
+
 
 // clone all the arguments!
 	public ArrayList<dLStructure> cloneArguments() {
@@ -119,8 +142,11 @@ public abstract class dLStructure {
 // 1. getVariables
 // 2. getBoundVariables
 // 3. getFreeVariables
-// 4. extractContinuousBlocks
-// 5. extractFirstHybridProgram
+// 4. getDynamicVariables
+// 5. containsAnyFreeVariables
+// 6. extractContinuousBlocks
+// 7. extractFirstHybridProgram
+
 	public Set<RealVariable> getVariables () {
 		Set<RealVariable> myVariables = new HashSet<RealVariable>();
 
@@ -143,6 +169,19 @@ public abstract class dLStructure {
 	}
 
 	public abstract Set<RealVariable> getFreeVariables();
+	
+	public boolean containsAnyFreeVariables( ArrayList<RealVariable> variables ) {
+		Set<RealVariable> freeVars = getFreeVariables();
+		int freeVarsCardinality = freeVars.size();
+		freeVars.removeAll( variables );
+
+		if ( freeVars.size() < freeVarsCardinality ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public abstract Set<RealVariable> getDynamicVariables();
 
 	public ArrayList<ContinuousProgram> extractContinuousBlocks() {
@@ -151,6 +190,7 @@ public abstract class dLStructure {
 
 		if ( getClass().equals( ContinuousProgram.class ) ) {
 			continuousBlocks.add( (ContinuousProgram)this );
+
 		} else if ( arguments != null ) {
 
 			Iterator<dLStructure> argumentsIterator = arguments.iterator();

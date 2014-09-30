@@ -1067,7 +1067,7 @@ term:
 	}
 	| IDENTIFIER LPAREN argumentlist RPAREN {
 		try {
-			$$ = new Term( new Operator( (String)$1, ((ArrayList<Term>)$3).size(), false ), (ArrayList<Term>)$3 );
+			$$ = new FunctionApplicationTerm( new Operator( (String)$1, ((ArrayList<Term>)$3).size(), false ), (ArrayList<Term>)$3 );
 		} catch ( Exception e ) {
 			System.err.println("Exception at location term:IDENTIFIER LPAREN argumentlist RPAREN");
 			System.err.println( e );
