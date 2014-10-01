@@ -223,7 +223,10 @@ public class MatrixTerm extends NonScalarTerm {
 
 	public MatrixTerm addAsRow( MatrixTerm anotherMatrix ) throws Exception {
 		if ( this.getNumColumns() != anotherMatrix.getNumColumns() ) {
-			throw new Exception("Matrix dimenstion mismatch when adding in row form");
+			throw new Exception("Matrix dimenstion mismatch when adding in row form, thisColumns: " + this.getNumColumns() 
+				+ "; otherColumns: " + anotherMatrix.getNumColumns() 
+				+ "\n this: " + this.toMatrixFormString() 
+				+ "\n other: " + anotherMatrix.toMatrixFormString()  );
 
 		} else {
 			ArrayList<dLStructure> newArguments = this.cloneArguments();
