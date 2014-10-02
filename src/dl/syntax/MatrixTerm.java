@@ -9,15 +9,17 @@ public class MatrixTerm extends NonScalarTerm {
 	int numColumns;
 
 // Constructors
+	public MatrixTerm() {
+	}
+
 	public MatrixTerm ( int rows, int columns ) {
 		numColumns = columns;
 		numRows = rows;
 
 		// Correct type of chiildren will be enforced when adding elements
 		// to it -- only terms may be added.
-		spawnArguments();
 
-		zeroOut();
+		fillWithZeros();
 	}
 
 	protected MatrixTerm ( int rows, int columns, List<dLStructure> matrix  ) {
@@ -26,7 +28,7 @@ public class MatrixTerm extends NonScalarTerm {
 
 		Iterator<dLStructure> matrixIterator = matrix.iterator();
 		while( matrixIterator.hasNext() ) {
-			arguments.add( (Term)(matrixIterator.next()) );
+			addArgument( (Term)(matrixIterator.next()) );
 		}
 
 		numRows = rows;
@@ -38,7 +40,8 @@ public class MatrixTerm extends NonScalarTerm {
 		return (row - 1)*numColumns + column - 1;
 	}
 
-	protected void zeroOut() {
+	protected void fillWithZeros() {
+		spawnArguments();
 		for ( int i = 0; i < getNumRows()*getNumColumns(); i ++ ) {
 			addArgument( new Real(0) );
 		}
@@ -79,7 +82,7 @@ public class MatrixTerm extends NonScalarTerm {
 		return thisTransposeRow.transpose();
 	}
 
-	public MatrixTerm getRowsMatrix( int lowerRow, int upperRow ) throws Exception {
+	public MatrixTerm getRowsMatrix( int lowerRow, int upperRow ) {
 		// Returns the submatrix consisting of the rows from lowerRow to upperRow,
 		// inclusive for both.
 		
@@ -92,7 +95,7 @@ public class MatrixTerm extends NonScalarTerm {
 		return rowsMatrix;
 	}
 
-	public MatrixTerm getColumnsMatrix( int lowerColumn, int upperColumn ) throws Exception {
+	public MatrixTerm getColumnsMatrix( int lowerColumn, int upperColumn ) {
 		// Returns the submatrix consisting of the columns from lowerColumn to upperColumn,
 		// inclusive for both.
 
@@ -221,9 +224,9 @@ public class MatrixTerm extends NonScalarTerm {
 		return newMatrix;
 	}
 
-	public MatrixTerm addAsRow( MatrixTerm anotherMatrix ) throws Exception {
+	public MatrixTerm addAsRow( MatrixTerm anotherMatrix ) {
 		if ( this.getNumColumns() != anotherMatrix.getNumColumns() ) {
-			throw new Exception("Matrix dimenstion mismatch when adding in row form, thisColumns: " + this.getNumColumns() 
+			throw new RuntimeException("Matrix dimenstion mismatch when adding in row form, thisColumns: " + this.getNumColumns() 
 				+ "; otherColumns: " + anotherMatrix.getNumColumns() 
 				+ "\n this: " + this.toMatrixFormString() 
 				+ "\n other: " + anotherMatrix.toMatrixFormString()  );
@@ -239,9 +242,9 @@ public class MatrixTerm extends NonScalarTerm {
 		}
 	}
 
-	public MatrixTerm addAsColumn( MatrixTerm anotherMatrix ) throws Exception {
+	public MatrixTerm addAsColumn( MatrixTerm anotherMatrix ) {
 		if ( this.getNumRows() != anotherMatrix.getNumRows() ) {
-			throw new Exception("Matrix dimenstion mismatch when adding in column form");
+			throw new RuntimeException("Matrix dimenstion mismatch when adding in column form");
 
 		} else {
 			MatrixTerm thisTranspose = this.transpose();

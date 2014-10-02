@@ -27,8 +27,12 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	public static boolean isLinearIn( Term thisTerm, ArrayList<RealVariable> variables ) throws AnalyticsException {
 
 		if ( thisTerm.isANumber() ) {
-			// A Real is affine in any variables, but never strictly linear
-			return false;
+			// A Real is affine in any variables, but never strictly linear -- unless it is zero
+			if ( thisTerm.equals( new Real("0") ) ) {
+				return true;
+			} else {
+				return false;
+			}
 
 		} else if ( thisTerm.isAVariable() ) {
 			RealVariable term = (RealVariable)thisTerm;
@@ -54,7 +58,20 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 
 			}
 
+		} else if ( thisTerm.operatorEquals("-") 
+				&& (thisTerm.getArguments().size() == 1) ) {
+			// Unary minus, is linear if its subterm is linear
+			NegativeTerm term = (NegativeTerm)thisTerm;
+
+			if ( isLinearIn( term.getNegatedTerm(), variables ) ) {
+				return true;
+			} else {
+				return false;
+			}
+
 		} else if ( thisTerm.operatorEquals("-") ) {
+			// If both terms are linear in the given variables,
+			// then the difference is linear
 			SubtractionTerm term = (SubtractionTerm)thisTerm;
 
 			if ( isLinearIn( term.getMinuend(), variables )
@@ -223,6 +240,14 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	}
 
 // ContinuousProgram
+	//public static boolean isLinearIn( ContinuousProgram continousProgram, ColumnVector stateVector ) throws AnalyticsException {
+	//	return isLinearIn( continousProgram, stateVector.toArrayList() );
+	//}
+
+	//public static boolean isAffineIn( ContinuousProgram continousProgram, ColumnVector stateVector ) throws AnalyticsException {
+	//	return isAffineIn( continousProgram, stateVector.toArrayList() );
+	//}
+
 	public static boolean isLinearIn( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws AnalyticsException {
 		boolean linearity = true;
 
@@ -245,6 +270,7 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		return affinity;
 	}
 
+// Arithmetic splitting
 	public static ArrayList<Term> splitTermOnAddition( Term thisTerm ) {
 		ArrayList<Term> summands = new ArrayList<>();
 
@@ -267,6 +293,11 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 			factors.addAll( splitTermOnMultiplication( ((MultiplicationTerm)thisTerm).getLeftFactor() ) );
 			factors.addAll( splitTermOnMultiplication( ((MultiplicationTerm)thisTerm).getRightFactor() ) );
 
+		} else if ( thisTerm.operatorEquals("-")
+				&& thisTerm.getSubTerms().size() == 1) {
+			factors.add( new Real("-1"));
+			factors.addAll( splitTermOnMultiplication( ((NegativeTerm)thisTerm).getNegatedTerm() ) );
+		
 		} else {
 			factors.add( thisTerm );
 
@@ -275,6 +306,52 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		return factors;
 	}
 
+	//public static Term distributeMultiplication( Term thisTerm ) {
+
+	//	if ( thisTerm.operatorEquals("*") {
+	//		MultiplicationTerm product = (MultiplicationTerm)thisTerm;
+
+	//		Term leftFactor = product.getLeftFactor();
+	//		Term rightFactor = product.getRightFactor();
+
+	//		if ( rightFactor.operatorEquals("+") ) {
+	//			// Return a new sum of the distributed products
+	//			AdditionTerm distributeeSum = (AdditionTerm)rightFactor;
+
+	//			MultiplicationTerm newLeftSummand = 
+	//				new MulitplicationTerm( leftFactor,
+	//							distributeeSum.getLeftSummand() );
+	//			MulitplicationTerm newRightSummand =
+	//				new MultiplicationTerm( leftFactor,
+	//							distributeeSum.getRightSummand() );
+
+	//			return new AdditionTerm(
+	//				distributeMultiplication( newLeftSummand ),
+	//				distributeMultiplication( newRightSummand ) );
+
+	//		} else if ( rightFactor.operatorEquals("-")
+	//				&& rightFactor.getArguments().size() > 1 ) {
+	//			// Return a new difference of the distributed products
+	//			AdditionTerm distributeeDifference = (SubtractionTerm)rightFactor;
+	//			
+	//			MulitplicationTerm newMinuend = 
+	//				new MultiplicationTerm( leftFactor,
+	//							distributeeDifference.getMinuend() );
+	//			MultiplicationTerm newSubtrahend = 
+	//				new MultiplicationTerm( leftFactor,
+	//							distributeeDifference.getSubtrahend() );
+
+	//			return new SubtractionTerm(
+	//				distributeMultiplication( newMinuend ),
+	//				distributeMultiplication( newSubtrahend ) );
+
+	//		} else if ( leftFactor.operatorEquals("+") {
+
+
+	//	} else {
+	//		return thisTerm;
+	//	}
+//
 	public static MatrixTerm extractLinearCoefficients( ExplicitODE ode, ArrayList<RealVariable> variables ) throws AnalyticsException {
 		
 		if ( !isLinearIn( ode, variables ) ){
@@ -282,6 +359,8 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		}
 
 		System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+		System.out.println("ode is: " + ode);
+		System.out.println("rhs is: " + ode.getRHS() );
 
 		ArrayList<Term> additiveTerms = splitTermOnAddition( ode.getRHS() );
 		MatrixTerm coefficients = new MatrixTerm( 1, variables.size() );
@@ -289,11 +368,18 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		ArrayList<Term> subFactors;
 		RealVariable thisVariable;
 		for ( Term thisSummand : additiveTerms ) {
+			
+			System.out.println("this summand is: " + thisSummand.toString());
 			subFactors = splitTermOnMultiplication( thisSummand );
+			System.out.println("subfactors before removing anything: " + subFactors.toString() );
 
+			System.out.println("variables size: " + variables.size());
 			for ( int j = 1; j < variables.size() + 1; j ++ ) {
 				if ( subFactors.contains( variables.get( j - 1 ) ) ) {
 					subFactors.remove( variables.get( j - 1 ) );
+					System.out.println("subfactors after removing var: " + subFactors.toString() );
+					System.out.println("subfactor size: " + subFactors.size() );
+
 
 					if ( subFactors.size() == 0 ) {
 						coefficients.setElement( 1, j, new Real(1) );
@@ -308,7 +394,8 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		return coefficients;
 	}
 
-	public static MatrixTerm extractLinearCoefficients( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws Exception {
+//
+	public static MatrixTerm extractLinearCoefficients( ContinuousProgram continousProgram, ArrayList<RealVariable> variables ) throws AnalyticsException {
 		// A challenge when getting this method to work was ensuring that the column-order of the variables
 		// is the same as the row-order of the variables. The variables in the ArrayList passed in here are in some order,
 		// and I need to make sure that the row corresponding to each ODE is put at the same index.
@@ -333,6 +420,42 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 		return coefficients;
 	}
 
+	//public static MatrixTerm extractLinearCoefficients( ContinuousProgram continousProgram, ColumnVector stateVector ) throws Exception {
+	//	return extractLinearCoefficients( continuousProgram, stateVector.toArrayList() );
+	//}
+
+// Not currently useful because of difficulties between RealVariable, Terms, and casting
+	//public static ColumnVector getStateVector( ContinuousProgram continuousProgram ) {
+	//	Set<RealVariable> stateSet = continuousProgram.getDynamicVariables();
+
+	//	ArrayList<Term> states = new ArrayList<>();
+	//	states.addAll( stateSet );
+	//	Collections.reverse( states );
+
+	//	ColumnVector stateVector = new ColumnVector( states );
+
+	//	return stateVector;
+	//}
+
+	public static ArrayList<RealVariable> getStateList( ContinuousProgram continuousProgram ) {
+		Set<RealVariable> stateSet = continuousProgram.getDynamicVariables();
+		ArrayList<RealVariable> states = new ArrayList<>();
+		states.addAll( stateSet );
+
+		Collections.reverse( states );
+
+		return states;
+	}
+
+	public static ArrayList<RealVariable> getStateList( HybridProgram hybridProgram ) {
+		Set<RealVariable> stateSet = hybridProgram.getDynamicVariables();
+		ArrayList<RealVariable> states = new ArrayList<>();
+		states.addAll( stateSet );
+
+		Collections.reverse( states );
+
+		return states;
+	}
 
 }
 

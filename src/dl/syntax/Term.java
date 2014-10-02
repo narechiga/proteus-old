@@ -174,6 +174,11 @@ public class Term extends GeneralizedTerm {
 		return dynamicVariables;
 	}
 
+// Arithmetic
+	public Term distributeMultiplication() {
+		throw new RuntimeException("This term does not have this method!");
+	}
+
 // Following two methods really only used for the "arbitrary" term, as in x := *
 	//public Term ( Operator operator ) {
 	//	this.operator = operator;

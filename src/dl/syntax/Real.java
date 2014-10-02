@@ -140,5 +140,10 @@ public class Real extends Term {
 		return new HashSet<RealVariable>();
 	}
 
+// Arithmetic
+	public Term distributeMultiplication() {
+		return this.clone();
+	}
+
 }
 

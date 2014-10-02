@@ -65,7 +65,212 @@ public class MultiplicationTerm extends Term {
 		System.out.println( myProduct.toMathematicaString() );
 	}
 
-		
+// Arithmetic
+	//public Term distributeMultiplication() {
+	//	// First distribute rightwards ( from left to right ),
+	//	// then take the result of that and distribute leftwards ( from right to left )
+	//	MultiplicationTerm rightDistributed = this.distributeMultiplicationRightwards();
+	//	return rightDistributed.distributeMultiplicationRightwards();
+
+	//}
+	
+	public boolean multiplicationFullyDistributed( Term thisTerm ) {
+		if ( thisTerm instanceof Real ) {
+			return true;
+
+		} else if ( thisTerm instanceof RealVariable ) {
+			return true;
+
+		} else if ( thisTerm instanceof AdditionTerm ) {
+			AdditionTerm term = (AdditionTerm)thisTerm;
+
+			return multiplicationFullyDistributed( term.getLeftSummand() )
+				&& multiplicationFullyDistributed( term.getRightSummand() );
+
+		} else if ( thisTerm instanceof SubtractionTerm ) {
+			SubtractionTerm term = (SubtractionTerm)thisTerm;
+
+			return multiplicationFullyDistributed( term.getMinuend() )
+				&& multiplicationFullyDistributed( term.getSubtrahend() );
+
+		} else if ( thisTerm instanceof NegativeTerm ) {
+			NegativeTerm term = (NegativeTerm)thisTerm;
+
+			return multiplicationFullyDistributed( term.getNegatedTerm() );
+
+		} else if ( thisTerm instanceof MultiplicationTerm ) {
+			System.out.println("Checking done-ness of product...");
+			MultiplicationTerm term = (MultiplicationTerm)thisTerm;
+
+			if ( term.getRightFactor() instanceof AdditionTerm
+				|| term.getRightFactor() instanceof SubtractionTerm
+				|| term.getLeftFactor() instanceof AdditionTerm
+				|| term.getLeftFactor() instanceof SubtractionTerm
+				) {
+				return false;
+
+			} else {
+				return multiplicationFullyDistributed( term.getLeftFactor() )
+					&& multiplicationFullyDistributed( term.getRightFactor() );
+			}
+
+		} else if ( thisTerm instanceof DivisionTerm) {
+			DivisionTerm term = (DivisionTerm)thisTerm;
+
+			if ( term.getNumerator() instanceof AdditionTerm
+				|| term.getNumerator() instanceof SubtractionTerm ) {
+				return false;
+
+			} else {
+				return multiplicationFullyDistributed( term.getNumerator() )
+					&& multiplicationFullyDistributed( term.getDenominator() );
+
+			}
+
+		} else if ( thisTerm instanceof PowerTerm ) {
+			PowerTerm term = (PowerTerm)thisTerm;
+
+			return multiplicationFullyDistributed( term.getBase() )
+				&& multiplicationFullyDistributed( term.getExponent() );
+
+		} else if ( thisTerm instanceof FunctionApplicationTerm ) {
+			return true;
+
+		} else {
+			throw new RuntimeException("Unknown term!; " + this.getClass().toString() );
+		}
+	}
+
+
+	
+	public Term distributeMultiplication() {
+		Term returnTerm;
+
+		if ( multiplicationFullyDistributed( this ) ) {
+			returnTerm = this;
+			System.out.println("Done with: " + this.toKeYmaeraString() );
+
+		} else if ( !multiplicationFullyDistributed( this.getLeftFactor() ) ) {
+			Term distributedLeft = getLeftFactor().distributeMultiplication();
+			MultiplicationTerm newProduct = new MultiplicationTerm( 
+								distributedLeft,
+								getRightFactor() );
+
+			returnTerm = newProduct.distributeMultiplication();
+		} else {
+
+			if ( getRightFactor() instanceof Real ) {
+				// Rotate the Real number to the left!
+				// Then apply distribute
+				MultiplicationTerm rotatedTerm = new MultiplicationTerm(
+									getRightFactor(),
+									getLeftFactor() );
+				returnTerm = rotatedTerm.distributeMultiplication();
+
+			} else if ( getRightFactor() instanceof RealVariable ) {
+				// Rotate the variable to the left!
+				// Then apply distribute
+
+				MultiplicationTerm rotatedTerm = new MultiplicationTerm(
+									getRightFactor(),
+									getLeftFactor() );
+
+				System.out.println("Rotated product is: " + rotatedTerm.toKeYmaeraString() );
+
+				returnTerm = rotatedTerm.distributeMultiplication();
+
+			} else if ( getRightFactor() instanceof AdditionTerm ) {
+				// Return a new sum of the distributed products
+				AdditionTerm distributeeSum = (AdditionTerm)getRightFactor();
+
+				MultiplicationTerm newLeftSummand = 
+					new MultiplicationTerm( getLeftFactor(),
+								distributeeSum.getLeftSummand() );
+				MultiplicationTerm newRightSummand =
+					new MultiplicationTerm( getLeftFactor(),
+								distributeeSum.getRightSummand() );
+
+				returnTerm = new AdditionTerm( newLeftSummand.distributeMultiplication(),
+							newRightSummand.distributeMultiplication() );
+
+			} else if ( getRightFactor() instanceof SubtractionTerm ) {
+				// Return a new difference of the distributed products
+				SubtractionTerm distributeeDifference = (SubtractionTerm)getRightFactor();
+				
+				MultiplicationTerm newMinuend = 
+					new MultiplicationTerm( getLeftFactor(),
+								distributeeDifference.getMinuend() );
+				MultiplicationTerm newSubtrahend = 
+					new MultiplicationTerm( getLeftFactor(),
+								distributeeDifference.getSubtrahend() );
+
+				returnTerm = new SubtractionTerm( newMinuend.distributeMultiplication(),
+							newSubtrahend.distributeMultiplication() );
+
+			} else if ( getRightFactor() instanceof NegativeTerm ) {
+				// Factor out the -1, throw it to the left (as when rotating Reals)
+				NegativeTerm negativeTerm = (NegativeTerm)getRightFactor();
+
+				MultiplicationTerm intermediateProduct =
+					new MultiplicationTerm( getLeftFactor(),
+								negativeTerm.getNegatedTerm() );
+
+				MultiplicationTerm negatedProduct = 
+					new MultiplicationTerm( new Real("-1"),
+								intermediateProduct.distributeMultiplication() );
+
+				returnTerm = negatedProduct.distributeMultiplication();
+
+			} else if ( getRightFactor() instanceof MultiplicationTerm ) {
+				// First perform the left-most multiplication, then multiply
+				// with the right term and distribute over it
+				MultiplicationTerm rightFactor = (MultiplicationTerm)getRightFactor();
+
+				MultiplicationTerm intermediateProduct1 = 
+					new MultiplicationTerm( getLeftFactor(),
+								rightFactor.getLeftFactor() );
+
+				MultiplicationTerm intermediateProduct2 =
+					new MultiplicationTerm( intermediateProduct1.distributeMultiplication(),
+								rightFactor.getRightFactor() );
+
+				returnTerm = intermediateProduct2.distributeMultiplication();
+
+			} else if ( getRightFactor() instanceof DivisionTerm ) {
+				// Multiply the numberator by this left factor, call distribute on
+				// the resulting division term
+
+				DivisionTerm divisionTerm = (DivisionTerm)getRightFactor();
+
+				MultiplicationTerm newNumerator = new MultiplicationTerm(
+					getLeftFactor(),
+					divisionTerm.getNumerator() );
+
+				DivisionTerm intermediateDivision = new DivisionTerm(
+					newNumerator.distributeMultiplication(),
+					divisionTerm.getDenominator() );
+
+				returnTerm = intermediateDivision.distributeMultiplication();
+
+			} else if ( getRightFactor() instanceof PowerTerm ) {
+				// Just tell the power term to expand itself, and
+				// let's multiply ourselves by it
+				returnTerm = new MultiplicationTerm(
+					getLeftFactor(),
+					getRightFactor().distributeMultiplication() );
+
+			//} else if ( getRightFactor() instanceof FunctionApplicationTerm ) {
+			// this case is handled by multiplicationFullyDistributed, calling it done
+			} else {
+				throw new RuntimeException("Unknown term!: " + this.getClass().toString() );
+			}
+
+		}
+
+		return returnTerm;
+	}
+
+
 
 }
 

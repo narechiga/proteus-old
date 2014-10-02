@@ -34,5 +34,11 @@ public class PowerTerm extends Term {
 		return new PowerTerm( getBase(), getExponent() );
 	}
 
+	public Term distributeMultiplication() {
+		return new PowerTerm(
+			getBase().distributeMultiplication(),
+			getExponent().distributeMultiplication() );
+	}
+
 }
 

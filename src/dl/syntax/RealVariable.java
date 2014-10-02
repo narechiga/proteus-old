@@ -70,6 +70,11 @@ public class RealVariable extends Term {
 		return freeVariables;
 	}
 
+// Arithmetic
+	public Term distributeMultiplication() {
+		return this.clone();
+	}
+
 
 }
 

@@ -32,6 +32,24 @@ public class DivisionTerm extends Term {
 		return new DivisionTerm( getNumerator().clone() , getDenominator().clone() );
 	}
 
+	public Term distributeMultiplication() {
+
+		if ( getNumerator().isANumber() || getNumerator().isAVariable() ) {
+			return new DivisionTerm( getNumerator(),
+						getDenominator().distributeMultiplication() );
+
+		} else {
+
+			DivisionTerm denominatorAsFactor = new DivisionTerm( new Real(1),
+								getDenominator() );
+
+			MultiplicationTerm divisionAsProduct = 
+				new MultiplicationTerm( denominatorAsFactor, getNumerator() );
+
+			return divisionAsProduct.distributeMultiplication();
+		}
+	}
+
 	//public Term getLHS() {
 	//	return (Term)getArgument( 0 );
 	//}

@@ -34,5 +34,11 @@ public class SubtractionTerm extends Term {
 		return new SubtractionTerm( getMinuend().clone(), getSubtrahend().clone() );
 	}
 
+	public Term distributeMultiplication() {
+		return new SubtractionTerm(
+			getMinuend().distributeMultiplication(),
+			getSubtrahend().distributeMultiplication() );
+	}
+
 }
 
