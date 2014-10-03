@@ -3,7 +3,9 @@ package proteus.logicsolvers.drealkit;
 import proteus.logicsolvers.abstractions.*;;
 import java.util.*;
 import java.io.*;
-import manticore.dl.*;
+
+import proteus.dl.syntax.*;
+import proteus.dl.semantics.*;
 
 
 public class dRealInterface extends LogicSolverInterface {

@@ -1,6 +1,7 @@
 package proteus.logicsolvers.abstractions;
 
-import manticore.dl.*;
+import proteus.dl.syntax.*;
+import proteus.dl.semantics.*;
 
 public class LogicSolverResult {
     

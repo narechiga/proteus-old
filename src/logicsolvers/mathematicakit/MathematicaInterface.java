@@ -3,7 +3,9 @@ package proteus.logicsolvers.mathematicakit;
 import proteus.logicsolvers.abstractions.*;
 import java.util.*;
 import java.io.*;
-import manticore.dl.*;
+import proteus.dl.syntax.*;
+import proteus.dl.semantics.*;
+import proteus.dl.parser.*;
 
 
 public class MathematicaInterface extends LogicSolverInterface {
@@ -45,8 +47,8 @@ public class MathematicaInterface extends LogicSolverInterface {
 		BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
 		
 		// Parse the result
-		Lexer thisLexer = new Lexer( reader );
-		YYParser thisParser = new YYParser( thisLexer );
+		dLLexer thisLexer = new dLLexer( reader );
+		dLParser thisParser = new dLParser( thisLexer );
 		thisParser.parse();
 			
 		if ( thisParser.parsedStructure instanceof TrueFormula ){
