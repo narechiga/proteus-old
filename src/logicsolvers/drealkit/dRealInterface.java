@@ -6,7 +6,7 @@ import java.io.*;
 import manticore.dl.*;
 
 
-public class dRealInterface extends LogicSolverInterface {
+public class dRealInterface extends LogicSolver {
 
 	// COLORS! OMG COLORS!
 	public final String ANSI_RESET = "\u001B[0m";

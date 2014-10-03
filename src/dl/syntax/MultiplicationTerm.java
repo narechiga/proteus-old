@@ -62,7 +62,7 @@ public class MultiplicationTerm extends Term {
 		mySubterms.add( new Real("42") );
 
 		MultiplicationTerm myProduct = new MultiplicationTerm( mySubterms );
-		System.out.println( myProduct.toMathematicaString() );
+		//System.out.println( myProduct.toMathematicaString() );
 	}
 
 // Arithmetic
@@ -91,7 +91,7 @@ public class MultiplicationTerm extends Term {
 			return multiplicationFullyDistributed( term.getNegatedTerm() );
 
 		} else if ( thisTerm instanceof MultiplicationTerm ) {
-			System.out.println("Checking done-ness of product...");
+			//System.out.println("Checking done-ness of product...");
 			MultiplicationTerm term = (MultiplicationTerm)thisTerm;
 
 			if ( term.getRightFactor() instanceof AdditionTerm
@@ -140,7 +140,7 @@ public class MultiplicationTerm extends Term {
 
 		if ( multiplicationFullyDistributed( this ) ) {
 			returnTerm = this;
-			System.out.println("Done with: " + this.toKeYmaeraString() );
+			//System.out.println("Done with: " + this.toKeYmaeraString() );
 
 		} else if ( !multiplicationFullyDistributed( this.getLeftFactor() ) ) {
 			Term distributedLeft = getLeftFactor().distributeMultiplication();
@@ -167,7 +167,7 @@ public class MultiplicationTerm extends Term {
 									getRightFactor(),
 									getLeftFactor() );
 
-				System.out.println("Rotated product is: " + rotatedTerm.toKeYmaeraString() );
+				//System.out.println("Rotated product is: " + rotatedTerm.toKeYmaeraString() );
 
 				returnTerm = rotatedTerm.distributeMultiplication();
 
