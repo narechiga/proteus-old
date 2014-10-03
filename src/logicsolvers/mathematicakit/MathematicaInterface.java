@@ -6,7 +6,7 @@ import java.io.*;
 import manticore.dl.*;
 
 
-public class MathematicaInterface extends LogicSolver {
+public class MathematicaInterface extends LogicSolverInterface {
 
 // Constructor
 	public MathematicaInterface() {

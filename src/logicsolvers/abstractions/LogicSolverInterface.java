@@ -4,7 +4,7 @@ import manticore.dl.*;
 import java.util.*;
 import java.io.*;
 
-public abstract class LogicSolver{
+public abstract class LogicSolverInterface {
 
 // Basic ways to do "quantifier elimination"
 	public abstract LogicSolverResult checkValidity( String filename, dLFormula thisFormula, String comment ) 
