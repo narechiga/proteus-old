@@ -1,6 +1,7 @@
 package proteus.dl.syntax;
 
 import proteus.dl.semantics.*;
+import java.util.*;
 
 public class SubtractionTerm extends Term {
 
@@ -40,5 +41,32 @@ public class SubtractionTerm extends Term {
 			getSubtrahend().distributeMultiplication() );
 	}
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		// If both terms are linear in the given variables,
+		// then the difference is linear
+		if ( getMinuend().isLinearIn( variables )
+			&& getSubtrahend().isLinearIn( variables ) ) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		// If both terms are affine in the given variables,
+		// then the difference is affine
+		if ( getMinuend().isAffineIn( variables )
+			&& getSubtrahend().isAffineIn( variables ) ) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+	}
+	
 }
 

@@ -21,9 +21,10 @@ public class Term extends GeneralizedTerm {
 		this.arguments.addAll( subTerms );
 	}
 
-	public Operator getOperator() {
-		return this.operator;
-	}
+	// Redundant, already provided by dLStructure
+	//public Operator getOperator() {
+	//	return this.operator;
+	//}
 
 
 // Substitution method
@@ -174,9 +175,60 @@ public class Term extends GeneralizedTerm {
 		return dynamicVariables;
 	}
 
-// Arithmetic
+// Arithmetic 
 	public Term distributeMultiplication() {
 		throw new RuntimeException("This term does not have this method!");
+	}
+
+// Split on Addition and Subtraction
+	public ArrayList<Term> splitSummands() {
+		ArrayList<Term> summands = new ArrayList<>();
+
+		if ( this instanceof AdditionTerm ) {
+			summands.addAll( 
+				((AdditionTerm)this).getLeftSummand().splitSummands() );
+			summands.addAll( 
+				((AdditionTerm)this).getRightSummand().splitSummands() );
+
+		} else if ( this instanceof SubtractionTerm ) {
+			summands.addAll(
+				((SubtractionTerm)this).getMinuend().splitSummands() );
+
+			NegativeTerm negativeRHS = new NegativeTerm( 
+				((SubtractionTerm)this).getSubtrahend() );
+			summands.addAll(
+				negativeRHS.distributeMultiplication().splitSummands() );
+
+		} else {
+			summands.add( this );
+
+		}
+
+		return summands;
+	}
+
+// Split on multiplication
+	public ArrayList<Term> splitFactors() {
+		ArrayList<Term> factors = new ArrayList<>();
+
+		if ( this instanceof MultiplicationTerm ) {
+			factors.addAll(
+				((MultiplicationTerm)this).getLeftFactor().splitFactors() );
+
+			factors.addAll(
+				((MultiplicationTerm)this).getRightFactor().splitFactors() );
+
+		} else if ( this instanceof NegativeTerm ) {
+			factors.add( new Real("-1"));
+			factors.addAll(
+				((NegativeTerm)this).getNegatedTerm().splitFactors() );
+		
+		} else {
+			factors.add( this );
+
+		}
+
+		return factors;
 	}
 
 // Following two methods really only used for the "arbitrary" term, as in x := *
@@ -190,29 +242,29 @@ public class Term extends GeneralizedTerm {
 	//	this.arguments = null;
 	//}
 
-// Arithmetic properties
-//	public boolean isLinearIn( RealVariable variable ) {
-//		ArrayList<RealVariable> variableList = new ArrayList<>();
-//		variableList.add( variable );
-//
-//		return isLinearIn( variableList );
-//	}
-//	public boolean isAffineIn( RealVariable variable ) {
-//		ArrayList<RealVariable> variableList = new ArrayList<>();
-//		variableList.add( variable );
-//
-//		return isAffineIn( variableList );
-//	}
-//
-//	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
-//		return false;
-//	}
-//
-//	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
-//		return false;
-//	}
+// Arithmetic Analysis
+	public boolean isLinearIn( RealVariable variable ) {
+		ArrayList<RealVariable> variableList = new ArrayList<>();
+		variableList.add( variable );
 
+		return isLinearIn( variableList );
+	}
+	public boolean isAffineIn( RealVariable variable ) {
+		ArrayList<RealVariable> variableList = new ArrayList<>();
+		variableList.add( variable );
 
+		return isAffineIn( variableList );
+	}
+
+	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
+		// Subclasses override this with a real check
+		return false;
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
+		// Subclasses override this with a real check
+		return false;
+	}
 
 			
 

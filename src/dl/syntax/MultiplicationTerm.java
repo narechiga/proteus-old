@@ -66,19 +66,11 @@ public class MultiplicationTerm extends Term {
 	}
 
 // Arithmetic
-	//public Term distributeMultiplication() {
-	//	// First distribute rightwards ( from left to right ),
-	//	// then take the result of that and distribute leftwards ( from right to left )
-	//	MultiplicationTerm rightDistributed = this.distributeMultiplicationRightwards();
-	//	return rightDistributed.distributeMultiplicationRightwards();
-
-	//}
-	
 	public boolean multiplicationFullyDistributed( Term thisTerm ) {
-		if ( thisTerm instanceof Real ) {
+		if ( thisTerm.isANumber() ) {
 			return true;
 
-		} else if ( thisTerm instanceof RealVariable ) {
+		} else if ( thisTerm.isAVariable() ) {
 			return true;
 
 		} else if ( thisTerm instanceof AdditionTerm ) {
@@ -271,6 +263,44 @@ public class MultiplicationTerm extends Term {
 	}
 
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		// If exactly one factor is linear in the given variables
+		// and the other contains none, then the product is linear
+
+		if ( getLeftFactor().isLinearIn( variables )
+			&& !getRightFactor().containsAnyFreeVariables( variables) )  {
+			return true;
+
+		} else if ( getRightFactor().isLinearIn( variables )
+			&& !getLeftFactor().containsAnyFreeVariables( variables ) ) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		// If exactly one factor is affine in the given variables
+		// and the other contains none of those variables, 
+		// then the product is affine
+
+		if ( getLeftFactor().isAffineIn( variables )
+			&& !getRightFactor().containsAnyFreeVariables( variables) ) {
+			return true;
+
+		} else if ( getRightFactor().isAffineIn( variables )
+			&& !getLeftFactor().containsAnyFreeVariables( variables ) ) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+
+	}
 
 }
 

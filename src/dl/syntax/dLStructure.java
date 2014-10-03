@@ -117,7 +117,7 @@ public abstract class dLStructure {
 	public ArrayList<dLStructure> cloneArguments() {
 		ArrayList<dLStructure> newArguments = new ArrayList<>();
 
-		Iterator<dLStructure> argIterator = getArguments().iterator();
+		Iterator<dLStructure> argIterator = getArgumentIterator();
 		while( argIterator.hasNext() ) {
 			newArguments.add( (argIterator.next()).clone() );
 		}

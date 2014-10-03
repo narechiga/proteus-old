@@ -274,9 +274,15 @@ public class ArithmeticAnalyzer { //extends ScalarTerm {
 	public static ArrayList<Term> splitTermOnAddition( Term thisTerm ) {
 		ArrayList<Term> summands = new ArrayList<>();
 
-		if ( thisTerm.operatorEquals("+") ) {
+		if ( thisTerm instanceof AdditionTerm ) {
 			summands.addAll( splitTermOnAddition( ((AdditionTerm)thisTerm).getLeftSummand() ) );
 			summands.addAll( splitTermOnAddition( ((AdditionTerm)thisTerm).getRightSummand() ) );
+
+		} else if ( thisTerm instanceof SubtractionTerm ) {
+			summands.addAll( splitTermOnAddition( ((SubtractionTerm)thisTerm).getMinuend() ) );
+
+			NegativeTerm negativeRHS = new NegativeTerm( ((SubtractionTerm)thisTerm).getSubtrahend() );
+			summands.addAll( splitTermOnAddition( negativeRHS.distributeMultiplication() ) );
 
 		} else {
 			summands.add( thisTerm );

@@ -160,14 +160,18 @@ public class ContinuousProgram extends HybridProgram {
 			
 			thisArgument = childIterator.next();
 
-			if ( childIterator.hasNext() ) { // then this is an ode, not the doe
-
+			if ( childIterator.hasNext() ) { 
+				// then this is an ode, not the doe
 				thisODE = (ExplicitODE)thisArgument;
-				returnString = returnString + thisODE.toKeYmaeraString() + ", ";
+				returnString = returnString 
+					+ thisODE.toKeYmaeraString() + ", ";
 
 			} else { //then this is the doe
-				returnString = returnString.substring(0, returnString.length() -2 );
-				returnString = returnString + " & " + getDOE().toKeYmaeraString();
+				returnString = returnString.substring(0, 
+						returnString.length() -2 );
+				returnString = returnString 
+						+ " & " 
+						+ getDOE().toKeYmaeraString();
 			}
 		}
 		returnString = returnString + " }";
@@ -181,33 +185,83 @@ public class ContinuousProgram extends HybridProgram {
 
 
 	public Set<RealVariable> getBoundVariables() {
-		HashSet<RealVariable> boundVariables = new HashSet<RealVariable>();
+		HashSet<RealVariable> boundVariables = 
+						new HashSet<RealVariable>();
 		boundVariables.addAll( getDOE().getBoundVariables() );
 		return boundVariables;
 	}
 
 	public Set<RealVariable> getFreeVariables() {
-		HashSet<RealVariable> freeVariables = new HashSet<RealVariable>();
+		HashSet<RealVariable> freeVariables = 
+						new HashSet<RealVariable>();
 		freeVariables.addAll( getDOE().getFreeVariables() );
 
 		Iterator<ExplicitODE> odeIterator = getODEs().iterator();
 		while (odeIterator.hasNext() ) {
-			freeVariables.addAll( odeIterator.next().getFreeVariables() );
+			freeVariables.addAll( 
+				odeIterator.next().getFreeVariables() );
 		}
 
 		return freeVariables;
 	}
 
 	public Set<RealVariable> getDynamicVariables() {
-		HashSet<RealVariable> dynamicVariables = new HashSet<RealVariable>();
+		HashSet<RealVariable> dynamicVariables = 
+						new HashSet<RealVariable>();
 
 		Iterator<ExplicitODE> odeIterator = getODEs().iterator();
 		while( odeIterator.hasNext() ) {
-			dynamicVariables.addAll( odeIterator.next().getDynamicVariables() );
+			dynamicVariables.addAll( 
+				odeIterator.next().getDynamicVariables() );
 		}
 
 		return dynamicVariables;
 	}
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		boolean linearity = true;
+
+		for ( ExplicitODE ode : getODEs() ) {
+			linearity = linearity && ode.isLinearIn( variables );
+		}
+		
+		return linearity;
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		boolean affinity = true;
+
+		for ( ExplicitODE ode : getODEs() ) {
+			affinity = affinity && ode.isAffineIn( variables );
+		}
+		
+		return affinity;
+	}
+
+	public MatrixTerm extractLinearCoefficients( ArrayList<RealVariable> variables ) {
+		// A challenge when getting this method to work was ensuring that the column-order of the variables
+		// is the same as the row-order of the variables. The variables in the ArrayList passed in here are 
+		// in some order, and I need to make sure that the row corresponding to each ODE is put at the same index.
+
+		if ( !isLinearIn( variables ) ){
+			throw new RuntimeException( "Continuous program is not even linear!" );
+		}
+
+		//System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+
+		//ArrayList<ExplicitODE> odeList = getODEs();
+		HashMap<RealVariable, MatrixTerm> rows = new HashMap<>();
+		for ( ExplicitODE thisODE : getODEs() ) {
+			rows.put( thisODE.getLHS(), thisODE.extractLinearCoefficients( variables ) );
+		}
+
+		MatrixTerm coefficients = new MatrixTerm( 0, variables.size() );
+		for ( int v = 0; v < variables.size(); v ++ ) {
+			coefficients = coefficients.addAsRow( rows.get( variables.get( v ) ) );
+		}
+
+		return coefficients;
+	}
 
 }

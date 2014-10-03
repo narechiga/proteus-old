@@ -25,4 +25,13 @@ public class FunctionApplicationTerm extends Term {
 		return this.clone();
 	}
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		return false;
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		return false;
+	}
+
 }

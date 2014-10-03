@@ -1,6 +1,7 @@
 package proteus.dl.syntax;
 
 import proteus.dl.semantics.*;
+import java.util.*;
 
 public class NegativeTerm extends Term {
 
@@ -28,6 +29,15 @@ public class NegativeTerm extends Term {
 			getNegatedTerm() );
 
 		return negativeAsMultiplication.distributeMultiplication();
+	}
+
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		return getNegatedTerm().isLinearIn( variables );
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		return getNegatedTerm().isAffineIn( variables );
 	}
 
 }

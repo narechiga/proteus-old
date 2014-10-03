@@ -1,6 +1,7 @@
 package proteus.dl.syntax;
 
 import proteus.dl.semantics.*;
+import java.util.*;
 
 public class DivisionTerm extends Term {
 
@@ -29,22 +30,26 @@ public class DivisionTerm extends Term {
 	}
 
 	public DivisionTerm clone() {
-		return new DivisionTerm( getNumerator().clone() , getDenominator().clone() );
+		return new DivisionTerm( getNumerator().clone(), 
+						getDenominator().clone() );
 	}
 
 	public Term distributeMultiplication() {
 
-		if ( getNumerator().isANumber() || getNumerator().isAVariable() ) {
+		if ( getNumerator().isANumber() 
+			|| getNumerator().isAVariable() ) {
 			return new DivisionTerm( getNumerator(),
-						getDenominator().distributeMultiplication() );
+				getDenominator().distributeMultiplication() );
 
 		} else {
 
-			DivisionTerm denominatorAsFactor = new DivisionTerm( new Real(1),
-								getDenominator() );
+			DivisionTerm denominatorAsFactor = 
+				new DivisionTerm( new Real(1),
+						getDenominator() );
 
 			MultiplicationTerm divisionAsProduct = 
-				new MultiplicationTerm( denominatorAsFactor, getNumerator() );
+				new MultiplicationTerm( denominatorAsFactor, 
+							getNumerator() );
 
 			return divisionAsProduct.distributeMultiplication();
 		}
@@ -58,5 +63,44 @@ public class DivisionTerm extends Term {
 	//	return (Term)getArgument( 1 );
 	//}
 
+	
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		// If the numerator is linear and the denominator 
+		// does not contain the variables, then the quotient 
+		// is linear
+		boolean linearity;
+	
+		if ( getNumerator().isLinearIn( variables ) 
+			&& !getDenominator().containsAnyFreeVariables( variables )) {
+
+			linearity = true;
+			
+		} else {
+			linearity = false;
+		}
+	
+		return linearity;
+
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		// If the numerator is affine and the denominator 
+		// does not contain the variables, then the quotient 
+		// is affine
+
+		boolean affinity;
+	
+		if ( getNumerator().isAffineIn( variables ) 
+			&& !getDenominator().containsAnyFreeVariables( variables )) {
+
+			affinity = true;
+			
+		} else {
+			affinity = false;
+		}
+	
+		return affinity;
+	}
 }
 

@@ -52,23 +52,77 @@ public class ExplicitODE extends dLStructure {
 	public String toKeYmaeraString () {
 		String returnString = "";
 
-		returnString = returnString + getLHS().toKeYmaeraString() + "' = " + getRHS().toKeYmaeraString();
+		returnString = returnString 
+				+ getLHS().toKeYmaeraString() 
+				+ "' = " + getRHS().toKeYmaeraString();
 
 		return returnString;
 	}
 // Logic
 	public Set<RealVariable> getFreeVariables() {
-		HashSet<RealVariable> freeVariables = new HashSet<RealVariable>();
+		HashSet<RealVariable> freeVariables = 
+						new HashSet<RealVariable>();
 		freeVariables.addAll( getLHS().getFreeVariables() );
 		freeVariables.addAll( getRHS().getFreeVariables() );
 		return freeVariables;
 	}
 
 	public Set<RealVariable> getDynamicVariables() {
-		HashSet<RealVariable> dynamicVariables = new HashSet<RealVariable>();
+		HashSet<RealVariable> dynamicVariables = 
+						new HashSet<RealVariable>();
 		dynamicVariables.add( getLHS() );
 		return dynamicVariables;
 	}
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		return getRHS().isLinearIn( variables );
+	}
 
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		return getRHS().isAffineIn( variables );
+	}
+
+	public MatrixTerm extractLinearCoefficients( ArrayList<RealVariable> variables ) {
+		
+		if ( !isLinearIn( variables ) ){
+			throw new RuntimeException( "ODE is not even linear!" );
+		}
+
+		//System.out.println("WARNING: extractLinearCoefficients does not expand terms, so this will only work if your ode expression is expanded");
+		System.out.println("ode is: " + this);
+		//System.out.println("rhs is: " + ode.getRHS() );
+		System.out.println("rhs is: " + getRHS().distributeMultiplication() );
+
+		ArrayList<Term> additiveTerms = getRHS().splitSummands();
+		MatrixTerm coefficients = new MatrixTerm( 1, variables.size() );
+
+		ArrayList<Term> subFactors;
+		RealVariable thisVariable;
+		for ( Term thisSummand : additiveTerms ) {
+			
+			System.out.println("this summand is: " + thisSummand.toString());
+			subFactors = thisSummand.splitFactors();
+			System.out.println("subfactors before removing anything: " + subFactors.toString() );
+
+			System.out.println("variables size: " + variables.size());
+			for ( int j = 1; j < variables.size() + 1; j ++ ) {
+				if ( subFactors.contains( variables.get( j - 1 ) ) ) {
+					subFactors.remove( variables.get( j - 1 ) );
+					System.out.println("subfactors after removing var: " + subFactors.toString() );
+					System.out.println("subfactor size: " + subFactors.size() );
+
+
+					if ( subFactors.size() == 0 ) {
+						coefficients.setElement( 1, j, new Real(1) );
+					} else {
+						coefficients.setElement( 1, j, new MultiplicationTerm( subFactors ) );
+					}
+
+				}
+			}
+
+		}
+		return coefficients;
+	}
 }

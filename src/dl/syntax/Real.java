@@ -145,5 +145,22 @@ public class Real extends Term {
 		return this.clone();
 	}
 
+// Arithmetic Analysis
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		// A Real is affine in any variables, but never strictly 
+		// linear -- unless it is zero
+		if ( this.equals( new Real("0") ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		// A Real is always affine, in any variables
+		return true;
+	}
+	
+
 }
 
