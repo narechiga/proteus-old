@@ -63,32 +63,56 @@ public abstract class dLFormula extends dLStructure {
                 return subFormulas;
         }           
 
-        public dLFormula universalClosure() {
-        	dLFormula uC;
-        	if ( this.isClosedFormula() ) {
-        		uC = this;
-		} else {
-			uC = this;
-			Iterator<RealVariable> fVi = this.getFreeVariables().iterator();
-			while ( fVi.hasNext() ) {
-				uC = new ForAllFormula( fVi.next(), uC );
+        public ForAllFormula universalClosure() {
+        	return universalClosure( this, 
+        		new ArrayList<RealVariable>( this.getFreeVariables() ) );
+        	//dLFormula uC;
+        	//if ( this.isClosedFormula() ) {
+        	//	uC = this.clone();
+		//} else {
+		//	uC = this.clone();
+		//	Iterator<RealVariable> fVi = this.getFreeVariables().iterator();
+		//	while ( fVi.hasNext() ) {
+		//		uC = new ForAllFormula( fVi.next().clone(), uC );
+		//	}
+		//}
+		//return uC;
+	}
+
+	public ForAllFormula universalClosure( ArrayList<RealVariable> qvars ) {
+		dLFormula uC = this.clone();
+		for ( RealVariable var : qvars ) {
+			if ( this.getFreeVariables().contains( var ) ){
+				uC = new ForAllFormula( var.clone(), uC );
 			}
 		}
 		return uC;
 	}
-	
-        public dLFormula existentialClosure() {
-        	dLFormula eC;
-        	if ( this.isClosedFormula() ) {
-        		eC = this;
-		} else {
-			eC = this;
-			Iterator<RealVariable> fVi = this.getFreeVariables().iterator();
-			while ( fVi.hasNext() ) {
-				eC = new ExistsFormula( fVi.next(), eC );
+
+	public ExistsFormula existentialClosure( ArrayList<RealVariable> qvars ) {
+		dLFormula eC = this.clone();
+		for ( RealVariable var : qvars ) {
+			if ( this.getFreeVariables().contains( var ) ){
+				eC = new ExistsFormula( var.clone(), eC );
 			}
 		}
 		return eC;
+	}
+
+        public ExistsFormula existentialClosure() {
+        	return existentialClosure( this, 
+        		new ArrayList<RealVariable>( this.getFreeVariables() ) );
+        	//dLFormula eC;
+        	//if ( this.isClosedFormula() ) {
+        	//	eC = this.clone();
+		//} else {
+		//	eC = this.clone();
+		//	Iterator<RealVariable> fVi = this.getFreeVariables().iterator();
+		//	while ( fVi.hasNext() ) {
+		//		eC = new ExistsFormula( fVi.next().clone(), eC );
+		//	}
+		//}
+		//return eC;
 	}
 
 

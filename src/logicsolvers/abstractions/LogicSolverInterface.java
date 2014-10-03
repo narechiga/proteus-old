@@ -14,7 +14,7 @@ public abstract class LogicSolverInterface {
 	public abstract LogicSolverResult findInstance( String filename, List<dLFormula> theseFormulas, String comment ) 
 				throws Exception;
 
-// Convenient aliades for findInstance
+// Convenient aliases for findInstance
 	public LogicSolverResult findInstance( dLFormula thisFormula ) throws Exception {
 		ArrayList<dLFormula> theseFormulas = new ArrayList<dLFormula>();
 		theseFormulas.add( thisFormula );
