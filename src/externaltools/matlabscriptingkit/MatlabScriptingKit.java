@@ -5,7 +5,10 @@ import java.util.*;
 
 
 public class MatlabScriptingKit {
-	// Everything in here is broken except for batch. Make sure your batch command has an exit command at the end.
+	// Everything in here is broken except for batch()
+	
+	
+	boolean debug = false;
 	public final String ANSI_RESET = "\u001B[0m";
 	public final String ANSI_BLACK = "\u001B[30m";
 	public final String ANSI_RED = "\u001B[31m";
@@ -94,10 +97,12 @@ public class MatlabScriptingKit {
 			BufferedReader reader = new BufferedReader (new InputStreamReader(is));
 
 			String line;
+			returnString = "";
 			while ((line = reader.readLine()) != null) {
-				//if ( debugMode ) {
+				returnString = returnString + line + "\n";
+				if ( debug ) {
 					System.out.println ("Matlab output: " + line);
-				//}
+				}
 			}
 
 
