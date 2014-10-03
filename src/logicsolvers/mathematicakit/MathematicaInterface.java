@@ -78,7 +78,7 @@ public class MathematicaInterface extends LogicSolverInterface {
 			totalFormula = new AndFormula( totalFormula, formulaIterator.next() );
 		}
 
-		String variableString = totalFormula.getBoundVariables().toString();
+		String variableString = totalFormula.getFreeVariables().toString();
 		variableString = variableString.replace("[", "{").replace("]", "}");
 		
 		// Write the file
@@ -87,9 +87,11 @@ public class MathematicaInterface extends LogicSolverInterface {
 
 		queryFileWriter.println( timeStampComment( comment ));
 
-		queryFileWriter.println("Print[ Flatten[ Quiet[ FindInstance[\n");
+		queryFileWriter.println("instance = Flatten[ Quiet[ FindInstance[\n");
 		queryFileWriter.println("\t" + totalFormula.toMathematicaString() + "\n");
-		queryFileWriter.println(", " + variableString + ", Reals ] ] ] ];");
+		queryFileWriter.println(", " + variableString + ", Reals ] ] ] // N;\n");
+		queryFileWriter.println("Print[ instance ];\n");
+
 		queryFileWriter.close();
 
 		// Run Mathematica

@@ -76,6 +76,7 @@ public class ExistsFormula extends dLFormula {
 	public Set<RealVariable> getBoundVariables() {
 		HashSet<RealVariable> boundVariables = new HashSet<RealVariable>();
 		boundVariables.add( getVariable() );
+		boundVariables.addAll( getFormula().getBoundVariables() );
 		return boundVariables;
 	}
 
