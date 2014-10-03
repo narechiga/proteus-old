@@ -25,7 +25,7 @@ public class MathematicaInterface extends LogicSolverInterface {
 
 		LogicSolverResult result = new LogicSolverResult("unknown", "unknown", new Valuation() );
 
-		String variableString = thisFormula.getVariables().toString();
+		String variableString = thisFormula.getBoundVariables().toString();
 		variableString = variableString.replace("[", "{").replace("]", "}");
 
 		// Write the file
@@ -78,7 +78,7 @@ public class MathematicaInterface extends LogicSolverInterface {
 			totalFormula = new AndFormula( totalFormula, formulaIterator.next() );
 		}
 
-		String variableString = totalFormula.getVariables().toString();
+		String variableString = totalFormula.getBoundVariables().toString();
 		variableString = variableString.replace("[", "{").replace("]", "}");
 		
 		// Write the file
@@ -100,8 +100,8 @@ public class MathematicaInterface extends LogicSolverInterface {
 		BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
 		
 		// Parse the result
-		Lexer thisLexer = new Lexer( reader );
-		YYParser thisParser = new YYParser( thisLexer );
+		dLLexer thisLexer = new dLLexer( reader );
+		dLParser thisParser = new dLParser( thisLexer );
 		thisParser.parse();
 			
 		if ( thisParser.valuation != null ){

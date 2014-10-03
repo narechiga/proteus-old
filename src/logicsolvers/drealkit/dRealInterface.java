@@ -215,7 +215,7 @@ public class dRealInterface extends LogicSolverInterface {
 		Iterator<dLFormula> formulaIterator = theseFormulas.iterator();
 		Set<RealVariable> variables = new HashSet<RealVariable>();
 		while ( formulaIterator.hasNext() ) {
-			variables.addAll( formulaIterator.next().getVariables() );
+			variables.addAll( formulaIterator.next().getFreeVariables() );
 		}
 
 		// Now print the variable declarations
