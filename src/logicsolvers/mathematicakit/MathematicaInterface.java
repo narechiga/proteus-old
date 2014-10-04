@@ -34,9 +34,10 @@ public class MathematicaInterface extends LogicSolverInterface {
 
 		queryFileWriter.println( timeStampComment( comment ));
 
-		queryFileWriter.println("Print[ Quiet[ Reduce[\n");
+		queryFileWriter.println("reducedFormula = Quiet[ Reduce[\n");
 		queryFileWriter.println("\t" + thisFormula.universalClosure().toMathematicaString() + "\n");
-		queryFileWriter.println(", " + variableString + ", Reals ] ] ];");
+		queryFileWriter.println(", " + variableString + ", Reals ] ] // InputForm ;");
+		queryFileWriter.println("Print[ reducedFormula ]\n;");
 		queryFileWriter.close();
 		
 		// Run Mathematica
