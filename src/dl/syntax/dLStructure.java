@@ -64,7 +64,7 @@ public abstract class dLStructure {
 		}
 	}
 
-	public ArrayList<dLStructure> getArguments() {
+	public List<dLStructure> getArguments() {
 		return arguments;
 	}
 
