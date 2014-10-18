@@ -29,9 +29,9 @@ public class ContinuousProgram extends HybridProgram {
 		this.arguments.add( new TrueFormula() );
 	}
 
-	public ArrayList<RealVariable> getContinuousVariables() {
+	public Set<RealVariable> getContinuousVariables() {
 
-		ArrayList<RealVariable> myVariables = new ArrayList<RealVariable>();
+		HashSet<RealVariable> myVariables = new HashSet<RealVariable>();
 
 		ArrayList<ExplicitODE> myODEs= this.getODEs();
 		Iterator<ExplicitODE> odeIterator = myODEs.iterator();
@@ -219,6 +219,10 @@ public class ContinuousProgram extends HybridProgram {
 	}
 
 // Arithmetic Analysis
+	public boolean isLinear() {
+		return isLinearIn( new ArrayList<>( getDynamicVariables() ) );
+	}
+
 	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
 		boolean linearity = true;
 
@@ -262,6 +266,83 @@ public class ContinuousProgram extends HybridProgram {
 		}
 
 		return coefficients;
+	}
+
+	public Set<RealVariable> getTimers() {
+
+		Set<RealVariable> timers = new HashSet<>();
+
+		for ( ExplicitODE thisODE : this.getODEs() ) {
+			
+			if ( thisODE.getRHS().isANumber() ) {
+				timers.add( thisODE.getLHS() );
+			}
+		}
+
+		return timers;
+	}
+
+	public Set<RealVariable> getPositiveTimers() {
+
+		Set<RealVariable> timers = new HashSet<>();
+
+		for ( ExplicitODE thisODE : this.getODEs() ) {
+			
+			if ( thisODE.getRHS().isANumber() && ((Real)(thisODE.getRHS())).isPositive() ) {
+				timers.add( thisODE.getLHS() );
+			}
+		}
+
+		return timers;
+	}
+
+	public ContinuousProgram removeTimers() {
+		ArrayList<ExplicitODE> nonTimerODEs = new ArrayList<>();
+
+		for ( ExplicitODE thisODE : this.getODEs() ) {
+			
+			if ( !thisODE.getRHS().isANumber() ) {
+				nonTimerODEs.add( thisODE.clone() );
+			}
+		}
+
+		return new ContinuousProgram( nonTimerODEs, this.getDOE().clone() );
+	}
+
+
+	public static void main( String [] args ) {
+
+		// Test the timer extraction functionality
+		try {
+			ContinuousProgram sampleProgram = (ContinuousProgram)(dLStructure.parseStructure( "{x' = -10*x + y, y' = 2*x - 11*y, t' = 1, s' = 2}" ));
+
+			for ( RealVariable thisTimer : sampleProgram.getTimers() ) {
+				System.out.println("Found timer variable: " + thisTimer.toKeYmaeraString() );
+			}
+			System.out.println("======================================================================");
+			System.out.println("Subsystem without timers is:");
+
+			ContinuousProgram exceptTimers = sampleProgram.removeTimers();
+			System.out.println( exceptTimers.toKeYmaeraString() );
+			System.out.println("Linearity: " + exceptTimers.isLinear() );
+
+			
+		} catch ( Exception e ) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public Set<RealVariable> getPurelyDiscreteVariables() {
+		return new HashSet<RealVariable>();
+	}
+
+	public Set<RealVariable> getPurelyContinuousVariables() {
+		return getDynamicVariables();
+	}
+
+	public Set<RealVariable> getHybridVariables() {
+		return new HashSet<RealVariable>();
 	}
 
 }

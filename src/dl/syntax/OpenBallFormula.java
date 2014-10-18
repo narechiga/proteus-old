@@ -4,7 +4,7 @@ import proteus.dl.semantics.*;
 
 import java.util.*;
 
-public class OpenBallFormula extends ComparisonFormula {
+public class OpenBallFormula extends BallFormula {
 
 	Valuation center;
 	Real radius;

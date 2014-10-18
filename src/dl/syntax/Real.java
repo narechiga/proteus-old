@@ -160,6 +160,16 @@ public class Real extends Term {
 		// A Real is always affine, in any variables
 		return true;
 	}
+
+	public boolean isPositive() {
+		try {
+			return (this.toDouble() > 0);
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
 
 }

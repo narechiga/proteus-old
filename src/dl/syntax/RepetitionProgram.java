@@ -83,5 +83,16 @@ public class RepetitionProgram extends HybridProgram {
                 return dynamicVariables;
         }
 
+	public Set<RealVariable> getPurelyDiscreteVariables() {
+		return getProgram().getPurelyDiscreteVariables();
+	}
+
+	public Set<RealVariable> getPurelyContinuousVariables() {
+		return getProgram().getPurelyContinuousVariables();
+	}
+
+	public Set<RealVariable> getHybridVariables() {
+		return getProgram().getHybridVariables();
+	}
 
 }

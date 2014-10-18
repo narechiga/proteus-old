@@ -26,7 +26,9 @@ public abstract class HybridProgram extends dLStructure {
 		return false;
 	}
 
-	public abstract HybridProgram substituteConcreteValuation( Valuation substitution );
+	public HybridProgram substituteConcreteValuation( Valuation substitution ) {
+		return null;
+	}
 
 	public abstract HybridProgram clone();
 
@@ -39,5 +41,17 @@ public abstract class HybridProgram extends dLStructure {
 
 		return states;
 	}
+
+	// Subclasses override this
+	public Set<RealVariable> getPurelyDiscreteVariables() {
+		return new HashSet<RealVariable>();
+	}
+	public Set<RealVariable> getPurelyContinuousVariables() {
+		return new HashSet<RealVariable>();
+	}
+	public Set<RealVariable> getHybridVariables() {
+		return new HashSet<RealVariable>();
+	}
+
 
 }

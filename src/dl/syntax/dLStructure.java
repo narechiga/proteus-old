@@ -90,7 +90,7 @@ public abstract class dLStructure {
 		}
 	}
 
-	public boolean addArguments( ArrayList<dLStructure> newArgumentList ) {
+	public boolean addArguments( List<? extends dLStructure> newArgumentList ) {
 		if ( arguments != null ) {
 			arguments.addAll( newArgumentList );
 			return true;
@@ -147,28 +147,30 @@ public abstract class dLStructure {
 // 6. extractContinuousBlocks
 // 7. extractFirstHybridProgram
 
-	public Set<RealVariable> getVariables () {
-		Set<RealVariable> myVariables = new HashSet<RealVariable>();
+	//public Set<RealVariable> getVariables () {
+	//	Set<RealVariable> myVariables = new HashSet<RealVariable>();
 
-		if ( this instanceof RealVariable ) {
-			myVariables.add( (RealVariable)this );
-		} else if ( arguments != null ) {
-			Iterator<dLStructure> childIterator = arguments.iterator();
+	//	if ( this instanceof RealVariable ) {
+	//		myVariables.add( (RealVariable)this );
+	//	} else if ( arguments != null ) {
+	//		Iterator<dLStructure> childIterator = arguments.iterator();
 
-			while ( childIterator.hasNext() ) {
-				myVariables.addAll( childIterator.next().getVariables() );
-			}
+	//		while ( childIterator.hasNext() ) {
+	//			myVariables.addAll( childIterator.next().getVariables() );
+	//		}
 
-		}
+	//	}
 
-		return myVariables;
-	}
+	//	return myVariables;
+	//}
 
 	public Set<RealVariable> getBoundVariables() {
 		return new HashSet<RealVariable>();
 	}
 
-	public abstract Set<RealVariable> getFreeVariables();
+	public Set<RealVariable> getFreeVariables() {
+		return new HashSet<>();
+	}
 	
 	public boolean containsAnyFreeVariables( ArrayList<RealVariable> variables ) {
 		Set<RealVariable> freeVars = getFreeVariables();
@@ -182,7 +184,9 @@ public abstract class dLStructure {
 		}
 	}
 
-	public abstract Set<RealVariable> getDynamicVariables();
+	public Set<RealVariable> getDynamicVariables() {
+		return new HashSet<>();
+	}
 
 	public ArrayList<ContinuousProgram> extractContinuousBlocks() {
 

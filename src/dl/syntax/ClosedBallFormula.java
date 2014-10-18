@@ -5,7 +5,7 @@ import proteus.dl.semantics.*;
 
 import java.util.*;
 
-public class ClosedBallFormula extends ComparisonFormula {
+public class ClosedBallFormula extends BallFormula {
 
 	Valuation center;
 	Real radius;
@@ -28,6 +28,7 @@ public class ClosedBallFormula extends ComparisonFormula {
 		addArgument( new NormTerm( normTerms, 2 ) );
 		addArgument( radius );
 	}
+
 
 	// Just inherit the negation from ComparisonFormula (?)
 	//public ComparisonFormula negate() {

@@ -6,8 +6,10 @@ import proteus.dl.semantics.*;
 import java.util.*;
 
 public class AbstractdLParser {
-
+	/* Generally, for Manticore parsing, and for the proof generator */
 	public dLStructure parsedStructure;
+	public int numberOfDeclarations;
+	public int numberOfInitializations;
 
 	// for when "evaluate" is called from the command line
 	public Valuation valuation;
@@ -26,14 +28,13 @@ public class AbstractdLParser {
 
 	// For EITool
 	public boolean synthesis; //whether a synthesis or verification task is desired
-	public ArrayList<RealVariable> statevariables;
-	public ArrayList<RealVariable> eiparameters;
+	public List<RealVariable> statevariables;
+	public List<RealVariable> eiparameters;
 	public dLFormula envelope;
 	public dLFormula invariant;
 	public dLFormula robustparameters;
 	public dLFormula domain;
 	public dLFormula control;
-
 
 }
 

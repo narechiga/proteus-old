@@ -91,5 +91,57 @@ public class ChoiceProgram extends HybridProgram {
                 return dynamicVariables;
         }
 
+	public Set<RealVariable> getPurelyDiscreteVariables() {
+		HashSet<RealVariable> discreteVariables = new HashSet<>();
+
+		Set<RealVariable> rightDiscrete = getRHS().getPurelyDiscreteVariables();
+		Set<RealVariable> leftDiscrete = getLHS().getPurelyDiscreteVariables();
+
+		discreteVariables.addAll( rightDiscrete );
+		discreteVariables.addAll( leftDiscrete );
+
+		discreteVariables.removeAll( getHybridVariables() );
+
+		return discreteVariables;
+	}
+
+	public Set<RealVariable> getPurelyContinuousVariables() {
+		HashSet<RealVariable> continuousVariables = new HashSet<>();
+
+		Set<RealVariable> rightContinuous = getRHS().getPurelyContinuousVariables();
+		Set<RealVariable> leftContinuous = getLHS().getPurelyContinuousVariables();
+
+		continuousVariables.addAll( rightContinuous );
+		continuousVariables.addAll( leftContinuous );
+
+		continuousVariables.removeAll( getHybridVariables() );
+
+		return continuousVariables;
+	}
+
+	public Set<RealVariable> getHybridVariables() {
+		HashSet<RealVariable> hybridVariables = new HashSet<>();
+
+		// Easy case, the ones that are hybrid on either side will be hybrid overall
+		hybridVariables.addAll( getLHS().getHybridVariables() );
+		hybridVariables.addAll( getRHS().getHybridVariables() );
+
+		// Next, if they are continuous on the left and discrete on the right, they are hybrid
+		Set<RealVariable> rightContinuous = getRHS().getPurelyContinuousVariables();
+		Set<RealVariable> leftDiscrete = getLHS().getPurelyDiscreteVariables();
+
+		rightContinuous.retainAll( leftDiscrete );
+		hybridVariables.addAll( rightContinuous );
+
+		// Next, if they are discrete on the left and continuous on the right, they are hybrid
+		Set<RealVariable> rightDiscrete = getRHS().getPurelyDiscreteVariables();
+		Set<RealVariable> leftContinuous = getLHS().getPurelyContinuousVariables();
+
+		rightDiscrete.retainAll( leftContinuous );
+		hybridVariables.addAll( rightDiscrete );
+
+		return hybridVariables;
+	}
+
 
 }
