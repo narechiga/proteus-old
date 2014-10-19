@@ -13,6 +13,8 @@
 %define parser_class_name {dLParser}
 %define public
 
+%token ASTERISK
+
 %token EXTERNAL
 %token FUNCTIONS
 %token RULES
@@ -39,15 +41,16 @@
 %token CLOSEBRACE
 %token EQUALS
 %token TEST
-%token KLEENESTAR
+/*%token KLEENESTAR*/
 %token CUP
-%token RANDOM
+/*%token RANDOM*/
 %token REALDECLARATION
 
 
 /* precedence for hybrid program operators */
 %left KLEENESTAR
 %right SEMICOLON CUP
+%left RANDOM
 
 
 /* Modalities */
@@ -61,7 +64,7 @@
 %token IDENTIFIER
 %token PLUS
 %token MINUS
-%token MULTIPLY
+/*%token MULTIPLY*/
 %token DIVIDE
 %token POWER
 %token NEWLINE
@@ -923,7 +926,7 @@ hybridprogram:
 			System.err.println( e );
 		}
 	}
-	| hybridprogram KLEENESTAR {
+	| hybridprogram ASTERISK %prec KLEENESTAR {
 		try {
 			$$ = new RepetitionProgram( (HybridProgram)$1 );
 		} catch ( Exception e ) {
@@ -953,7 +956,7 @@ concreteassignment:
 ;
 
 arbitraryassignment:
-	IDENTIFIER ASSIGN RANDOM { 
+	IDENTIFIER ASSIGN ASTERISK %prec RANDOM { 
 		try {
 			$$ = new ArbitraryAssignmentProgram( new RealVariable( (String)$1 ) );
 		} catch ( Exception e ) {
@@ -1113,7 +1116,7 @@ term:
 			System.err.println( e );
 		}
 	}
-	| term MULTIPLY term { 
+	| term ASTERISK term %prec MULTIPLY { 
 		try {
 			//ArrayList<Term> args = new ArrayList<Term>();
 			//args.add( (Term)$1 );

@@ -260,20 +260,20 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return CLOSEDIAMOND;
 	}
-	"***" { 
-		if ( debug ) {
-			System.out.println("Lexer: KLEENESTAR");
-			System.out.println("Lexer @ " + yytext() );
-		}
-		return KLEENESTAR;
-	}
-	"**" { 
-		if ( debug ) {
-			System.out.println("Lexer: RANDOM");
-			System.out.println("Lexer @ " + yytext() );
-		}
-		return RANDOM;
-	}
+	//"***" { 
+	//	if ( debug ) {
+	//		System.out.println("Lexer: KLEENESTAR");
+	//		System.out.println("Lexer @ " + yytext() );
+	//	}
+	//	return KLEENESTAR;
+	//}
+	//"**" { 
+	//	if ( debug ) {
+	//		System.out.println("Lexer: RANDOM");
+	//		System.out.println("Lexer @ " + yytext() );
+	//	}
+	//	return RANDOM;
+	//}
 	
 	
 	// Punctuation
@@ -314,12 +314,19 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return PLUS;
 	}
+	//"*" { 
+	//	if ( debug ) {
+	//		System.out.println("Lexer: MULTIPLY");
+	//		System.out.println("Lexer @ " + yytext() );
+	//	}
+	//	return MULTIPLY;
+	//}
 	"*" { 
 		if ( debug ) {
-			System.out.println("Lexer: MULTIPLY");
+			System.out.println("Lexer: ASTERISK");
 			System.out.println("Lexer @ " + yytext() );
 		}
-		return MULTIPLY;
+		return ASTERISK;
 	}
 	"-" { 
 		if ( debug ) {

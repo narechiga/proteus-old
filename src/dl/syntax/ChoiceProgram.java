@@ -35,6 +35,17 @@ public class ChoiceProgram extends HybridProgram {
 		return new ChoiceProgram( getLHS().clone(), getRHS().clone());
 	}
 
+// Equals
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof ChoiceProgram ) {
+			boolean leftEquals = getLHS().equals( ((ChoiceProgram)otherObject).getLHS() );
+			boolean rightEquals = getRHS().equals( ((ChoiceProgram)otherObject).getRHS() );
+
+			return (leftEquals && rightEquals);
+		} else {
+			return false;
+		}
+	}
 
 // String methods
 	public String toKeYmaeraString() {

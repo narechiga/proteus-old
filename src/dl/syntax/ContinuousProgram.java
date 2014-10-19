@@ -126,6 +126,20 @@ public class ContinuousProgram extends HybridProgram {
 		return new ContinuousProgram( odeClones, getDOE().clone() );
 	}
 
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof ContinuousProgram ) {
+			Set<ExplicitODE> theseODEs = new HashSet<>( getODEs() );
+			Set<ExplicitODE> thoseODEs = new HashSet<>( ((ContinuousProgram)otherObject).getODEs() );
+
+			return theseODEs.equals( thoseODEs );
+
+		} else {
+			return false;
+		}
+	}
+		
+
+
 // Assorted convenience functions
 	public boolean isPurelyContinuous() {
 		return true;

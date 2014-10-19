@@ -109,4 +109,11 @@ public class Valuation {
 		return newValuation;
 	}
 
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof Valuation ) {
+			return valuation.equals( ((Valuation)otherObject).valuation );
+		} else {
+			return false;
+		}
+
 }

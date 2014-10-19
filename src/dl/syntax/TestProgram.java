@@ -29,6 +29,15 @@ public class TestProgram extends DiscreteProgram {
 		return new TestProgram( getFormula().clone() );
 	}
 
+// Equals
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof TestProgram ) {
+			return getFormula().equals( ((TestProgram)otherObject).getFormula() );
+		} else {
+			return false;
+		}
+	}
+
 // String methods
 	public String toKeYmaeraString() {
 		return "(? " + getFormula().toKeYmaeraString() + " )";

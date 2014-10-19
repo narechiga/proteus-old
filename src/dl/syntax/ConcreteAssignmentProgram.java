@@ -36,6 +36,18 @@ public class ConcreteAssignmentProgram extends DiscreteProgram {
 		return new ConcreteAssignmentProgram( getLHS().clone(), getRHS().clone() );
 	}
 
+// Equals
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof ConcreteAssignmentProgram ) {
+			boolean leftEquals = getLHS().equals( ((ConcreteAssignmentProgram)otherObject).getLHS() );
+			boolean rightEquals = getRHS().equals( ((ConcreteAssignmentProgram)otherObject).getRHS() );
+
+			return (leftEquals && rightEquals);
+		} else {
+			return false;
+		}
+	}
+
 // String methods
 	public String toKeYmaeraString() {
 		return "( " + getLHS().toKeYmaeraString() + " := " + getRHS().toKeYmaeraString() +" )";

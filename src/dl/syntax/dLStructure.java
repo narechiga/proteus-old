@@ -139,7 +139,7 @@ public abstract class dLStructure {
 
 
 // Extract assorted bits and pieces
-// 1. getVariables
+// --- 1. getVariables -- DEPRECATED
 // 2. getBoundVariables
 // 3. getFreeVariables
 // 4. getDynamicVariables
@@ -231,6 +231,23 @@ public abstract class dLStructure {
 		}
 
 		return myProgram;
+	}
+
+	public List<HybridProgram> extractHybridPrograms() {
+		List<HybridProgram> hybridPrograms = new ArrayList<>();
+
+		if ( this instanceof HybridProgram ) {
+			hybridPrograms.add( this );
+
+		} else if ( getArguments() != null ) {
+
+			for ( dLStructure thisArgument : getArguments() ) {
+				hybridPrograms.addAll( thisArgument.extractHybridPrograms() );
+			}
+		}
+
+		return hybridPrograms;
+
 	}
 
 
