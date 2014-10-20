@@ -127,7 +127,7 @@ public abstract class dLStructure {
 
 // equals
 	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof this.getClass() ) {
+		if ( otherObject.getClass() == this.getClass() ) {
 			List<dLStructure> theseArguments = getArguments();
 			List<dLStructure> thoseArguments = ((dLStructure)otherObject).getArguments();
 
@@ -136,6 +136,7 @@ public abstract class dLStructure {
 		} else {
 			return false;
 		}
+	}
 
 // Parse a dLStructure from a string
 	public static dLStructure parseStructure( String structureString ) throws Exception {
@@ -249,7 +250,7 @@ public abstract class dLStructure {
 		List<HybridProgram> hybridPrograms = new ArrayList<>();
 
 		if ( this instanceof HybridProgram ) {
-			hybridPrograms.add( this );
+			hybridPrograms.add( (HybridProgram)this );
 
 		} else if ( getArguments() != null ) {
 

@@ -1,13 +1,13 @@
-//
-//package proteus.dl.syntax;
-//
-//import proteus.dl.semantics.*;
-//
-//import java.util.*;
-//
-//public class ConcreteAssignmentProgram extends DiscreteProgram {
-//
-//// Constructors and field getters
+
+package proteus.dl.syntax;
+
+import proteus.dl.semantics.*;
+
+import java.util.*;
+
+public class ConcreteAssignmentProgram extends DiscreteProgram {
+
+// Constructors and field getters
 	public ConcreteAssignmentProgram( RealVariable leftArgument, Term rightArgument ) {
 		operator = new Operator( "assign", 2, true );
 

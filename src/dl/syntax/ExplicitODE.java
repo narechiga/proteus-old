@@ -45,16 +45,16 @@ public class ExplicitODE extends dLStructure {
 	}
 
 // Equals
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof ExplicitODE ) {
-			boolean leftEquals = getLHS().equals( ((ExplicitODE)otherObject).getLHS());
-			boolean rightEquals = getRHS().equals( ((ExplicitODE)otherObject).getRHS());
-
-			return leftEquals && rightEquals;
-			
-		} else {
-			return false;
-		}
+//	public boolean equals( Object otherObject ) {
+//		if ( otherObject instanceof ExplicitODE ) {
+//			boolean leftEquals = getLHS().equals( ((ExplicitODE)otherObject).getLHS());
+//			boolean rightEquals = getRHS().equals( ((ExplicitODE)otherObject).getRHS());
+//
+//			return leftEquals && rightEquals;
+//			
+//		} else {
+//			return false;
+//		}
 
 // String methods
 	public String toInfix() {

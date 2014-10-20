@@ -115,5 +115,6 @@ public class Valuation {
 		} else {
 			return false;
 		}
+	}
 
 }
