@@ -30,12 +30,12 @@ public class RepetitionProgram extends HybridProgram {
 		return new RepetitionProgram( getProgram().clone() );
 	}
 
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof RepetitionProgram ) {
-			return getProgram().equals( ((RepetitionProgram)otherObject).getProgram());
-		} else {
-			return false;
-		}
+	//public boolean equals( Object otherObject ) {
+	//	if ( otherObject instanceof RepetitionProgram ) {
+	//		return getProgram().equals( ((RepetitionProgram)otherObject).getProgram());
+	//	} else {
+	//		return false;
+	//	}
 
 // String methods
 	public String toKeYmaeraString() {

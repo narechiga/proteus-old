@@ -30,13 +30,13 @@ public class TestProgram extends DiscreteProgram {
 	}
 
 // Equals
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof TestProgram ) {
-			return getFormula().equals( ((TestProgram)otherObject).getFormula() );
-		} else {
-			return false;
-		}
-	}
+	//public boolean equals( Object otherObject ) {
+	//	if ( otherObject instanceof TestProgram ) {
+	//		return getFormula().equals( ((TestProgram)otherObject).getFormula() );
+	//	} else {
+	//		return false;
+	//	}
+	//}
 
 // String methods
 	public String toKeYmaeraString() {

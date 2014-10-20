@@ -21,6 +21,15 @@ public class TrueFormula extends dLFormula {
 		return new TrueFormula();
 	}
 
+// Equals method
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof TrueFormula ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 // String methods
 	public String toKeYmaeraString () {
 		return "true";

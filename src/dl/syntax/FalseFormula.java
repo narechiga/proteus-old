@@ -22,6 +22,14 @@ public class FalseFormula extends dLFormula {
 		return new FalseFormula();
 	}
 
+// Equals method
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof FalseFormula ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 // String methods
 	public String toKeYmaeraString () {
 		return "false";

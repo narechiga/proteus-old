@@ -125,6 +125,18 @@ public abstract class dLStructure {
 		return newArguments;
 	}
 
+// equals
+	public boolean equals( Object otherObject ) {
+		if ( otherObject instanceof this.getClass() ) {
+			List<dLStructure> theseArguments = getArguments();
+			List<dLStructure> thoseArguments = ((dLStructure)otherObject).getArguments();
+
+			return theseArguments.equals( thoseArguments );
+
+		} else {
+			return false;
+		}
+
 // Parse a dLStructure from a string
 	public static dLStructure parseStructure( String structureString ) throws Exception {
 		// returns the dLStructure that exists in the string

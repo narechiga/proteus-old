@@ -44,16 +44,16 @@ public class SequenceProgram extends HybridProgram {
 	}
 
 // Equals
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof SequenceProgram ) {
-			boolean leftEquals = getLHS().equals( ((SequenceProgram)otherObject).getLHS() );
-			boolean rightEquals = getRHS().equals( ((SequenceProgram)otherObject).getRHS() );
+	//public boolean equals( Object otherObject ) {
+	//	if ( otherObject instanceof SequenceProgram ) {
+	//		boolean leftEquals = getLHS().equals( ((SequenceProgram)otherObject).getLHS() );
+	//		boolean rightEquals = getRHS().equals( ((SequenceProgram)otherObject).getRHS() );
 
-			return (leftEquals && rightEquals);
-		} else {
-			return false;
-		}
-	}
+	//		return (leftEquals && rightEquals);
+	//	} else {
+	//		return false;
+	//	}
+	//}
 // String methods
 	public String toKeYmaeraString() {
 		return "( " + arguments.get(0).toKeYmaeraString() + " ; " + arguments.get(1).toKeYmaeraString() + " )";

@@ -51,12 +51,12 @@ public class ArbitraryAssignmentProgram extends DiscreteProgram {
 		return true;
 	}
 
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof ArbitraryAssignmentProgram ) {
-			return getLHS().equals( ((ArbitraryAssignmentProgram)otherObject).getLHS() );
-		} else {
-			return false;
-		}
+//	public boolean equals( Object otherObject ) {
+//		if ( otherObject instanceof ArbitraryAssignmentProgram ) {
+//			return getLHS().equals( ((ArbitraryAssignmentProgram)otherObject).getLHS() );
+//		} else {
+//			return false;
+//		}
 
 
 // public Set<RealVariable> getBoundVariables();

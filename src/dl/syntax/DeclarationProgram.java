@@ -31,13 +31,13 @@ public class DeclarationProgram extends HybridProgram {
 		return new DeclarationProgram( clonedVariables );
 	}
 
-	public boolean equals( Object otherObject ) {
-		if ( otherObject instanceof DeclarationProgram ) {
-			return getDeclaredVariables().equals( ((DeclarationProgram)otherObject).getDeclaredVariables() );
-		} else {
-			return false;
-		}
-	}
+	//public boolean equals( Object otherObject ) {
+	//	if ( otherObject instanceof DeclarationProgram ) {
+	//		return getDeclaredVariables().equals( ((DeclarationProgram)otherObject).getDeclaredVariables() );
+	//	} else {
+	//		return false;
+	//	}
+	//}
 
 
 }
