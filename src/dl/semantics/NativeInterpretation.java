@@ -83,6 +83,12 @@ public class NativeInterpretation implements Interpretation {
 			}
 		} else if ( thisTerm.operatorEquals( multiplication ) ) {
 			try {
+				System.out.println("Mulitplication term is: " + ((Term)thisTerm).toKeYmaeraString() );
+				System.out.println("apparently bad element is: " + (Term)(thisTerm.arguments.get(0)));
+				System.out.println("apparently bad element is: " + (Term)(thisTerm.arguments.get(1)));
+
+
+
 				doubleResult = (evaluateTerm( (Term)(thisTerm.arguments.get(0)), valuation )).toDouble()
 						* (evaluateTerm( (Term)(thisTerm.arguments.get(1)), valuation )).toDouble();
 				result = new Real( doubleResult.toString() );
@@ -308,6 +314,8 @@ public class NativeInterpretation implements Interpretation {
 		/**/		return ( (evaluateTerm( ((ComparisonFormula)thisFormula).getLHS(), valuation ).toDouble())
 		/**/			<= (evaluateTerm( ((ComparisonFormula)thisFormula).getRHS(), valuation ) ).toDouble());
 		/**/	}else if ( thisFormula.getOperator().equals( eq ) ) {
+			//	System.out.println( "lhs: " + (evaluateTerm( ((ComparisonFormula)thisFormula).getLHS(), valuation )) );
+			//	System.out.println( "rhs: " + (evaluateTerm( ((ComparisonFormula)thisFormula).getRHS(), valuation )) );
 		/**/		return ( (evaluateTerm( ((ComparisonFormula)thisFormula).getLHS(), valuation )).equals(
 		/**/			 (evaluateTerm( ((ComparisonFormula)thisFormula).getRHS(), valuation ) )));
 		/**/	} else {

@@ -1158,7 +1158,8 @@ term:
 			//args.add( new Real( "0" ) );
 			//args.add( (Term)$2 );
 			//$$ = new Term( new Operator("-", 2, true), args );
-			$$ = new NegativeTerm( (Term)$2 );
+			//$$ = new NegativeTerm( (Term)$2 );
+			$$ = new SubtractionTerm( new Real(0), (Term)$2 );
 		} catch ( Exception e ) {
 			System.err.println("Exception at location term:MINUS term");
 			System.err.println( e );

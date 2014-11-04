@@ -45,7 +45,12 @@ public class Real extends Term {
 // Equality
 	public boolean equals( Object otherObject ) {
 		if ( otherObject instanceof Real ) {
-			return operator.equals( ((Real)otherObject).operator );
+			try {
+				return toDouble().equals( ((Real)otherObject).toDouble() );
+			} catch ( Exception e ) {
+				return operator.equals( ((Real)otherObject).operator );
+			}
+
 		} else {
 			return false;
 		}
