@@ -42,7 +42,7 @@ public class ImpliesFormula extends dLFormula {
 		return new ImpliesFormula( getAntecedent().clone(), getSuccedent().clone() );
 	}
 
-// Strint methods
+// String methods
 	public String toKeYmaeraString () {
 		return "(" + getAntecedent().toKeYmaeraString() + " -> " + getSuccedent().toKeYmaeraString() + ")";
 	}
@@ -66,7 +66,8 @@ public class ImpliesFormula extends dLFormula {
 	}
 
 	public boolean isModal() {
-		return (getAntecedent().isModal() && getSuccedent().isModal() );
+
+		return (getAntecedent().isModal() || getSuccedent().isModal() );
 	}
         public boolean isStatic() {
                 return (getAntecedent().isStatic() && getSuccedent().isStatic());
