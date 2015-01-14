@@ -57,7 +57,7 @@ public class OrFormula extends dLFormula {
 	}
 
 	public boolean isModal() {
-		return (getLHS().isModal() && getRHS().isModal() );
+		return (getLHS().isModal() || getRHS().isModal() );
 	}
 
         public boolean isStatic() {
