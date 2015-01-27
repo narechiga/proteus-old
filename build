@@ -38,3 +38,5 @@
 #`mv src/analytics/*.class bin/proteus/analytics/`;
 #`mv src/tests/*.class bin/proteus/tests/`;
 
+`cd bin; jar -cf proteus.jar proteus/*`;
+
