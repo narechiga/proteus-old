@@ -173,6 +173,10 @@ public class MatrixTerm extends NonScalarTerm {
 		return matrixFormString;
 	}
 
+	public String toString() {
+		return toMatlabString;
+	}
+
 	
 // Convenience functions
 	public MatrixTerm clone() {
