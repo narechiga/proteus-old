@@ -1,8 +1,11 @@
 package proteus.externaltools;
 
+
 public abstract class ScriptingKit {
 
-	protected runningProcess;
+	// This is broken!
+
+	protected int runningProcess;
 	protected PrintWriter stdin;
 	protected Scanner stdout;
 

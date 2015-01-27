@@ -257,15 +257,52 @@ public class Term extends GeneralizedTerm {
 	}
 
 	public boolean isLinearIn( ArrayList<RealVariable> variable ) {
-		// Subclasses override this with a real check
+		// Subclasses override this with a real check, depending on their class
 		return false;
 	}
 
 	public boolean isAffineIn( ArrayList<RealVariable> variable ) {
-		// Subclasses override this with a real check
+		// Subclasses override this with a real check, depending on their class
 		return false;
 	}
 
-			
+
+	public MatrixTerm extractLinearCoefficients( ArrayList<RealVariable> variables ) {
+
+                if ( !isLinearIn( variables ) ){
+                        throw new RuntimeException( "Term is not linear: " + this.toMathematicaString() );
+                }
+
+                ArrayList<Term> additiveTerms = this.splitSummands();
+                MatrixTerm coefficients = new MatrixTerm( 1, variables.size() );
+
+                ArrayList<Term> subFactors;
+                RealVariable thisVariable;
+                for ( Term thisSummand : additiveTerms ) {
+                        
+                        //System.out.println("this summand is: " + thisSummand.toString());
+                        subFactors = thisSummand.splitFactors();
+                        //System.out.println("subfactors before removing anything: " + subFactors.toString() );
+
+                        //System.out.println("variables size: " + variables.size());
+                        for ( int j = 1; j < variables.size() + 1; j ++ ) {
+                                if ( subFactors.contains( variables.get( j - 1 ) ) ) {
+                                        subFactors.remove( variables.get( j - 1 ) );
+                                        //System.out.println("subfactors after removing var: " + subFactors.toString() );
+                                        //System.out.println("subfactor size: " + subFactors.size() );
+
+                                        if ( subFactors.size() == 0 ) {
+                                                coefficients.setElement( 1, j, new Real(1) );
+                                        } else {
+                                                coefficients.setElement( 1, j, new MultiplicationTerm( subFactors ) );
+                                        }
+                                 
+                                }
+                        }
+
+                }                       
+                return coefficients;
+	}
+
 
 }

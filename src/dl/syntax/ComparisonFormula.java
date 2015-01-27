@@ -124,6 +124,15 @@ public class ComparisonFormula extends dLFormula {
 		return true;
         }
 
+// Useful, arithmetic, linearity-related functions
+	public boolean isLinearIn( ArrayList<RealVariable> variables ) {
+		return getLHS().isLinearIn( variables ) && getRHS().isLinearIn( variables );
+	}
+
+	public boolean isAffineIn( ArrayList<RealVariable> variables ) {
+		return getLHS().isAffineIn( variables ) && getRHS().isAffineIn( variables );
+	}
+
 // Logic
 	public ComparisonFormula negate() {
 		ComparisonFormula returnFormula = null;
