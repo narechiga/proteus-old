@@ -174,7 +174,7 @@ public class MatrixTerm extends NonScalarTerm {
 	}
 
 	public String toString() {
-		return toMatlabString;
+		return toMatlabString();
 	}
 
 	
