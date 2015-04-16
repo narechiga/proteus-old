@@ -122,6 +122,20 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return STATEVARIABLES;
 	}
+	"\\initialset" {
+		if ( debug ) {
+			System.out.println("Lexer: INITIALSET");
+			System.out.println("Lexer @ " + yytext() );
+		}
+		return INITIALSET;
+	}
+	"\\safeset" {
+		if ( debug ) {
+			System.out.println("Lexer: SAFESET");
+			System.out.println("Lexer @ " + yytext() );
+		}
+		return SAFESET;
+	}
 	"\\eiparameters" {
 		if ( debug ) {
 			System.out.println("Lexer: EIPARAMETERS");
@@ -143,20 +157,6 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return INVARIANT;
 	}
-	"\\robustparameters" {
-		if ( debug ) {
-			System.out.println("Lexer: ROBUSTPARAMETERS");
-			System.out.println("Lexer @ " + yytext() );
-		}
-		return ROBUSTPARAMETERS;
-	}
-	"\\domain" {
-		if ( debug ) {
-			System.out.println("Lexer: DOMAIN");
-			System.out.println("Lexer @ " + yytext() );
-		}
-		return DOMAIN;
-	}
 	"\\controllaw" {
 		if ( debug ) {
 			System.out.println("Lexer: CONTROLLAW");
@@ -164,12 +164,26 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return CONTROLLAW;
 	}
+	"\\controlparameters" {
+		if ( debug ) {
+			System.out.println("Lexer: CONTROLPARAMETERS");
+			System.out.println("Lexer @ " + yytext() );
+		}
+		return CONTROLPARAMETERS;
+	}
 	"\\controltemplate" {
 		if ( debug ) {
 			System.out.println("Lexer: CONTROLTEMPLATE");
 			System.out.println("Lexer @ " + yytext() );
 		}
 		return CONTROLTEMPLATE;
+	}
+	"\\objectivefunction" {
+		if ( debug ) {
+			System.out.println("Lexer: OBJECTIVEFUNCTION");
+			System.out.println("Lexer @ " + yytext() );
+		}
+		return OBJECTIVEFUNCTION;
 	}
 	"\\settings" {
                 if ( debug ) { 

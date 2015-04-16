@@ -24,15 +24,21 @@
 %token ANNOTATION
 %token BOUNDS
 
+/* Perseus */
 %token STATEVARIABLES
+%token INITIALSET
+%token SAFESET
+/*************/
 %token EIPARAMETERS
 %token ENVELOPE
 %token INVARIANT
-%token ROBUSTPARAMETERS
-%token DOMAIN
+/*************/
 %token CONTROLLAW
+%token CONTROLPARAMETERS
 %token CONTROLTEMPLATE
+%token OBJECTIVEFUNCTION
 %token SETTINGS
+/* End perseus */
 
 /* Hybrid programs */
 %token ASSIGN
@@ -313,19 +319,19 @@ problemblock:
 
 /*============================================================*/
 /*==================== Input file for EITool ====================*/
-eitoolblock: statevarblock eiparameterblock envelopeblock invariantblock robustparameterblock domainblock controllawblock {
+eitoolblock: statevarblock initialsetblock safesetblock eiparameterblock envelopeblock invariantblock controllawblock {
 		try {
 			synthesis = false;
 		} catch ( Exception e ) {
-			System.err.println("Exception at location eitoolblock: statevarblock eiparameterblock envelopeblock invariantblock robustparameterblock controllawblock");
+			System.err.println("Exception at location eitoolblock: statevarblock initialsetblock safesetblock eiparameterblock envelopeblock invariantblock robustparameterblock  controllawblock");
 			System.err.println( e );
 		}
 	}
-	| statevarblock eiparameterblock envelopeblock invariantblock robustparameterblock domainblock controltemplateblock {
+	| statevarblock initialsetblock safesetblock eiparameterblock envelopeblock invariantblock controlparameters controltemplateblock objectivefunction {
 		try {
 			synthesis = true;
 		} catch ( Exception e ) {
-			System.err.println("Exception at location eitoolblock: statevarblock eiparameterblock envelopeblock invariantblock robustparameterblock controltemplateblock");
+			System.err.println("Exception at location eitoolblock: statevarblock initialsetblock safesetblock eiparameterblock envelopeblock invariantblock controlparameters controltemplateblock objectivefunction");
 			System.err.println( e );
 		}
 	}
@@ -340,9 +346,30 @@ statevarblock: STATEVARIABLES OPENBRACE varlist CLOSEBRACE {
 	}
 ;
 
+initialsetblock: INITIALSET OPENBRACE dLformula CLOSEBRACE {
+		try {
+			initialSet = (dLFormula)$3;
+		} catch ( Exception e ) {
+			System.err.println("Exception at location invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE");
+			System.err.println( e );
+		}
+	}
+;
+safesetblock: SAFESET OPENBRACE dLformula CLOSEBRACE {
+		try {
+			safeSet = (dLFormula)$3;
+		} catch ( Exception e ) {
+			System.err.println("Exception at location invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE");
+			System.err.println( e );
+		}
+	}
+;
+
 eiparameterblock: EIPARAMETERS OPENBRACE varlist CLOSEBRACE {
 		try {
-			eiparameters = (ArrayList<RealVariable>)$3;
+			robustparameters = (dLFormula)$3;
+			eiparameters = new ArrayList<>();
+			eiparameters.addAll(robustparameters.getFreeVariables());
 		} catch ( Exception e ) {
 			System.err.println("Exception at location eiparameterblock: EIPARAMETERS OPENBRACE varlist CLOSEBRACE");
 			System.err.println( e );
@@ -371,33 +398,33 @@ invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE {
 	}
 ;
 
-robustparameterblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE {
-		try {
-			robustparameters = (dLFormula)$3;
-		} catch ( Exception e ) {
-			System.err.println("Exception at location robustparametersblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE");
-			System.err.println( e );
-		}
-	} /*| ROBUSTPARAMETERS OPENBRACE valuation CLOSEBRACE {
-		try {
-			$$ = "single valuation parameters: (String)$3";
-		} catch ( Exception e ) {
-			System.err.println("Exception at location robustparametersblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE");
-			System.err.println( e );
-		}
+//robustparameterblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE {
+//		try {
+//			robustparameters = (dLFormula)$3;
+//		} catch ( Exception e ) {
+//			System.err.println("Exception at location robustparametersblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE");
+//			System.err.println( e );
+//		}
+//	} /*| ROBUSTPARAMETERS OPENBRACE valuation CLOSEBRACE {
+//		try {
+//			$$ = "single valuation parameters: (String)$3";
+//		} catch ( Exception e ) {
+//			System.err.println("Exception at location robustparametersblock: ROBUSTPARAMETERS OPENBRACE dLformula CLOSEBRACE");
+//			System.err.println( e );
+//		}
+//
+//	}*/
+//;
 
-	}*/
-;
-
-domainblock: DOMAIN OPENBRACE dLformula CLOSEBRACE {
-		try {
-			domain = (dLFormula)$3;
-		} catch ( Exception e ) {
-			System.err.println("Exception at location invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE");
-			System.err.println( e );
-		}
-	}
-;
+//initialsetblock: INITIALSET OPENBRACE dLformula CLOSEBRACE {
+//		try {
+//			domain = (dLFormula)$3;
+//		} catch ( Exception e ) {
+//			System.err.println("Exception at location invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE");
+//			System.err.println( e );
+//		}
+//	}
+//;
 
 
 controllawblock: CONTROLLAW OPENBRACE dLformula CLOSEBRACE {
@@ -409,9 +436,30 @@ controllawblock: CONTROLLAW OPENBRACE dLformula CLOSEBRACE {
 		}
 	}
 ;
+
+controlparameters: CONTROLPARAMETERS OPENBRACE dLformula CLOSEBRACE {
+		try {
+			controlparameters = (dLFormula)$3;
+		} catch ( Exception e ) {
+			System.err.println("Exception at location controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE");
+			System.err.println( e );
+		}
+	}
+;
+
 controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE {
 		try {
 			control = (dLFormula)$3;
+		} catch ( Exception e ) {
+			System.err.println("Exception at location controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE");
+			System.err.println( e );
+		}
+	}
+;
+
+objectivefunction: OBJECTIVEFUNCTION OPENBRACE term CLOSEBRACE {
+		try {
+			objective = (Term)$3;
 		} catch ( Exception e ) {
 			System.err.println("Exception at location controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE");
 			System.err.println( e );

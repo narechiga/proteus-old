@@ -30,11 +30,18 @@ public class AbstractdLParser {
 	public boolean synthesis; //whether a synthesis or verification task is desired
 	public List<RealVariable> statevariables;
 	public List<RealVariable> eiparameters;
+	public dLFormula initialSet;
+	public dLFormula safeSet;
+
+	public dLFormula robustparameters;
 	public dLFormula envelope;
 	public dLFormula invariant;
-	public dLFormula robustparameters;
-	public dLFormula domain;
+
 	public dLFormula control;
+
+	public dLFormula controlparameters;
+	public dLFormula controltemplate;
+	public Term objective;
 
 }
 
