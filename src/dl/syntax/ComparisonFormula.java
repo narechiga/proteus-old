@@ -32,11 +32,11 @@ public class ComparisonFormula extends dLFormula {
 	}
 
 	public Term getLHS() {
-		return (Term)(arguments.get(0));
+		return ((Term)(arguments.get(0))).clone();
 	}
 
 	public Term getRHS() {
-		return (Term)(arguments.get(1));
+		return ((Term)(arguments.get(1))).clone();
 	}
 
 // Substitution method
@@ -49,6 +49,13 @@ public class ComparisonFormula extends dLFormula {
 		}
 		return substitutedFormula;
 	}
+
+	public ComparisonFormula replace( Replacement replacement ) {
+		return new ComparisonFormula( getInequality().clone(),
+								getLHS().replace( replacement ),
+								getRHS().replace( replacement ) );
+	}
+		
 
 // Clone method
 	public ComparisonFormula clone() {

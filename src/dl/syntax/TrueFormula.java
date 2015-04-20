@@ -16,6 +16,10 @@ public class TrueFormula extends dLFormula {
 		return this.clone();
 	}
 
+	public TrueFormula replace( Replacement replacement ) {
+		return this.clone();
+	}
+
 // Clone method
 	public TrueFormula clone() {
 		return new TrueFormula();

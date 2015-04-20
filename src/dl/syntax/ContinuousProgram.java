@@ -111,6 +111,16 @@ public class ContinuousProgram extends HybridProgram {
 
 		return new ContinuousProgram( odeSubstituted, getDOE().clone() );
 	}
+	public ContinuousProgram replace( Replacement replacement ) {
+		// Substitute into the ode list
+		ArrayList<ExplicitODE> odeSubstituted = new ArrayList<ExplicitODE>();
+		Iterator<ExplicitODE> myODEiterator = getODEs().iterator();
+		while ( myODEiterator.hasNext() ) {
+			odeSubstituted.add( myODEiterator.next().replace( replacement ) );
+		}
+
+		return new ContinuousProgram( odeSubstituted, getDOE().clone() );
+	}
 
 
 

@@ -16,11 +16,11 @@ public class BoxModalityFormula extends dLFormula {
 	}
 
 	public HybridProgram getProgram() {
-		return (HybridProgram)(arguments.get(0));
+		return ((HybridProgram)(arguments.get(0))).clone();
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(arguments.get(1));
+		return ((dLFormula)(arguments.get(1))).clone();
 	}
 
 //	public HybridProgram getLHS() {
@@ -36,6 +36,11 @@ public class BoxModalityFormula extends dLFormula {
 	public BoxModalityFormula substituteConcreteValuation( Valuation substitution ) {
 		return new BoxModalityFormula( getProgram().substituteConcreteValuation( substitution ), 
 					getFormula().substituteConcreteValuation( substitution ) );
+	}
+
+	public BoxModalityFormula replace( Replacement replacement ) {
+		return new BoxModalityFormula( getProgram().replace( replacement ),
+						getFormula().replace( replacement ) );
 	}
 
 // Clone method

@@ -23,6 +23,9 @@ public class TestProgram extends DiscreteProgram {
 	public TestProgram substituteConcreteValuation( Valuation substitution ) {
 		return new TestProgram( getFormula().substituteConcreteValuation( substitution ) );
 	}
+	public TestProgram replace( Replacement replacement ) {
+		return new TestProgram( getFormula().replace( replacement ) );
+	}
 
 // Clone
 	public TestProgram clone() {

@@ -16,11 +16,11 @@ public class ExistsFormula extends dLFormula {
 	}
 
 	public RealVariable getVariable() {
-		return (RealVariable)(arguments.get(0));
+		return ((RealVariable)(arguments.get(0))).clone();
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(arguments.get(1));
+		return ((dLFormula)(arguments.get(1))).clone();
 	}
 // Substitution method
 	public ExistsFormula substituteConcreteValuation( Valuation substitution ) {
@@ -30,6 +30,16 @@ public class ExistsFormula extends dLFormula {
 		} else {
 			return new ExistsFormula( getVariable().clone(),
 						getFormula().substituteConcreteValuation( substitution ) );
+		}
+	}
+
+	public ExistsFormula replace( Replacement replacement ) {
+		if ( replacement.containsVariable( getVariable() ) ) {
+			// It's not actually the same variable, because of the scope of the quantifier
+			return this.clone();
+		} else {
+			return new ExistsFormula( getVariable(),
+						getFormula().replace( replacement ) );
 		}
 	}
 

@@ -24,6 +24,9 @@ public class RepetitionProgram extends HybridProgram {
 	public RepetitionProgram substituteConcreteValuation( Valuation substitution ) {
 		return new RepetitionProgram( getProgram().substituteConcreteValuation( substitution ) );
 	}
+	public RepetitionProgram replace( Replacement replacement ) {
+		return new RepetitionProgram( getProgram().replace( replacement ) );
+	}
 
 // Clone method
 	public RepetitionProgram clone() {

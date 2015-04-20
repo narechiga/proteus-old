@@ -29,11 +29,11 @@ public class AbstractdLParser {
 	// For EITool
 	public boolean synthesis; //whether a synthesis or verification task is desired
 	public List<RealVariable> statevariables;
-	public List<RealVariable> eiparameters;
 	public dLFormula initialSet;
 	public dLFormula safeSet;
 
-	public dLFormula robustparameters;
+	public dLFormula eiparameterset;
+	public List<RealVariable> eiparameters;
 	public dLFormula envelope;
 	public dLFormula invariant;
 

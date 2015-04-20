@@ -37,6 +37,10 @@ public class SequenceProgram extends HybridProgram {
 		return new SequenceProgram( getLHS().substituteConcreteValuation( substitution ),
 						getRHS().substituteConcreteValuation( substitution ) );
 	}
+	public SequenceProgram replace( Replacement replacement ) {
+		return new SequenceProgram( getLHS().replace( replacement ),
+						getRHS().replace( replacement ) );
+	}
 
 // Clone method
 	public SequenceProgram clone() {

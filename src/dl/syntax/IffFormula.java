@@ -16,20 +16,20 @@ public class IffFormula extends dLFormula {
 	}
 
 	public dLFormula getAntecedent() {
-		return (dLFormula)(arguments.get(0));
+		return ((dLFormula)(arguments.get(0))).clone();
 	}
 
 	public dLFormula getSuccedent() {
-		return (dLFormula)(arguments.get(1));
+		return ((dLFormula)(arguments.get(1))).clone();
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(arguments.get(0));
+		return getAntecedent(); 
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(arguments.get(1));
-	}
+		return getSuccedent();
+ 	}
 
 
 // Substitution method
@@ -38,6 +38,10 @@ public class IffFormula extends dLFormula {
 					getSuccedent().substituteConcreteValuation( substitution ) );
 	}
 
+	public IffFormula replace( Replacement replacement ) {
+		return new IffFormula( getAntecedent().replace( replacement ),
+					getSuccedent().replace( replacement ) );
+	}
 // Clone method
 	public IffFormula clone() {
 		return new IffFormula( getAntecedent().clone(), getSuccedent().clone() );

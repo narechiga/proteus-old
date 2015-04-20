@@ -6,9 +6,11 @@ import java.util.*;
 
 public abstract class ProblemStatement {
 	public List<RealVariable> stateVariables;
+	public dLFormula initialSet;
+	public dLFormula safeSet;
 	public List<RealVariable> eiParameters;
+	public dLFormula eiParameterSet;
 	public dLFormula envelope;
 	public dLFormula invariant;
-	public dLFormula robustParameters;
-	public dLFormula domain;
+	public dLFormula control;
 }

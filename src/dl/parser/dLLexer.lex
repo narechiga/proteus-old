@@ -136,7 +136,7 @@ Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 		}
 		return SAFESET;
 	}
-	"\\eiparameters" {
+	"\\eiparameterset" {
 		if ( debug ) {
 			System.out.println("Lexer: EIPARAMETERS");
 			System.out.println("Lexer @ " + yytext() );

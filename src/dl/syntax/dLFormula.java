@@ -38,6 +38,12 @@ public abstract class dLFormula extends dLStructure {
 	public abstract dLFormula clone();
 
 	public abstract dLFormula substituteConcreteValuation( Valuation substitution );
+	public abstract dLFormula replace( Replacement replacement );
+
+	// Because it's super obnoxious to always be typing substituteConcreteValuation
+	public dLFormula plugIn( Valuation substitution ) {
+		return this.clone().substituteConcreteValuation( substitution );
+	}
 
 // Logic
 	public abstract dLFormula negate();

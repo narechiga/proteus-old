@@ -35,6 +35,16 @@ public class RealVariable extends Term {
 		}
 	}
 
+	public Term replace( Replacement replacement ) {
+		if ( replacement == null ) {
+			return this;
+		} else if ( replacement.get( this ) != null ) {
+			return replacement.get( this );
+		} else {
+			return this.clone();
+		}
+	}
+
 // hashCode
 	public int hashCode() {
 		return operator.toString().hashCode();

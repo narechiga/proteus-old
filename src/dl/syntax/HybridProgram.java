@@ -29,6 +29,9 @@ public abstract class HybridProgram extends dLStructure {
 	public HybridProgram substituteConcreteValuation( Valuation substitution ) {
 		return null;
 	}
+	public HybridProgram replace( Replacement replacement ) {
+		return null;
+	}
 
 	public abstract HybridProgram clone();
 

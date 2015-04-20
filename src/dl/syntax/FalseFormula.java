@@ -17,6 +17,10 @@ public class FalseFormula extends dLFormula {
 		return new FalseFormula();
 	}
 
+	public FalseFormula replace( Replacement replacement ) {
+		return new FalseFormula();
+	}
+
 // Clone method
 	public FalseFormula clone() {
 		return new FalseFormula();

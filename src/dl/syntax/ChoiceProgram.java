@@ -29,6 +29,10 @@ public class ChoiceProgram extends HybridProgram {
 		return new ChoiceProgram(  getLHS().substituteConcreteValuation( substitution ),
 						getRHS().substituteConcreteValuation( substitution ) ) ;
 	}
+	public ChoiceProgram replace( Replacement replacement ) {
+		return new ChoiceProgram(  getLHS().replace( replacement ),
+						getRHS().replace( replacement ) ) ;
+	}
 
 // Clone method
 	public ChoiceProgram clone() {

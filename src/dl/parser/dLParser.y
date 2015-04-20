@@ -365,11 +365,11 @@ safesetblock: SAFESET OPENBRACE dLformula CLOSEBRACE {
 	}
 ;
 
-eiparameterblock: EIPARAMETERS OPENBRACE varlist CLOSEBRACE {
+eiparameterblock: EIPARAMETERS OPENBRACE dLformula CLOSEBRACE {
 		try {
-			robustparameters = (dLFormula)$3;
+			eiparameterset = (dLFormula)$3;
 			eiparameters = new ArrayList<>();
-			eiparameters.addAll(robustparameters.getFreeVariables());
+			eiparameters.addAll(eiparameterset.getFreeVariables());
 		} catch ( Exception e ) {
 			System.err.println("Exception at location eiparameterblock: EIPARAMETERS OPENBRACE varlist CLOSEBRACE");
 			System.err.println( e );

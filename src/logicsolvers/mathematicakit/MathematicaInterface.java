@@ -34,10 +34,17 @@ public class MathematicaInterface extends LogicSolverInterface {
 
 		queryFileWriter.println( timeStampComment( comment ));
 
+		// Somehow, these lines that worked on my old machine don't work on this one :(
+		//queryFileWriter.println("reducedFormula = Quiet[ Reduce[\n");
+		//queryFileWriter.println("\t" + thisFormula.universalClosure().toMathematicaString() + "\n");
+		//queryFileWriter.println(", " + variableString + ", Reals ] ] // InputForm ;");
+		//queryFileWriter.println("Print[ reducedFormula ]\n;");
+		//queryFileWriter.close();
+		
 		queryFileWriter.println("reducedFormula = Quiet[ Reduce[\n");
 		queryFileWriter.println("\t" + thisFormula.universalClosure().toMathematicaString() + "\n");
-		queryFileWriter.println(", " + variableString + ", Reals ] ] // InputForm ;");
-		queryFileWriter.println("Print[ reducedFormula ]\n;");
+		queryFileWriter.println(", " + variableString + ", Reals ] ];");
+		queryFileWriter.println("Print[ reducedFormula ];");
 		queryFileWriter.close();
 		
 		// Run Mathematica

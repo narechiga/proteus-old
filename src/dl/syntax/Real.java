@@ -41,6 +41,9 @@ public class Real extends Term {
 	public Real substituteConcreteValuation( Valuation substitution ) {
 		return this.clone();
 	}
+	public Real replace( Replacement replacement ) {
+		return this.clone();
+	}
 
 // Equality
 	public boolean equals( Object otherObject ) {

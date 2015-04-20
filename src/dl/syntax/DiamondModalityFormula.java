@@ -38,6 +38,11 @@ public class DiamondModalityFormula extends dLFormula {
 							getFormula().substituteConcreteValuation( substitution ) );
 	}
 
+	public DiamondModalityFormula replace( Replacement replacement ) {
+		return new DiamondModalityFormula( getProgram().replace( replacement ),
+							getFormula().replace( replacement ) );
+	}
+
 // Clone method
 	public DiamondModalityFormula clone() {
 		return new DiamondModalityFormula( getProgram().clone(),

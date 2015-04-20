@@ -31,6 +31,12 @@ public class ConcreteAssignmentProgram extends DiscreteProgram {
 							getRHS().substituteConcreteValuation( substitution ) );
 	}
 
+	public ConcreteAssignmentProgram replace( Replacement replacement ) {
+		// Don't mess with the LHS, just the RHS
+		return new ConcreteAssignmentProgram( getLHS().clone(),
+							getRHS().replace( replacement ) );
+	}
+
 // Clone method
 	public ConcreteAssignmentProgram clone() {
 		return new ConcreteAssignmentProgram( getLHS().clone(), getRHS().clone() );

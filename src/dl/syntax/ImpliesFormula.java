@@ -16,25 +16,32 @@ public class ImpliesFormula extends dLFormula {
 	}
 
 	public dLFormula getAntecedent() {
-		return (dLFormula)(arguments.get(0));
+		dLFormula antecedent = (dLFormula)(arguments.get(0));
+		return antecedent.clone();
 	}
 
 	public dLFormula getSuccedent() {
-		return (dLFormula)(arguments.get(1));
+		dLFormula succedent = (dLFormula)(arguments.get(1));
+		return succedent.clone();
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(arguments.get(0));
+		return getAntecedent();
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(arguments.get(1));
+		return getSuccedent();
 	}
 
 // Substitution method
 	public ImpliesFormula substituteConcreteValuation( Valuation substitution ) {
 		return new ImpliesFormula( getAntecedent().substituteConcreteValuation( substitution ),
 						getSuccedent().substituteConcreteValuation( substitution ) );
+	}
+
+	public ImpliesFormula replace( Replacement replacement ) {
+		return new ImpliesFormula( getAntecedent().replace( replacement ),
+						getSuccedent().replace( replacement ) );
 	}
 
 // Clone method
@@ -57,7 +64,9 @@ public class ImpliesFormula extends dLFormula {
 	}
 
 	public String todRealString() {
-		return "(implies " + getAntecedent().todRealString() + " " + getSuccedent().todRealString() + ")\n";
+		return "(=> " + getAntecedent().todRealString() + " " + getSuccedent().todRealString() + ")\n";
+		//OrFormula impliesAsOr = new OrFormula( getAntecedent().negate(), getSuccedent() );
+		//return impliesAsOr.todRealString();
 	}
 
 // Assorted convenience functions

@@ -16,17 +16,22 @@ public class OrFormula extends dLFormula {
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(arguments.get(0));
+		return ((dLFormula)(arguments.get(0))).clone();
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(arguments.get(1));
+		return ((dLFormula)(arguments.get(1))).clone();
 	}
 
 // Substitution method
 	public OrFormula substituteConcreteValuation( Valuation substitution ) {
 		return new OrFormula( getLHS().substituteConcreteValuation( substitution ), 
 					getRHS().substituteConcreteValuation( substitution ) );
+	}
+
+	public OrFormula replace( Replacement replacement ) {
+		return new OrFormula( getLHS().replace( replacement ), 
+					getRHS().replace( replacement ) );
 	}
 
 // Clone method

@@ -18,11 +18,11 @@ public class AndFormula extends dLFormula {
 	}
 
 	public dLFormula getLHS() {
-		return (dLFormula)(arguments.get(0));
+		return ((dLFormula)(arguments.get(0))).clone();
 	}
 
 	public dLFormula getRHS() {
-		return (dLFormula)(arguments.get(1));
+		return ((dLFormula)(arguments.get(1))).clone();
 	}
 
 // Substitution method
@@ -33,6 +33,13 @@ public class AndFormula extends dLFormula {
 			System.out.println("Returning AndFormula: " + substitutedFormula.toMathematicaString() );
 		}
 		return substitutedFormula;
+	}
+
+	public AndFormula replace( Replacement replacement ) {
+		AndFormula replacedFormula = new AndFormula(
+							getLHS().replace( replacement ),
+							getRHS().replace( replacement ) );
+		return replacedFormula;
 	}
 
 // Clone method

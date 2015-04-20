@@ -24,6 +24,10 @@ public class ArbitraryAssignmentProgram extends DiscreteProgram {
 		return this;
 	}
 
+	public ArbitraryAssignmentProgram replace( Replacement replacement ) {
+		return this;
+	}
+
 // Clone method
 	public ArbitraryAssignmentProgram clone() {
 		return new ArbitraryAssignmentProgram( getLHS().clone() );

@@ -17,12 +17,20 @@ public class NotFormula extends dLFormula {
 	}
 
 	public dLFormula getFormula() {
-		return (dLFormula)(arguments.get(0));
+		return ((dLFormula)(arguments.get(0))).clone();
 	}
 
 // Substition method
 	public NotFormula substituteConcreteValuation( Valuation substitution ) {
 		NotFormula substitutedFormula = new NotFormula( getFormula().substituteConcreteValuation( substitution ) );
+		if( debug ) {
+			System.out.println("Returning NotFormula: " + substitutedFormula.toMathematicaString() );
+		}
+		return substitutedFormula;
+	}
+
+	public NotFormula replace( Replacement replacement ) {
+		NotFormula substitutedFormula = new NotFormula( getFormula().replace( replacement ) );
 		if( debug ) {
 			System.out.println("Returning NotFormula: " + substitutedFormula.toMathematicaString() );
 		}
