@@ -109,7 +109,7 @@ public abstract class LogicSolverInterface {
 			if ( validity.equals("valid") ) {
 				result = true;
 			}
-			System.out.println("Validity: " + validity);
+			//System.out.println("Validity: " + validity);
 
 		} catch ( Exception e ) {
 			e.printStackTrace();

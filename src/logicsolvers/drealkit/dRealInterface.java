@@ -91,7 +91,7 @@ public class dRealInterface extends LogicSolverInterface {
 		Iterator<dLFormula> formulaIterator = theseFormulas.iterator();
 		int counter = 1;
 		while ( formulaIterator.hasNext() ) {
-			comment = comment + ";; Formula " + counter + ":\n";
+			comment = comment + "\n;; Formula " + counter + ":\n";
 			comment = comment + ";; " + formulaIterator.next().toMathematicaString();
 			counter = counter + 1;
 		}
@@ -155,7 +155,7 @@ public class dRealInterface extends LogicSolverInterface {
 		//System.out.println("Solver result is: ");
 		//System.out.println( result.toString() );
 
-		queryFile.delete();
+		//queryFile.delete();
 		return result;
 	}
 
@@ -175,7 +175,7 @@ public class dRealInterface extends LogicSolverInterface {
                 //        }
 		//}
 		
-		System.out.println("Pausing to let dReal finish writing out the CEX file...");
+		System.out.println("Pausing to let dReal finish writing out the CEX file...: " + modelFile.toString() );
 		try {
                               Thread.sleep(100);                 //1000 milliseconds is one second.
                 } catch(InterruptedException ex) {
@@ -190,6 +190,12 @@ public class dRealInterface extends LogicSolverInterface {
 		String line;
 		while( modelReader.hasNextLine() ) {
 			line = modelReader.nextLine();
+
+			if (!( line.contains("[") && (line.contains("]") ) ) ) {
+				System.out.println("Skipping strange line: " + line);
+				continue;
+			}
+
 			
 			//System.out.println("CEX line is: " + line);
 			line = line.trim();

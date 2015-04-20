@@ -16,6 +16,12 @@ public class Valuation {
 		this.valuation = valuation;
 	}
 
+	public Valuation ( RealVariable variable , Real number ) {
+		this.valuation = new HashMap<RealVariable,Real>();
+		valuation.put( variable, number );
+	}
+
+
 	public Set<RealVariable> keySet() {
 		return valuation.keySet();
 	}
