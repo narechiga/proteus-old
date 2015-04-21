@@ -37,7 +37,7 @@ public class AbstractdLParser {
 	public dLFormula envelope;
 	public dLFormula invariant;
 
-	public dLFormula control;
+	public HybridProgram control;
 
 	public dLFormula controlparameters;
 	public dLFormula controltemplate;

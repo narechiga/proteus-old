@@ -427,11 +427,11 @@ invariantblock: INVARIANT OPENBRACE dLformula CLOSEBRACE {
 //;
 
 
-controllawblock: CONTROLLAW OPENBRACE dLformula CLOSEBRACE {
+controllawblock: CONTROLLAW OPENBRACE hybridprogram CLOSEBRACE {
 		try {
-			control = (dLFormula)$3;
+			control = (HybridProgram)$3;
 		} catch ( Exception e ) {
-			System.err.println("Exception at location controllawblock: CONTROLLAW OPENBRACE dLformula CLOSEBRACE");
+			System.err.println("Exception at location controllawblock: CONTROLLAW OPENBRACE hybridprogram CLOSEBRACE");
 			System.err.println( e );
 		}
 	}
@@ -449,7 +449,7 @@ controlparameters: CONTROLPARAMETERS OPENBRACE dLformula CLOSEBRACE {
 
 controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE {
 		try {
-			control = (dLFormula)$3;
+			control = (HybridProgram)$3;
 		} catch ( Exception e ) {
 			System.err.println("Exception at location controltemplateblock: CONTROLTEMPLATE OPENBRACE dLformula CLOSEBRACE");
 			System.err.println( e );
@@ -891,6 +891,16 @@ dLformula:
 			System.err.println( e );
 		}
 	}
+	//| IDENTIFIER LPAREN formulalist RPAREN {
+	//	try {
+	//		$$ = new BooleanFunctionFormula(
+	//					new Operator( (String)$1 ),
+	//					(List<dLFormula>)$3 );
+	//	} catch ( Exception e ) {
+	//		System.err.println("Exception at location dLformula:IDENTIFIER LPAREN formulalist RPAREN");
+	//		System.err.println( e );
+	//	}
+	//}
 	| FORALL IDENTIFIER SEMICOLON dLformula %prec QUANTIFIER { 
 		try {
 			$$ = new ForAllFormula( new RealVariable( (String)$2), (dLFormula)$4 );
@@ -924,6 +934,29 @@ dLformula:
 		}
 	}
 ;
+
+//formulalist:
+//	dLformula {
+//		try {
+//			ArrayList<dLFormula> formulas = new ArrayList<>();
+//			formulas.add( (dLFormula)$1 );
+//			$$ = formulas;
+//		} catch ( Exception e ) {
+//			System.err.println("Exception at location formulalist:dLformula");
+//			System.err.println( e );
+//		}
+//	}
+//	| formulalist COMMA dLformula {
+//		try {
+//			ArrayList<dLFormula> formulas  = (ArrayList<dLFormula>)$1 ;
+//			formulas.add( (dLFormula)$3 );
+//			$$ = formulas;
+//		} catch ( Exception e ) {
+//			System.err.println("Exception at location formulalist:formulalist COMMA dLformula");
+//			System.err.println( e );
+//		}
+//	}
+//;
 
 hybridprogram:
 	odesystem { 

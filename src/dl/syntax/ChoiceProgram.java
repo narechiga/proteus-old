@@ -158,5 +158,25 @@ public class ChoiceProgram extends HybridProgram {
 		return hybridVariables;
 	}
 
+	public List<HybridProgram> splitOnChoice() {
+		List<HybridProgram> steps = new ArrayList<>();
+
+		if ( getLHS() instanceof ChoiceProgram ) {
+			steps.addAll( ((ChoiceProgram)getLHS()).splitOnChoice() );
+		} else {
+			steps.add( getLHS() );
+		}
+
+		if ( getRHS() instanceof ChoiceProgram ) {
+			steps.addAll( ((ChoiceProgram)getRHS()).splitOnChoice() );
+		} else {
+			steps.add( getRHS() );
+		}
+
+		return steps;
+
+	}
+
+
 
 }

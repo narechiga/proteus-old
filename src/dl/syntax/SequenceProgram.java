@@ -166,4 +166,24 @@ public class SequenceProgram extends HybridProgram {
 
 		return hybridVariables;
 	}
+
+	public List<HybridProgram> splitOnSequence() {
+		List<HybridProgram> steps = new ArrayList<>();
+
+		if ( getLHS() instanceof SequenceProgram ) {
+			steps.addAll( ((SequenceProgram)getLHS()).splitOnSequence() );
+		} else {
+			steps.add( getLHS() );
+		}
+
+		if ( getRHS() instanceof SequenceProgram ) {
+			steps.addAll( ((SequenceProgram)getRHS()).splitOnSequence() );
+		} else {
+			steps.add( getRHS() );
+		}
+
+		return steps;
+	}
+
+
 }
