@@ -192,7 +192,7 @@ public class dRealInterface extends LogicSolverInterface {
 			line = modelReader.nextLine();
 
 			if (!( line.contains(",")) ) {
-				System.out.println("Skipping strange line: " + line);
+				//System.out.println("Skipping strange line: " + line);
 				continue;
 			}
 
