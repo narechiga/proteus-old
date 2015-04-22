@@ -191,7 +191,7 @@ public class dRealInterface extends LogicSolverInterface {
 		while( modelReader.hasNextLine() ) {
 			line = modelReader.nextLine();
 
-			if (!( line.contains("[") && (line.contains("]") ) ) ) {
+			if (!( line.contains(",")) ) {
 				System.out.println("Skipping strange line: " + line);
 				continue;
 			}
