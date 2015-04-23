@@ -93,7 +93,7 @@ public abstract class LogicSolverInterface {
 
 // Convenient alias for checkvalidity
 	public LogicSolverResult checkValidity ( dLFormula thisFormula ) throws Exception {
-	    String comment = generateCheckValidityComment( new NotFormula(thisFormula) );
+	    String comment = generateCheckValidityComment( thisFormula );
 	    String filename = decorateFilename( "checkValidity" );
 
 	    return checkValidity( filename, thisFormula, comment );
